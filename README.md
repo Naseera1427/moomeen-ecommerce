@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MOOMEEN PRODUCTS
 
 ## Siddha & Natural Healthcare E-Commerce Website
@@ -80,3 +81,7 @@ Shipped
 Out for Delivery
    ↓
 Delivered
+=======
+# moomeen-ecommerce
+Siddha and natural healthcare e-commerce website built with Django and PostgreSQL.
+>>>>>>> cd5723b53fd9c5f351818e60257c01a9f68cfa4c
