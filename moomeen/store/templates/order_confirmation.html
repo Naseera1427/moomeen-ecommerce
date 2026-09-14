@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   MOOMEEN PRODUCTS
+   ORDER CONFIRMATION
+========================================= */
+
+.order-confirmation-page {
+    background: #ffffff;
+    min-height: 75vh;
+    padding: 70px 20px 90px;
+    color: #555555;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.confirmation-card {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 24px;
+    padding: 55px 45px;
+    box-shadow: 0 15px 45px rgba(18, 74, 71, 0.08);
+}
+
+
+/* =========================================
+   SUCCESS ICON
+========================================= */
+
+.success-icon {
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    background: #124A47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-icon svg {
+    width: 42px;
+    height: 42px;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.confirmation-card h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(38px, 5vw, 55px);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #124A47;
+    margin: 0 0 12px;
+}
+
+.confirmation-card h1 span {
+    color: #124A47;
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.confirmation-message {
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555555;
+    margin: 0 auto 30px;
+    max-width: 580px;
+}
+
+
+/* =========================================
+   ORDER NUMBER
+========================================= */
+
+.order-number-box {
+    background: #fafafa;
+    border: 1px solid #e3e3e3;
+    border-radius: 14px;
+    padding: 20px 25px;
+    margin: 25px auto 35px;
+    max-width: 450px;
+}
+
+.order-number-label {
+    display: block;
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #B9674B;
+    margin-bottom: 8px;
+}
+
+.order-number {
+    font-family: "DM Sans", sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #124A47;
+    word-break: break-word;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.confirmation-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 170px;
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #124A47;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: #0d3937;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #ffffff;
+    color: #124A47;
+    border: 1px solid #124A47;
+}
+
+.btn-secondary:hover {
+    background: #124A47;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   SMALL NOTE
+========================================= */
+
+.confirmation-note {
+    margin-top: 30px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #777777;
+}
+
+.confirmation-note strong {
+    color: #124A47;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .order-confirmation-page {
+        padding: 45px 15px 65px;
+    }
+
+    .confirmation-card {
+        padding: 40px 22px;
+        border-radius: 18px;
+    }
+
+    .success-icon {
+        width: 68px;
+        height: 68px;
+    }
+
+    .success-icon svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .confirmation-message {
+        font-size: 15px;
+    }
+
+    .order-number {
+        font-size: 18px;
+    }
+
+    .confirmation-buttons {
+        flex-direction: column;
+    }
+
+    .confirmation-btn {
+        width: 100%;
+    }
+}
+
+</style>
+
+
+<div class="order-confirmation-page">
+
+    <div class="confirmation-card">
+
+        <!-- SUCCESS ICON -->
+
+        <div class="success-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+
+        </div>
+
+
+        <!-- HEADING -->
+
+        <h1>
+            Order Confirmed!
+        </h1>
+
+
+        <!-- MESSAGE -->
+
+        <p class="confirmation-message">
+            Thank you for choosing
+            <strong style="color: #124A47;">
+                MOOMEEN PRODUCTS
+            </strong>.
+            Your order has been successfully placed.
+            We will process your order and keep you updated about its delivery.
+        </p>
+
+
+        <!-- ORDER NUMBER -->
+
+        <div class="order-number-box">
+
+            <span class="order-number-label">
+                Order Number
+            </span>
+
+            <div class="order-number">
+                {{ order.order_number }}
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="confirmation-buttons">
+
+            <a
+                href="{% url 'my_orders' %}"
+                class="confirmation-btn btn-primary"
+            >
+                View My Orders
+            </a>
+
+            <a
+                href="{% url 'products' %}"
+                class="confirmation-btn btn-secondary"
+            >
+                Continue Shopping
+            </a>
+
+        </div>
+
+
+        <!-- NOTE -->
+
+        <p class="confirmation-note">
+            You can track your order anytime from
+            <strong>My Orders</strong>.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

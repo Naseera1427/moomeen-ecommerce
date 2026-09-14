@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Something Went Wrong | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+    .error-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px;
+        background: #FFFFFF;
+    }
+
+    .error-container {
+        max-width: 600px;
+    }
+
+    .error-number {
+        margin: 0;
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: clamp(6rem, 15vw, 10rem);
+        font-weight: 600;
+        line-height: 0.9;
+    }
+
+    .error-title {
+        margin: 20px 0 10px;
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 2.2rem;
+    }
+
+    .error-text {
+        margin: 0 auto 28px;
+        max-width: 480px;
+        color: #667572;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.85rem;
+        line-height: 1.7;
+    }
+
+    .home-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 25px;
+        border-radius: 999px;
+        background: #1D4D32;
+        color: #FFFFFF;
+        text-decoration: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        transition: all 0.2s ease;
+    }
+
+    .home-btn:hover {
+        background: #B9674B;
+        color: #FFFFFF;
+        transform: translateY(-1px);
+    }
+</style>
+
+<section class="error-page">
+
+    <div class="error-container">
+
+        <h1 class="error-number">500</h1>
+
+        <h2 class="error-title">
+            Something Went Wrong
+        </h2>
+
+        <p class="error-text">
+            We're sorry, but something went wrong on our side.
+            Please try again in a little while.
+        </p>
+
+        <a href="{% url 'home' %}" class="home-btn">
+            Back to Home
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

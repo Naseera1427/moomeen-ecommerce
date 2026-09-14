@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}My Addresses | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+    .account-page {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+
+    .account-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .account-header h1 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 42px;
+        margin: 0;
+    }
+
+    .add-btn {
+        background: #168B82;
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .address-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    .address-card {
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 25px;
+        background: #fff;
+        box-shadow: 0 7px 22px rgba(0,0,0,0.04);
+    }
+
+    .address-card h3 {
+        color: #1D4D32;
+        margin-top: 0;
+    }
+
+    .default-badge {
+        display: inline-block;
+        background: #e8f3ef;
+        color: #168B82;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .address-card p {
+        color: #555;
+        line-height: 1.7;
+        margin: 5px 0;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        border: 1px dashed #ddd;
+        border-radius: 15px;
+    }
+
+    @media(max-width: 700px) {
+        .address-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .account-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+
+<div class="account-page">
+
+    <div class="account-header">
+        <div>
+            <h1>My Addresses</h1>
+            <p>Manage your delivery addresses.</p>
+        </div>
+
+        <a href="#" class="add-btn">+ Add Address</a>
+    </div>
+
+    {% if addresses %}
+
+        <div class="address-grid">
+
+            {% for address in addresses %}
+
+                <div class="address-card">
+
+                    {% if address.is_default %}
+                        <span class="default-badge">Default Address</span>
+                    {% endif %}
+
+                    <h3>{{ address.full_name }}</h3>
+
+                    <p><strong>Phone:</strong> {{ address.phone }}</p>
+
+                    <p>
+                        {{ address.address_line }}<br>
+                        {{ address.city }}, {{ address.state }}<br>
+                        PIN: {{ address.pincode }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <h2>No saved addresses</h2>
+            <p>Add an address during checkout to make future orders easier.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

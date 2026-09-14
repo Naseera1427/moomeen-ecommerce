@@ -1,0 +1,1423 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+{{ product.name }} | MOOMEEN PRODUCTS
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   PRODUCT DETAIL PAGE
+========================================================= */
+
+.product-detail-page {
+    width: 100%;
+    padding: 70px 20px 90px;
+    background: #FFFFFF;
+}
+
+.product-detail {
+    width: min(92%, 1100px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.detail-image {
+    width: 100%;
+    height: 540px;
+    background: #F8FCFA;
+    border: 1px solid #E4E8E4;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.large-placeholder {
+    color: #168B82;
+    font-size: 4rem;
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
+
+.detail-info {
+    padding-top: 8px;
+}
+
+.eyebrow {
+    margin: 0 0 10px;
+    color: #B9674B;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.detail-info h1 {
+    margin: 0;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1.05;
+}
+
+.detail-description {
+    margin: 18px 0 0;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.detail-price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.detail-price strong {
+    color: #168B82;
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.detail-price del {
+    color: #9AA7A2;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.82rem;
+}
+
+.discount {
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #F1F8F5;
+    color: #1D4D32;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PRODUCT META
+========================================================= */
+
+.product-meta {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 18px;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+}
+
+.product-meta strong {
+    color: #1D4D32;
+}
+
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+.in-stock {
+    margin: 14px 0 0;
+    color: #1D4D32;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.out-stock {
+    margin: 14px 0 0;
+    color: #B9674B;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.product-messages {
+    margin-top: 18px;
+}
+
+.product-message {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 13px;
+    border-radius: 9px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.5;
+}
+
+.product-message.success {
+    background: #F1F8F5;
+    border: 1px solid #D9EAE1;
+    color: #1D4D32;
+}
+
+.product-message.error,
+.product-message.warning {
+    background: #FFF7F4;
+    border: 1px solid #F0D8D0;
+    color: #B9674B;
+}
+
+.message-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BUY SECTION
+========================================================= */
+
+.product-buy-section {
+    margin-top: 28px;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.quantity-label {
+    color: #1D4D32;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid #DCE4DF;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+.quantity-control button {
+    width: 38px;
+    height: 36px;
+    border: 0;
+    background: #F8FCFA;
+    color: #1D4D32;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.quantity-control button:hover {
+    background: #EAF5F0;
+}
+
+.quantity-value {
+    min-width: 40px;
+    text-align: center;
+    color: #1D4D32;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.product-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.product-action-form {
+    margin: 0;
+}
+
+.product-add-btn,
+.product-buy-btn {
+    width: 100%;
+    min-height: 45px;
+    padding: 12px 15px;
+    border: 0;
+    border-radius: 999px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.product-add-btn {
+    background: #1D4D32;
+    color: #FFFFFF;
+}
+
+.product-add-btn:hover {
+    background: #168B82;
+    transform: translateY(-1px);
+}
+
+.product-buy-btn {
+    background: #B9674B;
+    color: #FFFFFF;
+}
+
+.product-buy-btn:hover {
+    background: #1D4D32;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.wishlist-action {
+    margin-top: 12px;
+}
+
+.wishlist-btn {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 15px;
+    border: 1px solid #D9E1DD;
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: #1D4D32;
+    text-decoration: none;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.wishlist-btn:hover {
+    background: #F1F8F5;
+    border-color: #168B82;
+    color: #168B82;
+    transform: translateY(-1px);
+}
+
+.wishlist-heart {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   LOGIN MESSAGE
+========================================================= */
+
+.wishlist-login-note {
+    margin-top: 11px;
+    text-align: center;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.62rem;
+}
+
+.wishlist-login-note a {
+    color: #168B82;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.wishlist-login-note a:hover {
+    color: #B9674B;
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
+
+.product-information {
+    width: min(92%, 1100px);
+    margin: 70px auto 0;
+    padding-top: 35px;
+    border-top: 1px solid #E4E8E4;
+}
+
+.product-information > div {
+    margin-bottom: 30px;
+}
+
+.product-information h2 {
+    margin: 0 0 10px;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.product-information p {
+    max-width: 900px;
+    margin: 0;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   REVIEWS
+========================================================= */
+
+.reviews {
+    width: min(92%, 1100px);
+    margin: 55px auto 0;
+    padding-top: 35px;
+    border-top: 1px solid #E4E8E4;
+}
+
+.reviews > h2 {
+    margin: 0 0 25px;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+}
+
+.review-card {
+    margin-bottom: 14px;
+    padding: 18px 20px;
+    background: #FFFFFF;
+    border: 1px solid #E4E8E4;
+    border-radius: 12px;
+}
+
+.review-card strong {
+    color: #1D4D32;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.78rem;
+}
+
+.review-rating {
+    margin-top: 6px;
+    color: #B9674B;
+    font-size: 0.82rem;
+    letter-spacing: 2px;
+}
+
+.review-card p {
+    margin: 9px 0 0;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.76rem;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   REVIEW FORM
+   ========================================================= */
+
+.review-form-box {
+    margin-top: 35px;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.review-form-box h3 {
+    margin: 0 0 22px;
+    color: #1D4D32;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.review-rating,
+.review-comment {
+    margin-bottom: 18px;
+}
+
+.review-rating label,
+.review-comment label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1D4D32;
+    font-weight: 600;
+}
+
+.review-rating select,
+.review-comment textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.review-rating select:focus,
+.review-comment textarea:focus {
+    outline: none;
+    border-color: #168B82;
+    box-shadow: 0 0 0 3px rgba(22, 139, 130, 0.10);
+}
+
+.review-comment textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.review-submit-btn {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    background: #1D4D32;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.review-submit-btn:hover {
+    background: #168B82;
+}
+
+.review-note {
+    margin: 15px 0 0;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.review-login-box {
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+}
+
+.review-login-box p {
+    margin: 0;
+    color: #666;
+}
+
+.review-login-box a {
+    color: #1D4D32;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.review-login-box a:hover {
+    color: #168B82;
+}
+
+/* =========================================================
+   EMPTY REVIEWS
+========================================================= */
+
+.reviews-empty {
+    padding: 35px 20px;
+    text-align: center;
+    background: #F8FCFA;
+    border: 1px solid #E4E8E4;
+    border-radius: 14px;
+}
+
+.review-empty-icon {
+    color: #B9674B;
+    font-size: 1.5rem;
+}
+
+.reviews-empty h3 {
+    margin: 10px 0 6px;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.4rem;
+}
+
+.reviews-empty p {
+    margin: 0;
+    color: #667572;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .product-detail {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .detail-image {
+        height: 500px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .product-detail-page {
+        padding: 50px 15px 70px;
+    }
+
+    .product-detail,
+    .product-information,
+    .reviews {
+        width: 100%;
+    }
+
+    .detail-image {
+        height: 390px;
+        border-radius: 14px;
+    }
+
+    .product-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .product-information {
+        margin-top: 50px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .detail-image {
+        height: 330px;
+    }
+
+    .product-quantity {
+        justify-content: space-between;
+    }
+
+}
+
+</style>
+
+
+<section class="product-detail-page">
+
+    <div class="product-detail">
+
+
+        <!-- =====================================================
+             PRODUCT IMAGE
+        ====================================================== -->
+
+        <div class="detail-image">
+
+            {% if product.image %}
+
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                >
+
+            {% else %}
+
+                <div class="large-placeholder">
+                    🌿
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =====================================================
+             PRODUCT INFORMATION
+        ====================================================== -->
+
+        <div class="detail-info">
+
+
+            <!-- CATEGORY -->
+
+            <p class="eyebrow">
+                {{ product.category.name }}
+            </p>
+
+
+            <!-- PRODUCT NAME -->
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+
+            <!-- SHORT DESCRIPTION -->
+
+            {% if product.short_description %}
+
+                <p class="detail-description">
+                    {{ product.short_description }}
+                </p>
+
+            {% else %}
+
+                <p class="detail-description">
+                    {{ product.description }}
+                </p>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 PRICE
+            ================================================== -->
+
+            <div class="detail-price">
+
+                <strong>
+                    ₹{{ product.selling_price|floatformat:2 }}
+                </strong>
+
+                {% if product.mrp > product.selling_price %}
+
+                    <del>
+                        ₹{{ product.mrp|floatformat:2 }}
+                    </del>
+
+                    <span class="discount">
+                        {{ product.discount_percentage }}% OFF
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =================================================
+                 NET QUANTITY
+            ================================================== -->
+
+            {% if product.net_quantity %}
+
+                <div class="product-meta">
+
+                    <strong>
+                        Net Quantity:
+                    </strong>
+
+                    <span>
+                        {{ product.net_quantity }}
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 STOCK STATUS
+            ================================================== -->
+
+            {% if product.stock > 0 %}
+
+                <p class="in-stock">
+                    ✓ In Stock
+                </p>
+
+            {% else %}
+
+                <p class="out-stock">
+                    Currently Out of Stock
+                </p>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 DJANGO MESSAGES
+            ================================================== -->
+
+            {% if messages %}
+
+                <div class="product-messages">
+
+                    {% for message in messages %}
+
+                        <div class="product-message {{ message.tags }}">
+
+                            {% if message.tags == "success" %}
+
+                                <span class="message-icon">
+                                    ✓
+                                </span>
+
+                            {% elif message.tags == "error" %}
+
+                                <span class="message-icon">
+                                    !
+                                </span>
+
+                            {% elif message.tags == "warning" %}
+
+                                <span class="message-icon">
+                                    !
+                                </span>
+
+                            {% endif %}
+
+                            <span class="message-text">
+                                {{ message }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 QUANTITY + ACTION BUTTONS
+            ================================================== -->
+
+            {% if product.stock > 0 %}
+
+                <div class="product-buy-section">
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="product-quantity">
+
+                        <span class="quantity-label">
+                            Quantity
+                        </span>
+
+                        <div class="quantity-control">
+
+                            <button
+                                type="button"
+                                class="quantity-minus"
+                                aria-label="Decrease quantity"
+                            >
+                                −
+                            </button>
+
+                            <span
+                                id="product-quantity"
+                                class="quantity-value"
+                            >
+                                1
+                            </span>
+
+                            <button
+                                type="button"
+                                class="quantity-plus"
+                                aria-label="Increase quantity"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACTION BUTTONS
+                    ================================================== -->
+
+                    <div class="product-actions">
+
+
+                        <!-- ADD TO CART -->
+
+                        <form
+                            method="POST"
+                            action="{% url 'add_to_cart' product.id %}"
+                            class="product-action-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="quantity"
+                                id="cart-quantity-input"
+                                value="1"
+                            >
+
+                            <button
+                                type="submit"
+                                class="product-add-btn"
+                            >
+                                ADD TO CART
+                            </button>
+
+                        </form>
+
+
+                        <!-- BUY NOW -->
+
+                        <form
+                            method="POST"
+                            action="{% url 'buy_now' product.id %}"
+                            class="product-action-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <input
+                                type="hidden"
+                                name="quantity"
+                                id="buy-now-quantity-input"
+                                value="1"
+                            >
+
+                            <button
+                                type="submit"
+                                class="product-buy-btn"
+                            >
+                                BUY NOW
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         WISHLIST
+                    ================================================== -->
+
+                    {% if user.is_authenticated %}
+
+                        <div class="wishlist-action">
+
+                            <a
+                                href="{% url 'add_to_wishlist' product.id %}"
+                                class="wishlist-btn"
+                            >
+
+                                <span class="wishlist-heart">
+                                    ♡
+                                </span>
+
+                                ADD TO WISHLIST
+
+                            </a>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="wishlist-login-note">
+
+                            Please
+                            <a href="{% url 'login' %}?next={{ request.path }}">
+                                login
+                            </a>
+                            to add this product to your wishlist.
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% else %}
+
+                <!-- OUT OF STOCK -->
+
+                {% if user.is_authenticated %}
+
+                    <div class="wishlist-action">
+
+                        <a
+                            href="{% url 'add_to_wishlist' product.id %}"
+                            class="wishlist-btn"
+                        >
+
+                            <span class="wishlist-heart">
+                                ♡
+                            </span>
+
+                            ADD TO WISHLIST
+
+                        </a>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="wishlist-login-note">
+
+                        Please
+                        <a href="{% url 'login' %}?next={{ request.path }}">
+                            login
+                        </a>
+                        to add this product to your wishlist.
+
+                    </div>
+
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         PRODUCT INFORMATION
+    ========================================================== -->
+
+    <section class="product-information">
+
+
+        <!-- PRODUCT DESCRIPTION -->
+
+        {% if product.description %}
+
+            <div>
+
+                <h2>
+                    Product Description
+                </h2>
+
+                <p>
+                    {{ product.description|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- INGREDIENTS -->
+
+        {% if product.ingredients %}
+
+            <div>
+
+                <h2>
+                    Ingredients
+                </h2>
+
+                <p>
+                    {{ product.ingredients|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- DIRECTIONS -->
+
+        {% if product.directions %}
+
+            <div>
+
+                <h2>
+                    Directions
+                </h2>
+
+                <p>
+                    {{ product.directions|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- PRECAUTIONS -->
+
+        {% if product.precautions %}
+
+            <div>
+
+                <h2>
+                    Precautions
+                </h2>
+
+                <p>
+                    {{ product.precautions|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- STORAGE -->
+
+        {% if product.storage %}
+
+            <div>
+
+                <h2>
+                    Storage
+                </h2>
+
+                <p>
+                    {{ product.storage|linebreaksbr }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </section>
+
+
+    <!-- =========================================================
+         CUSTOMER REVIEWS
+    ========================================================== -->
+
+    <section class="reviews">
+
+        <h2>
+            Customer Reviews
+        </h2>
+
+
+        {% if reviews %}
+
+            {% for review in reviews %}
+
+                <div class="review-card">
+
+
+                    <!-- CUSTOMER NAME -->
+
+                    <strong>
+                        {{ review.user.get_full_name|default:review.user.username }}
+                    </strong>
+
+
+                    <!-- STAR RATING -->
+
+                    <div class="review-rating">
+
+                        {% for i in "12345" %}
+
+                            {% if forloop.counter <= review.rating %}
+
+                                ★
+
+                            {% else %}
+
+                                ☆
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- REVIEW -->
+
+                    <p>
+                        {{ review.comment }}
+                    </p>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- NO REVIEWS -->
+
+            <div class="reviews-empty">
+
+                <div class="review-empty-icon">
+                    ☆
+                </div>
+
+                <h3>
+                    No reviews yet
+                </h3>
+
+                <p>
+                    Be the first customer to share your experience.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+        
+        {% if not user.is_authenticated %}
+
+<div class="review-login-box">
+    <p>
+        Please
+        <a href="{% url 'login' %}?next={{ request.path }}">login</a>
+        to write a review.
+    </p>
+</div>
+
+{% elif already_reviewed %}
+
+<div class="review-login-box">
+    <p>
+        You have already submitted a review for this product.
+    </p>
+</div>
+
+{% elif can_review %}
+
+<div class="review-form-box">
+
+    <h3>Write a Review</h3>
+
+    <form method="POST" action="{% url 'submit_review' product.id %}">
+        {% csrf_token %}
+
+        <div class="review-rating">
+            <label>Your Rating</label>
+
+            <select name="rating" required>
+                <option value="">Select Rating</option>
+                <option value="5">★★★★★ - Excellent</option>
+                <option value="4">★★★★☆ - Very Good</option>
+                <option value="3">★★★☆☆ - Good</option>
+                <option value="2">★★☆☆☆ - Fair</option>
+                <option value="1">★☆☆☆☆ - Poor</option>
+            </select>
+        </div>
+
+        <div class="review-comment">
+            <label>Your Review</label>
+
+            <textarea
+                name="comment"
+                rows="5"
+                placeholder="Share your experience with this product..."
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit" class="review-submit-btn">
+            Submit Review
+        </button>
+    </form>
+
+    <p class="review-note">
+        Your review will appear after admin approval.
+    </p>
+
+</div>
+
+{% else %}
+
+<div class="review-login-box">
+    <p>
+        You can write a review after this product has been delivered to you.
+    </p>
+</div>
+
+{% endif %}
+    </section>
+
+</section>
+
+
+<!-- =============================================================
+     PRODUCT QUANTITY JAVASCRIPT
+============================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* =========================================================
+       GET ELEMENTS
+    ========================================================== */
+
+    const quantityValue =
+        document.getElementById("product-quantity");
+
+    const minusButton =
+        document.querySelector(".quantity-minus");
+
+    const plusButton =
+        document.querySelector(".quantity-plus");
+
+    const cartQuantityInput =
+        document.getElementById("cart-quantity-input");
+
+    const buyNowQuantityInput =
+        document.getElementById("buy-now-quantity-input");
+
+
+    /* =========================================================
+       CHECK ELEMENTS
+    ========================================================== */
+
+    if (
+        !quantityValue ||
+        !minusButton ||
+        !plusButton ||
+        !cartQuantityInput ||
+        !buyNowQuantityInput
+    ) {
+        return;
+    }
+
+
+    /* =========================================================
+       INITIAL QUANTITY
+    ========================================================== */
+
+    let quantity = 1;
+
+
+    /* =========================================================
+       MAXIMUM STOCK
+    ========================================================== */
+
+    const maxStock = {{ product.stock }};
+
+
+    /* =========================================================
+       UPDATE QUANTITY
+    ========================================================== */
+
+    function updateQuantity() {
+
+        quantityValue.textContent = quantity;
+
+        cartQuantityInput.value = quantity;
+
+        buyNowQuantityInput.value = quantity;
+
+    }
+
+
+    /* =========================================================
+       MINUS BUTTON
+    ========================================================== */
+
+    minusButton.addEventListener("click", function () {
+
+        if (quantity > 1) {
+
+            quantity--;
+
+            updateQuantity();
+
+        }
+
+    });
+
+
+    /* =========================================================
+       PLUS BUTTON
+    ========================================================== */
+
+    plusButton.addEventListener("click", function () {
+
+        if (quantity < maxStock) {
+
+            quantity++;
+
+            updateQuantity();
+
+        }
+
+    });
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================== */
+
+    updateQuantity();
+
+});
+
+</script>
+
+{% endblock %}

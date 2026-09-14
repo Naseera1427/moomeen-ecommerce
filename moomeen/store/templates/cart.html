@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shopping Cart | MOOMEEN PRODUCTS
+{% endblock %}
+
+{% block content %}
+
+<section class="cart-page">
+
+    <div class="container">
+
+        <!-- =====================================================
+             CART HEADER
+        ====================================================== -->
+
+        <p class="eyebrow">
+            YOUR SHOPPING BAG
+        </p>
+
+        <h1>
+            Shopping Cart
+        </h1>
+
+
+        {% if cart_items %}
+
+        <!-- =====================================================
+             CART LAYOUT
+        ====================================================== -->
+
+        <div class="cart-layout">
+
+
+            <!-- =================================================
+                 CART ITEMS
+            ================================================== -->
+
+            <div class="cart-items">
+
+                {% for item in cart_items %}
+
+                <article class="cart-item">
+
+
+                    <!-- =========================================
+                         PRODUCT INFORMATION
+                    ========================================== -->
+
+                    <div class="cart-product">
+
+                        {% if item.product.image %}
+
+                        <img
+                            src="{{ item.product.image.url }}"
+                            alt="{{ item.product.name }}"
+                            loading="lazy"
+                        >
+
+                        {% else %}
+
+                        <div
+                            class="cart-placeholder"
+                            aria-label="Product image unavailable"
+                        >
+                            MP
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="cart-product-info">
+
+                            <h3>
+                                {{ item.product.name }}
+                            </h3>
+
+                            <p class="cart-price">
+                                ₹{{ item.product.selling_price|floatformat:2 }}
+                            </p>
+
+
+                            {% if item.product.net_quantity %}
+
+                            <small class="cart-quantity-info">
+                                {{ item.product.net_quantity }}
+                            </small>
+
+                            {% endif %}
+
+
+                            {% if item.product.stock > 0 %}
+
+                            <small class="cart-stock">
+                                {{ item.product.stock }} available
+                            </small>
+
+                            {% else %}
+
+                            <small class="cart-stock out-of-stock-text">
+                                Out of stock
+                            </small>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         QUANTITY
+                    ========================================== -->
+
+                    <div class="cart-quantity">
+
+                        <span class="quantity-label">
+                            Quantity
+                        </span>
+
+
+                        <form
+                            method="POST"
+                            action="{% url 'update_cart_quantity' item.id %}"
+                            class="quantity-box"
+                        >
+
+                            {% csrf_token %}
+
+
+                            <!-- DECREASE -->
+
+                            <button
+                                type="submit"
+                                name="quantity"
+                                value="{{ item.quantity|add:'-1' }}"
+                                aria-label="Decrease quantity"
+                                {% if item.quantity <= 1 %}disabled{% endif %}
+                            >
+                                −
+                            </button>
+
+
+                            <!-- CURRENT QUANTITY -->
+
+                            <span class="quantity-number">
+                                {{ item.quantity }}
+                            </span>
+
+
+                            <!-- INCREASE -->
+
+                            <button
+                                type="submit"
+                                name="quantity"
+                                value="{{ item.quantity|add:'1' }}"
+                                aria-label="Increase quantity"
+                                {% if item.quantity >= item.product.stock %}disabled{% endif %}
+                            >
+                                +
+                            </button>
+
+                        </form>
+
+
+                        {% if item.quantity >= item.product.stock and item.product.stock > 0 %}
+
+                        <small class="stock-limit">
+                            Maximum available
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- =========================================
+                         ITEM TOTAL
+                    ========================================== -->
+
+                    <div class="cart-item-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ₹{{ item.total_price|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         REMOVE
+                    ========================================== -->
+
+                    <div class="cart-remove">
+
+                        <a
+                            href="{% url 'remove_from_cart' item.id %}"
+                            aria-label="Remove {{ item.product.name }} from cart"
+                        >
+                            Remove
+                        </a>
+
+                    </div>
+
+                </article>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- =================================================
+                 CART SUMMARY
+            ================================================== -->
+
+            <aside class="cart-summary">
+
+                <h2>
+                    Cart Summary
+                </h2>
+
+
+                <!-- SUBTOTAL -->
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ₹{{ subtotal|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <!-- SHIPPING -->
+
+                <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+                    <span class="shipping-note">
+                        Calculated at checkout
+                    </span>
+
+                </div>
+
+
+                <!-- DIVIDER -->
+
+                <div class="summary-divider"></div>
+
+
+                <!-- TOTAL -->
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹{{ subtotal|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <!-- =============================================
+                     CHECKOUT
+                ============================================== -->
+
+                <a
+                    href="{% url 'checkout' %}"
+                    class="checkout-btn"
+                    aria-label="Proceed to checkout"
+                >
+                    Proceed to Checkout
+                </a>
+
+
+                <!-- =============================================
+                     CONTINUE SHOPPING
+                ============================================== -->
+
+                <a
+                    href="{% url 'products' %}"
+                    class="continue-shopping"
+                >
+                    ← Continue Shopping
+                </a>
+
+            </aside>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- =====================================================
+             EMPTY CART
+        ====================================================== -->
+
+        <div class="empty-cart">
+
+            <div
+                class="empty-cart-icon"
+                aria-hidden="true"
+            >
+                🛒
+            </div>
+
+
+            <h2>
+                Your Cart is Empty
+            </h2>
+
+
+            <p>
+                You haven't added any products to your cart yet.
+            </p>
+
+
+            <a
+                href="{% url 'products' %}"
+                class="primary-btn"
+            >
+                Start Shopping
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
