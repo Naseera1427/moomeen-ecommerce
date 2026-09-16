@@ -4,7 +4,11 @@ from functools import wraps
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
-from django.db.models import Sum, Count
+from django.db import transaction
+from django.db.models import Q, Sum, Count
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_POST
+from PIL import Image, UnidentifiedImageError
 from .forms import CheckoutAddressForm, UserLoginForm, RegisterForm
 
 from .models import (
@@ -18,6 +22,22 @@ from .models import (
     OrderItem,
     WishlistItem,
 )
+
+
+def validate_product_image(uploaded_image):
+    if not uploaded_image:
+        return
+
+    if uploaded_image.size > 5 * 1024 * 1024:
+        raise ValueError("Product images must be 5 MB or smaller.")
+
+    try:
+        with Image.open(uploaded_image) as image:
+            image.verify()
+    except (UnidentifiedImageError, OSError) as exc:
+        raise ValueError("Please upload a valid image file.") from exc
+    finally:
+        uploaded_image.seek(0)
 def admin_required(view_func):
     @wraps(view_func)
     @login_required
@@ -74,6 +94,8 @@ def register(request):
 def user_login(request):
 
     if request.user.is_authenticated:
+        if request.user.is_staff:
+            return redirect("admin_dashboard")
         return redirect("home")
 
     if request.method == "POST":
@@ -89,9 +111,13 @@ def user_login(request):
 
             login(request, user)
 
-            next_url = request.GET.get("next")
+            next_url = request.POST.get("next") or request.GET.get("next")
 
-            if next_url:
+            if next_url and url_has_allowed_host_and_scheme(
+                next_url,
+                allowed_hosts={request.get_host()},
+                require_https=request.is_secure(),
+            ):
                 return redirect(next_url)
 
             return redirect("home")
@@ -105,6 +131,7 @@ def user_login(request):
         "auth/login.html",
         {
             "form": form,
+            "next": request.GET.get("next", ""),
         }
     )
 
@@ -114,6 +141,7 @@ def user_login(request):
 # =========================================================
 
 @login_required
+@require_POST
 def user_logout(request):
 
     logout(request)
@@ -424,6 +452,7 @@ def submit_review(request, product_id):
 # =========================================================
 
 @login_required
+@require_POST
 def add_to_cart(request, product_id):
 
     product = get_object_or_404(
@@ -535,6 +564,7 @@ def add_to_cart(request, product_id):
 # =========================================================
 
 @login_required
+@require_POST
 def buy_now(request, product_id):
 
     product = get_object_or_404(
@@ -645,6 +675,7 @@ def cart(request):
 # =========================================================
 
 @login_required
+@require_POST
 def remove_from_cart(request, item_id):
 
     cart_item = get_object_or_404(
@@ -663,6 +694,7 @@ def remove_from_cart(request, item_id):
 # =========================================================
 
 @login_required
+@require_POST
 def update_cart_quantity(request, item_id):
 
     cart_item = get_object_or_404(
@@ -671,31 +703,16 @@ def update_cart_quantity(request, item_id):
         cart__user=request.user
     )
 
-    if request.method == "POST":
+    try:
+        quantity = int(request.POST.get("quantity", 1))
+    except (TypeError, ValueError):
+        return redirect("cart")
 
-        try:
-
-            quantity = int(
-                request.POST.get(
-                    "quantity",
-                    1
-                )
-            )
-
-        except (TypeError, ValueError):
-
-            return redirect("cart")
-
-        # Remove item when quantity becomes zero
-        if quantity <= 0:
-
-            cart_item.delete()
-
-        # Update only within available stock
-        elif quantity <= cart_item.product.stock:
-
-            cart_item.quantity = quantity
-            cart_item.save()
+    if quantity <= 0:
+        cart_item.delete()
+    elif quantity <= cart_item.product.stock:
+        cart_item.quantity = quantity
+        cart_item.save(update_fields=["quantity"])
 
     return redirect("cart")
 
@@ -730,6 +747,7 @@ def wishlist(request):
 # =========================================================
 
 @login_required
+@require_POST
 def add_to_wishlist(request, product_id):
 
     product = get_object_or_404(
@@ -757,12 +775,7 @@ def add_to_wishlist(request, product_id):
             f"{product.name} is already in your wishlist."
         )
 
-    return redirect(
-        request.META.get(
-            "HTTP_REFERER",
-            "products"
-        )
-    )
+    return redirect("products")
 
 
 # =========================================================
@@ -770,6 +783,7 @@ def add_to_wishlist(request, product_id):
 # =========================================================
 
 @login_required
+@require_POST
 def remove_from_wishlist(request, product_id):
 
     wishlist_item = WishlistItem.objects.filter(
@@ -788,12 +802,7 @@ def remove_from_wishlist(request, product_id):
             f"{product_name} removed from your wishlist."
         )
 
-    return redirect(
-        request.META.get(
-            "HTTP_REFERER",
-            "wishlist"
-        )
-    )
+    return redirect("wishlist")
 
 
 # =========================================================
@@ -801,6 +810,7 @@ def remove_from_wishlist(request, product_id):
 # =========================================================
 
 @login_required
+@transaction.atomic
 def checkout(request):
 
     # Get user's cart
@@ -810,7 +820,7 @@ def checkout(request):
 
     cart_items = cart.items.select_related(
         "product"
-    )
+    ).select_for_update()
 
     # -----------------------------------------------------
     # EMPTY CART CHECK
@@ -1109,13 +1119,10 @@ def contact(request):
 # ADMIN DASHBOARD
 # =========================================================
 
-@login_required
+@admin_required
 def admin_dashboard(request):
 
     # Only staff/admin users can access
-    if not request.user.is_staff:
-        return redirect("home")
-
     # -----------------------------------------------------
     # BASIC STATISTICS
     # -----------------------------------------------------
@@ -1195,11 +1202,8 @@ def admin_dashboard(request):
 # ADMIN PRODUCT MANAGEMENT
 # =====================================================
 
-@login_required
+@admin_required
 def admin_products(request):
-    if not request.user.is_staff:
-        return redirect("home")
-
     product_list = Product.objects.select_related(
         "category"
     ).order_by("-created_at")
@@ -1245,11 +1249,8 @@ def admin_products(request):
     )
 
 
-@login_required
+@admin_required
 def admin_product_add(request):
-    if not request.user.is_staff:
-        return redirect("home")
-
     categories = Category.objects.filter(
         is_active=True
     ).order_by("name")
@@ -1288,6 +1289,16 @@ def admin_product_add(request):
         stock = request.POST.get("stock", "").strip()
 
         image = request.FILES.get("image")
+
+        try:
+            validate_product_image(image)
+        except ValueError as error:
+            messages.error(request, str(error))
+            return render(
+                request,
+                "admin/product_form.html",
+                {"categories": categories, "form_type": "add"},
+            )
 
         is_active = request.POST.get("is_active") == "on"
 
@@ -1356,11 +1367,8 @@ def admin_product_add(request):
     )
 
 
-@login_required
+@admin_required
 def admin_product_edit(request, product_id):
-    if not request.user.is_staff:
-        return redirect("home")
-
     product = get_object_or_404(
         Product,
         id=product_id
@@ -1404,6 +1412,20 @@ def admin_product_edit(request, product_id):
         stock = request.POST.get("stock", "").strip()
 
         image = request.FILES.get("image")
+
+        try:
+            validate_product_image(image)
+        except ValueError as error:
+            messages.error(request, str(error))
+            return render(
+                request,
+                "admin/product_form.html",
+                {
+                    "product": product,
+                    "categories": categories,
+                    "form_type": "edit",
+                },
+            )
 
         is_active = request.POST.get("is_active") == "on"
 
@@ -1484,11 +1506,8 @@ def admin_product_edit(request, product_id):
 # ADMIN ORDER MANAGEMENT
 # =====================================================
 
-@login_required
+@admin_required
 def admin_orders(request):
-    if not request.user.is_staff:
-        return redirect("home")
-
     orders = Order.objects.select_related(
         "user"
     ).order_by("-created_at")
@@ -1522,10 +1541,8 @@ def admin_orders(request):
     )
 
 
-@login_required
+@admin_required
 def admin_order_detail(request, order_id):
-    if not request.user.is_staff:
-        return redirect("home")
     order = get_object_or_404(
     Order.objects.select_related(
         "user"
@@ -1585,11 +1602,8 @@ def admin_order_detail(request, order_id):
 # ADMIN CUSTOMER MANAGEMENT
 # =========================================================
 
-@login_required
+@admin_required
 def admin_customers(request):
-    if not request.user.is_staff:
-        return redirect("home")
-
     customers = User.objects.filter(
         is_staff=False
     ).order_by("-date_joined")
@@ -1637,11 +1651,8 @@ def admin_customers(request):
 # ADMIN CUSTOMER DETAIL
 # =========================================================
 
-@login_required
+@admin_required
 def admin_customer_detail(request, customer_id):
-    if not request.user.is_staff:
-        return redirect("home")
-
     customer = get_object_or_404(
         User,
         id=customer_id,
@@ -1709,11 +1720,8 @@ def admin_customer_detail(request, customer_id):
 # ACTIVATE / DEACTIVATE CUSTOMER
 # =========================================================
 
-@login_required
+@admin_required
 def admin_toggle_customer(request, customer_id):
-    if not request.user.is_staff:
-        return redirect("home")
-
     customer = get_object_or_404(
         User,
         id=customer_id,

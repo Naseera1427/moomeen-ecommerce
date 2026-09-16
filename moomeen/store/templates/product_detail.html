@@ -964,10 +964,9 @@
 
                         <div class="wishlist-action">
 
-                            <a
-                                href="{% url 'add_to_wishlist' product.id %}"
-                                class="wishlist-btn"
-                            >
+                            <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn">
 
                                 <span class="wishlist-heart">
                                     ♡
@@ -975,7 +974,8 @@
 
                                 ADD TO WISHLIST
 
-                            </a>
+                                </button>
+                            </form>
 
                         </div>
 
@@ -984,7 +984,7 @@
                         <div class="wishlist-login-note">
 
                             Please
-                            <a href="{% url 'login' %}?next={{ request.path }}">
+                            <a href="{% url 'login' %}?next={{ request.path|urlencode }}">
                                 login
                             </a>
                             to add this product to your wishlist.
@@ -1004,10 +1004,9 @@
 
                     <div class="wishlist-action">
 
-                        <a
-                            href="{% url 'add_to_wishlist' product.id %}"
-                            class="wishlist-btn"
-                        >
+                        <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="wishlist-btn">
 
                             <span class="wishlist-heart">
                                 ♡
@@ -1015,7 +1014,8 @@
 
                             ADD TO WISHLIST
 
-                        </a>
+                            </button>
+                        </form>
 
                     </div>
 
@@ -1024,7 +1024,7 @@
                     <div class="wishlist-login-note">
 
                         Please
-                        <a href="{% url 'login' %}?next={{ request.path }}">
+                        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">
                             login
                         </a>
                         to add this product to your wishlist.
@@ -1232,7 +1232,7 @@
 <div class="review-login-box">
     <p>
         Please
-        <a href="{% url 'login' %}?next={{ request.path }}">login</a>
+        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">login</a>
         to write a review.
     </p>
 </div>
@@ -1358,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", function () {
        MAXIMUM STOCK
     ========================================================== */
 
-    const maxStock = {{ product.stock }};
+    const maxStock = Number("{{ product.stock }}");
 
 
     /* =========================================================

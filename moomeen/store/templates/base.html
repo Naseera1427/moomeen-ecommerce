@@ -118,12 +118,12 @@
                     Wishlist
                 </a>
 
-                <a
-                    href="{% url 'logout' %}"
-                    class="nav-auth-link"
-                >
-                    Logout
-                </a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-auth-link">
+                        Logout
+                    </button>
+                </form>
 
             {% else %}
 

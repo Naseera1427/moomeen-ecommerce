@@ -47,6 +47,10 @@ Login | MOOMEEN PRODUCTS
 
                 {% csrf_token %}
 
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
+
                 <div class="auth-field">
 
                     <label for="{{ form.username.id_for_label }}">

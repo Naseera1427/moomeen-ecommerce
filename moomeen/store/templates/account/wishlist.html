@@ -452,14 +452,17 @@
 
                         <!-- REMOVE FROM WISHLIST -->
 
-                        <a
-                            href="{% url 'remove_from_wishlist' item.product.id %}"
-                            class="remove-wishlist"
-                            title="Remove from wishlist"
-                            aria-label="Remove {{ item.product.name }} from wishlist"
-                        >
-                            ×
-                        </a>
+                        <form method="post" action="{% url 'remove_from_wishlist' item.product.id %}">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                class="remove-wishlist"
+                                title="Remove from wishlist"
+                                aria-label="Remove {{ item.product.name }} from wishlist"
+                            >
+                                ×
+                            </button>
+                        </form>
 
 
                         <!-- PRODUCT IMAGE -->
