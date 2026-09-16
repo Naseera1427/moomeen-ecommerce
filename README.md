@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # MOOMEEN PRODUCTS
 
 ## Siddha & Natural Healthcare E-Commerce Website
@@ -81,7 +80,17 @@ Shipped
 Out for Delivery
    ↓
 Delivered
-=======
-# moomeen-ecommerce
-Siddha and natural healthcare e-commerce website built with Django and PostgreSQL.
->>>>>>> cd5723b53fd9c5f351818e60257c01a9f68cfa4c
+
+## Deployment
+
+Install dependencies, set the production environment variables, and run:
+
+```text
+python manage.py migrate
+python manage.py collectstatic --noinput
+gunicorn moomeen.wsgi:application
+```
+
+Required production variables include `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`,
+`DJANGO_CSRF_TRUSTED_ORIGINS`, `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`,
+`POSTGRES_HOST`, and `POSTGRES_PORT`. Keep `DJANGO_DEBUG` unset or set it to `false`.
