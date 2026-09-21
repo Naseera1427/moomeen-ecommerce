@@ -25,11 +25,15 @@ if not SECRET_KEY:
     else:
         raise RuntimeError("DJANGO_SECRET_KEY must be set when DJANGO_DEBUG is false")
 
+allowed_hosts_env = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
 ALLOWED_HOSTS = [
     host.strip()
-    for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+    for host in allowed_hosts_env.split(",")
     if host.strip()
 ]
+for domain in [".web.app", ".firebaseapp.com", ".run.app"]:
+    if domain not in ALLOWED_HOSTS and not any(h.endswith(domain) for h in ALLOWED_HOSTS):
+        ALLOWED_HOSTS.append(domain)
 
 
 # =========================================================
@@ -56,9 +60,8 @@ INSTALLED_APPS = [
 # =========================================================
 
 MIDDLEWARE = [
-
     "django.middleware.security.SecurityMiddleware",
-
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
 
     "django.middleware.common.CommonMiddleware",
@@ -119,24 +122,33 @@ ASGI_APPLICATION = "moomeen.asgi.application"
 
 # =========================================================
 # DATABASE
-# PostgreSQL
 # =========================================================
-if DEBUG:
+database_url = os.getenv("DATABASE_URL")
+
+if database_url:
+    try:
+        import dj_database_url
+        DATABASES = {
+            "default": dj_database_url.parse(database_url, conn_max_age=600)
+        }
+    except ImportError:
+        pass
+elif os.getenv("POSTGRES_DB"):
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ["POSTGRES_DB"],
+            "USER": os.getenv("POSTGRES_USER", "postgres"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
+            "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
         }
     }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ["POSTGRES_DB"],
-            "USER": os.environ["POSTGRES_USER"],
-            "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-            "HOST": os.environ["POSTGRES_HOST"],
-            "PORT": os.environ["POSTGRES_PORT"],
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 # =========================================================
@@ -192,11 +204,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "store" / "static",
 ]
 
-CSRF_TRUSTED_ORIGINS = [
+csrf_origins = [
     origin.strip()
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+for domain in ["https://moomeen-69cf9.web.app", "https://moomeen-69cf9.firebaseapp.com"]:
+    if domain not in csrf_origins:
+        csrf_origins.append(domain)
+CSRF_TRUSTED_ORIGINS = csrf_origins
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -209,12 +225,35 @@ if not DEBUG:
 
 
 # =========================================================
-# MEDIA FILES
+# MEDIA & STORAGES CONFIGURATION
 # =========================================================
 
-MEDIA_URL = "/media/"
+GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME")
 
-MEDIA_ROOT = BASE_DIR / "media"
+if GS_BUCKET_NAME:
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+            "OPTIONS": {
+                "bucket_name": GS_BUCKET_NAME,
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 
 # =========================================================
