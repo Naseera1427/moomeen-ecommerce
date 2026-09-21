@@ -20,10 +20,7 @@
     "rewrites": [
       {
         "source": "**",
-        "run": {
-          "serviceId": "moomeen-backend",
-          "region": "asia-south1"
-        }
+        "destination": "/index.html"
       }
     ]
   }
