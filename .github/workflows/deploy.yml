@@ -36,4 +36,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.GCP_CREDENTIALS }}'
           channelId: live
-          projectId: moomeen-69cf9
+          projectId: moomeenproducts

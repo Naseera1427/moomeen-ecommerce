@@ -31,8 +31,17 @@ ALLOWED_HOSTS = [
     for host in allowed_hosts_env.split(",")
     if host.strip()
 ]
-for domain in [".web.app", ".firebaseapp.com", ".run.app"]:
-    if domain not in ALLOWED_HOSTS and not any(h.endswith(domain) for h in ALLOWED_HOSTS):
+for domain in [
+    ".web.app",
+    ".firebaseapp.com",
+    ".run.app",
+    "moomeenproducts.com",
+    ".moomeenproducts.com",
+]:
+    if domain not in ALLOWED_HOSTS and not any(
+        h == domain or (h.startswith(".") and domain.endswith(h))
+        for h in ALLOWED_HOSTS
+    ):
         ALLOWED_HOSTS.append(domain)
 
 
@@ -209,7 +218,14 @@ csrf_origins = [
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
-for domain in ["https://moomeen-69cf9.web.app", "https://moomeen-69cf9.firebaseapp.com"]:
+for domain in [
+    "https://moomeenproducts.web.app",
+    "https://moomeenproducts.firebaseapp.com",
+    "https://moomeenproducts.com",
+    "https://www.moomeenproducts.com",
+    "https://moomeen-69cf9.web.app",
+    "https://moomeen-69cf9.firebaseapp.com",
+]:
     if domain not in csrf_origins:
         csrf_origins.append(domain)
 CSRF_TRUSTED_ORIGINS = csrf_origins

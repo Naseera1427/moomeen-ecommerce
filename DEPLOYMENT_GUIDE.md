@@ -1,5 +1,10 @@
 # MOOMEEN PRODUCTS - Firebase & Google Cloud Deployment Guide
-**Project ID:** `moomeen-69cf9`  
+**Project ID:** `moomeenproducts` (or `moomeen-69cf9`)  
+**Live Domains:**
+- `https://moomeenproducts.web.app` (Default Firebase Hosting)
+- `https://moomeenproducts.firebaseapp.com` (Default Firebase Hosting)
+- `https://moomeenproducts.com` (Custom Domain)
+
 **Architecture:** Google Cloud Run (Django Backend) + Firebase Hosting (CDN & Rewrites) + PostgreSQL + Firebase Storage
 
 ---
@@ -24,7 +29,7 @@ You have two simple options for PostgreSQL:
    ```
 
 ### Option B: Google Cloud SQL (PostgreSQL inside GCP)
-1. Go to the [Google Cloud Console - Cloud SQL](https://console.cloud.google.com/sql/instances?project=moomeen-69cf9).
+1. Go to the [Google Cloud Console - Cloud SQL](https://console.cloud.google.com/sql/instances?project=moomeenproducts).
 2. Click **Create Instance** &rarr; Select **PostgreSQL**.
 3. Set Instance ID to `moomeen-db` and set a root password.
 4. Choose the region `asia-south1` (Mumbai) or your preferred region.
@@ -33,10 +38,10 @@ You have two simple options for PostgreSQL:
 
 ## Step 2: Enable Firebase Storage (Media Files)
 
-1. Open the [Firebase Console](https://console.firebase.google.com/project/moomeen-69cf9/overview).
+1. Open the [Firebase Console](https://console.firebase.google.com/project/moomeenproducts/overview).
 2. In the left sidebar, click **Build** &rarr; **Storage** &rarr; **Get started**.
 3. Choose standard mode and select region `asia-south1` (or match your Cloud Run region).
-4. Note your bucket name (usually `moomeen-69cf9.firebasestorage.app` or `moomeen-69cf9.appspot.com`).
+4. Note your bucket name (usually `moomeenproducts.firebasestorage.app` or `moomeenproducts.appspot.com`).
 
 ---
 
@@ -44,7 +49,7 @@ You have two simple options for PostgreSQL:
 
 Since Docker and gcloud are not installed on your local Windows PC, use **Google Cloud Shell**. It is a free in-browser Linux terminal pre-loaded with `docker`, `gcloud`, `git`, and `firebase`.
 
-1. Open [Google Cloud Console](https://console.cloud.google.com/?project=moomeen-69cf9).
+1. Open [Google Cloud Console](https://console.cloud.google.com/?project=moomeenproducts).
 2. Click the **Activate Cloud Shell** icon (`>_`) in the top navigation bar.
 3. In Cloud Shell, clone your repository and navigate into it:
    ```bash
@@ -53,7 +58,7 @@ Since Docker and gcloud are not installed on your local Windows PC, use **Google
    ```
 4. Set your active project:
    ```bash
-   gcloud config set project moomeen-69cf9
+   gcloud config set project moomeenproducts
    ```
 5. Enable required Google Cloud APIs:
    ```bash
@@ -68,7 +73,7 @@ Since Docker and gcloud are not installed on your local Windows PC, use **Google
 
 ## Step 4: Configure Cloud Run Environment Variables
 
-1. Go to [Cloud Run in Google Cloud Console](https://console.cloud.google.com/run?project=moomeen-69cf9).
+1. Go to [Cloud Run in Google Cloud Console](https://console.cloud.google.com/run?project=moomeenproducts).
 2. Click on the service **`moomeen-backend`** &rarr; **Edit & Deploy New Revision**.
 3. Under the **Variables & Secrets** tab, add the following environment variables:
 
@@ -77,9 +82,9 @@ Since Docker and gcloud are not installed on your local Windows PC, use **Google
 | `DJANGO_DEBUG` | `false` | Disables debug mode in production |
 | `DJANGO_SECRET_KEY` | *(Generate a 50+ char random string)* | Production Django cryptographic key |
 | `DATABASE_URL` | `postgresql://user:pass@host:5432/moomeen` | PostgreSQL connection string |
-| `GS_BUCKET_NAME` | `moomeen-69cf9.firebasestorage.app` | Firebase Storage bucket for images |
-| `DJANGO_ALLOWED_HOSTS` | `moomeen-69cf9.web.app,moomeen-69cf9.firebaseapp.com` | Allowed hostnames |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://moomeen-69cf9.web.app,https://moomeen-69cf9.firebaseapp.com` | Trusted origins for forms |
+| `GS_BUCKET_NAME` | `moomeenproducts.firebasestorage.app` | Firebase Storage bucket for images |
+| `DJANGO_ALLOWED_HOSTS` | `moomeenproducts.com,www.moomeenproducts.com,moomeenproducts.web.app,moomeenproducts.firebaseapp.com` | Allowed hostnames |
+| `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://moomeenproducts.com,https://www.moomeenproducts.com,https://moomeenproducts.web.app,https://moomeenproducts.firebaseapp.com` | Trusted origins for forms |
 
 4. Click **Deploy**.
 
@@ -91,7 +96,7 @@ From Cloud Shell:
 ```bash
 # Run migrations using the deployed container image
 gcloud run jobs create moomeen-migrate \
-    --image gcr.io/moomeen-69cf9/moomeen-backend:latest \
+    --image gcr.io/moomeenproducts/moomeen-backend:latest \
     --region asia-south1 \
     --command python \
     --args manage.py,migrate \
@@ -107,10 +112,10 @@ gcloud run jobs execute moomeen-migrate --region asia-south1 --wait
 From Cloud Shell:
 ```bash
 # Deploy Firebase Hosting routing
-firebase deploy --only hosting --project moomeen-69cf9
+firebase deploy --only hosting --project moomeenproducts
 ```
 
 Once completed, your full Django e-commerce platform will be live at:
-- **`https://moomeen-69cf9.web.app`**
-- **`https://moomeen-69cf9.firebaseapp.com`**
-- (And any custom domain you connect under Firebase Hosting settings!)
+- **`https://moomeenproducts.com`** (Custom Domain)
+- **`https://moomeenproducts.web.app`** (Default Firebase Hosting)
+- **`https://moomeenproducts.firebaseapp.com`** (Default Firebase Hosting)
