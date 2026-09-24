@@ -1,11 +1,13 @@
 # MOOMEEN PRODUCTS - Firebase & Google Cloud Deployment Guide
-**Project ID:** `moomeenproducts` (or `moomeen-69cf9`)  
+**Project ID:** `moomeen-69cf9` (Hosting Site: `moomeenproducts`)  
 **Live Domains:**
-- `https://moomeenproducts.web.app` (Default Firebase Hosting)
-- `https://moomeenproducts.firebaseapp.com` (Default Firebase Hosting)
+- `https://moomeenproducts.web.app` (Firebase Hosting)
+- `https://moomeenproducts.firebaseapp.com` (Firebase Hosting)
 - `https://moomeenproducts.com` (Custom Domain)
 
-**Architecture:** Google Cloud Run (Django Backend) + Firebase Hosting (CDN & Rewrites) + PostgreSQL + Firebase Storage
+**Architecture:**
+- **Frontend:** `frontend/` (Static edge-cached CDN assets served by Firebase Hosting)
+- **Backend:** `backend/` (Full Django application running on Google Cloud Run + PostgreSQL + Cloud Storage)
 
 ---
 

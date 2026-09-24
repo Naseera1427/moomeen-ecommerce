@@ -1,0 +1,319 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        MOOMEEN PRODUCTS
+        {% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="MOOMEEN PRODUCTS - Natural and Siddha-inspired products."
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- =================================================
+             LEFT NAVIGATION
+        ================================================== -->
+
+        <nav class="nav-links nav-left">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'products' %}">
+                Products
+            </a>
+
+            <a href="{% url 'about' %}">
+                About
+            </a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             CENTER LOGO
+        ================================================== -->
+
+        <a
+            href="{% url 'home' %}"
+            class="brand"
+            aria-label="MOOMEEN PRODUCTS Home"
+        >
+
+            <img
+                src="{% static 'images/logo/moomeen-logo.jpg' %}"
+                alt="MOOMEEN PRODUCTS"
+                class="brand-logo"
+            >
+
+        </a>
+
+
+        <!-- =================================================
+             RIGHT ACTIONS
+        ================================================== -->
+
+        <div class="nav-actions">
+
+
+            <!-- =============================================
+                 LOGIN / USER
+            ============================================== -->
+
+            {% if user.is_authenticated %}
+
+                <span class="nav-user">
+                    Hi, {{ user.first_name|default:user.username }}
+                </span>
+
+                <a
+                    href="{% url 'my_orders' %}"
+                    class="nav-auth-link"
+                >
+                    My Orders
+                </a>
+
+                <a
+                    href="{% url 'wishlist' %}"
+                    class="nav-auth-link"
+                >
+                    Wishlist
+                </a>
+
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-auth-link">
+                        Logout
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    class="nav-auth-link"
+                >
+                    Login
+                </a>
+
+            {% endif %}
+
+
+            <!-- =============================================
+                 CART
+            ============================================== -->
+
+            <a
+                href="{% url 'cart' %}"
+                class="cart-link"
+            >
+                Cart
+                <span class="cart-symbol">🛒</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <div class="footer-brand">
+
+            <h3>
+                MOOMEEN PRODUCTS
+            </h3>
+
+            <p>
+                Natural care inspired by traditional wisdom.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK LINKS
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'products' %}">
+                Products
+            </a>
+
+            <a href="{% url 'about' %}">
+                About Us
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_orders' %}">
+                    My Orders
+                </a>
+
+                <a href="{% url 'wishlist' %}">
+                    Wishlist
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             CUSTOMER SUPPORT
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Customer Support
+            </h4>
+
+            <a href="{% url 'contact' %}">
+                Contact Us
+            </a>
+
+            <a href="#">
+                Shipping & Delivery
+            </a>
+
+            <a href="#">
+                Returns & Refunds
+            </a>
+
+            <a href="#">
+                FAQ
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             LEGAL
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Legal
+            </h4>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms & Conditions
+            </a>
+
+            <a href="#">
+                Disclaimer
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         COPYRIGHT
+    ====================================================== -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 MOOMEEN PRODUCTS · All Rights Reserved
+        </p>
+
+        <p>
+            Designed &amp; Developed by
+            <strong>Naseera Begam</strong>
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>

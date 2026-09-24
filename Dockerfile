@@ -19,11 +19,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY moomeen/requirements.txt ./requirements.txt
+COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the Django application source code
-COPY moomeen/ ./
+COPY backend/ ./
 
 # Run collectstatic during build (using build-time environment flags)
 ENV DJANGO_SECRET_KEY=build-time-insecure-secret-key-for-collectstatic \

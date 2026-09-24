@@ -7,33 +7,47 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  # =========================================================
+  # JOB 1: Build Django backend → push to GCR → deploy to Cloud Run
+  # =========================================================
+  deploy-backend:
+    name: Build & Deploy Backend (Cloud Run)
     runs-on: ubuntu-latest
+    if: "${{ secrets.GCP_CREDENTIALS != '' }}"
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
-        if: "${{ env.GCP_CREDENTIALS != '' }}"
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
-        if: "${{ env.GCP_CREDENTIALS != '' }}"
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Build and Deploy Container to Cloud Run
-        if: "${{ env.GCP_CREDENTIALS != '' }}"
         run: |
-          gcloud builds submit --config cloudbuild.yaml
+          gcloud builds submit --config cloudbuild.yaml --project moomeen-69cf9
+
+  # =========================================================
+  # JOB 2: Deploy frontend/ to Firebase Hosting (moomeenproducts)
+  # =========================================================
+  deploy-frontend:
+    name: Deploy Frontend (Firebase Hosting)
+    runs-on: ubuntu-latest
+    if: "${{ secrets.GCP_CREDENTIALS != '' }}"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Deploy to Firebase Hosting
-        if: "${{ env.FIREBASE_TOKEN != '' }}"
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.GCP_CREDENTIALS }}'
           channelId: live
-          projectId: moomeenproducts
+          projectId: moomeen-69cf9
+          target: moomeenproducts

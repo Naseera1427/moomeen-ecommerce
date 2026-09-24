@@ -1,10 +1,11 @@
 # =========================================================
 # Google Cloud Build Pipeline for MOOMEEN PRODUCTS
-# Automatically builds container & deploys to Cloud Run
+# Builds the Django backend container from backend/
+# and deploys it to Cloud Run (asia-south1)
 # =========================================================
 
 steps:
-  # 1. Build container image
+  # 1. Build the container image from the backend/ directory
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
@@ -12,15 +13,23 @@ steps:
       - 'gcr.io/$PROJECT_ID/moomeen-backend:$COMMIT_SHA'
       - '-t'
       - 'gcr.io/$PROJECT_ID/moomeen-backend:latest'
+      - '-f'
+      - 'Dockerfile'
       - '.'
 
-  # 2. Push image to Google Container Registry
+  # 2. Push commit-SHA tagged image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'gcr.io/$PROJECT_ID/moomeen-backend:$COMMIT_SHA'
 
-  # 3. Deploy container image to Cloud Run
+  # 3. Push latest tag as well
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/moomeen-backend:latest'
+
+  # 4. Deploy the commit-SHA image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -33,6 +42,8 @@ steps:
       - 'asia-south1'
       - '--platform'
       - 'managed'
+      - '--port'
+      - '8080'
       - '--allow-unauthenticated'
 
 images:

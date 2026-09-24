@@ -1,0 +1,1712 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout | MOOMEEN PRODUCTS
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   CHECKOUT PAGE
+   ========================================================= */
+
+.checkout-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 55px 0 80px;
+
+    background: #ffffff;
+
+    color: #24382e;
+    font-family: "DM Sans", Arial, sans-serif;
+}
+
+.checkout-page .container {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.checkout-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.checkout-header .eyebrow {
+    margin: 0 0 8px;
+
+    color: #168b82;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.checkout-header h1 {
+    margin: 0;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(3rem, 5vw, 4.4rem);
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+.checkout-intro {
+    max-width: 650px;
+    margin: 15px auto 0;
+
+    color: #69756f;
+
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.checkout-alert {
+    margin: 0 auto 25px;
+    padding: 13px 16px;
+
+    border-radius: 7px;
+
+    font-size: 0.75rem;
+}
+
+.checkout-alert.error {
+    color: #8a4938;
+    background: #fff6f2;
+    border: 1px solid #edd4ca;
+}
+
+.checkout-alert p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+.checkout-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.65fr) minmax(330px, 0.85fr);
+
+    gap: 28px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   LEFT CHECKOUT CARD
+   ========================================================= */
+
+.checkout-card {
+    padding: 31px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e7e2;
+    border-radius: 12px;
+
+    box-shadow: 0 9px 30px rgba(29, 77, 50, 0.06);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.checkout-card-header {
+    margin-bottom: 27px;
+}
+
+.checkout-step {
+    margin: 0 0 5px;
+
+    color: #168b82;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.checkout-card h2,
+.checkout-payment-section h2 {
+    margin: 0;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.85rem;
+    font-weight: 600;
+
+    line-height: 1.1;
+}
+
+.checkout-card-header > div > p:last-child,
+.payment-description {
+    margin: 7px 0 0;
+
+    color: #69756f;
+
+    font-size: 0.74rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SAVED ADDRESS
+   ========================================================= */
+
+.saved-address-note {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-bottom: 24px;
+    padding: 13px 15px;
+
+    background: #f5faf6;
+
+    border: 1px solid #dce9df;
+    border-radius: 7px;
+}
+
+.saved-address-icon {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    background: #1d4d32;
+
+    border-radius: 50%;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.saved-address-note strong {
+    display: block;
+
+    color: #1d4d32;
+
+    font-size: 0.72rem;
+}
+
+.saved-address-note p {
+    margin: 3px 0 0;
+
+    color: #69756f;
+
+    font-size: 0.67rem;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.checkout-form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 17px 18px;
+}
+
+.checkout-field {
+    min-width: 0;
+}
+
+.checkout-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.checkout-field label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #263b30;
+
+    font-size: 0.66rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.checkout-field input,
+.checkout-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 13px;
+
+    color: #24382e;
+    background: #ffffff;
+
+    border: 1px solid #d7e0da;
+    border-radius: 6px;
+
+    outline: none;
+
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.73rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.checkout-field input {
+    height: 44px;
+}
+
+.checkout-field textarea {
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+.checkout-field input:focus,
+.checkout-field textarea:focus {
+    border-color: #168b82;
+
+    box-shadow: 0 0 0 3px rgba(22, 139, 130, 0.08);
+}
+
+.checkout-field input::placeholder,
+.checkout-field textarea::placeholder {
+    color: #a0aaa4;
+}
+
+
+/* =========================================================
+   FIELD ERRORS
+   ========================================================= */
+
+.field-error {
+    margin-top: 5px;
+
+    color: #a14c39;
+
+    font-size: 0.62rem;
+}
+
+
+/* =========================================================
+   PAYMENT SECTION
+   ========================================================= */
+
+.checkout-payment-section {
+    margin-top: 31px;
+    padding-top: 27px;
+
+    border-top: 1px solid #e3e9e4;
+}
+
+.checkout-payment-section > .checkout-step {
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   PAYMENT OPTION
+   ========================================================= */
+
+.payment-option {
+    display: flex;
+    align-items: center;
+
+    margin-top: 18px;
+    padding: 17px 18px;
+
+    background: #f7fbf8;
+
+    border: 1px solid #b9d6c2;
+    border-radius: 8px;
+}
+
+.payment-radio {
+    position: relative;
+
+    width: 25px;
+    height: 25px;
+
+    margin-right: 12px;
+
+    flex-shrink: 0;
+}
+
+.payment-radio input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.payment-radio span {
+    width: 19px;
+    height: 19px;
+
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    box-sizing: border-box;
+
+    border: 2px solid #31875c;
+    border-radius: 50%;
+}
+
+.payment-radio input:checked + span::after {
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    top: 3px;
+    left: 3px;
+
+    background: #31875c;
+
+    border-radius: 50%;
+}
+
+.payment-option label {
+    cursor: pointer;
+
+    flex: 1;
+}
+
+.payment-option-content strong {
+    display: block;
+
+    color: #1d4d32;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.payment-option-content small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #69756f;
+
+    font-size: 0.66rem;
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+   ========================================================= */
+
+.checkout-security {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 17px;
+    padding: 14px 16px;
+
+    background: #f3f8f4;
+
+    border-radius: 7px;
+}
+
+.security-icon {
+    width: 25px;
+    height: 25px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    background: #1d4d32;
+
+    border-radius: 50%;
+
+    font-size: 0.65rem;
+}
+
+.checkout-security strong {
+    display: block;
+
+    color: #1d4d32;
+
+    font-size: 0.72rem;
+}
+
+.checkout-security p {
+    margin: 2px 0 0;
+
+    color: #69756f;
+
+    font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   PLACE ORDER
+   ========================================================= */
+
+.place-order-btn {
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 1px solid #1d4d32;
+    border-radius: 999px;
+
+    color: #ffffff;
+    background: #1d4d32;
+
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.place-order-btn:hover {
+    background: #168b82;
+
+    border-color: #168b82;
+
+    transform: translateY(-1px);
+}
+
+.place-order-btn:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.order-arrow {
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   RIGHT SIDEBAR
+   ========================================================= */
+
+.checkout-sidebar {
+    position: sticky;
+    top: 25px;
+}
+
+
+/* =========================================================
+   ORDER SUMMARY CARD
+   ========================================================= */
+
+.checkout-summary-card {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e0e7e2;
+    border-radius: 12px;
+
+    box-shadow: 0 9px 30px rgba(29, 77, 50, 0.06);
+}
+
+
+/* =========================================================
+   SUMMARY HEADER
+   ========================================================= */
+
+.summary-header {
+    margin-bottom: 20px;
+}
+
+.summary-header .checkout-step {
+    margin-bottom: 5px;
+}
+
+.summary-header h2 {
+    margin: 0;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.85rem;
+    font-weight: 600;
+
+    line-height: 1.1;
+}
+
+
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
+
+.checkout-products {
+    display: flex;
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+.checkout-product {
+    display: grid;
+
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+
+    gap: 12px;
+
+    align-items: center;
+
+    padding: 11px;
+
+    background: #f7faf8;
+
+    border-radius: 7px;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+   ========================================================= */
+
+.checkout-product-image {
+    position: relative;
+
+    width: 72px;
+    height: 72px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border-radius: 5px;
+}
+
+.checkout-product-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+.checkout-product-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   QUANTITY
+   ========================================================= */
+
+.checkout-product-quantity {
+    position: absolute;
+
+    top: -1px;
+    right: -1px;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    background: #1d4d32;
+
+    border-radius: 50%;
+
+    font-size: 0.58rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PRODUCT INFO
+   ========================================================= */
+
+.checkout-product-info {
+    min-width: 0;
+}
+
+.checkout-product-info h3 {
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #1d4d32;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.checkout-product-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #7b8780;
+
+    font-size: 0.62rem;
+}
+
+.checkout-product-info p {
+    margin: 7px 0 0;
+
+    color: #1d4d32;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PRODUCT TOTAL
+   ========================================================= */
+
+.checkout-product-total {
+    white-space: nowrap;
+}
+
+.checkout-product-total strong {
+    color: #1d4d32;
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   PRICE DETAILS
+   ========================================================= */
+
+.checkout-price-details {
+    margin-top: 20px;
+}
+
+.checkout-summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 7px 0;
+
+    color: #69756f;
+
+    font-size: 0.74rem;
+}
+
+.checkout-summary-row strong {
+    color: #384b41;
+
+    font-size: 0.74rem;
+}
+
+.free-shipping {
+    color: #31875c !important;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.checkout-summary-divider {
+    height: 1px;
+
+    margin: 12px 0;
+
+    background: #e1e7e2;
+}
+
+
+/* =========================================================
+   TOTAL
+   ========================================================= */
+
+.checkout-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 4px;
+    padding: 15px;
+
+    background: #f2f8f4;
+
+    border-radius: 7px;
+}
+
+.checkout-total-row span {
+    color: #1d4d32;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.checkout-total-row strong {
+    color: #1d4d32;
+
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   HELP CARD
+   ========================================================= */
+
+.checkout-help-card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 17px;
+    padding: 17px;
+
+    background: #f3f8f4;
+
+    border-radius: 8px;
+}
+
+.help-icon {
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    background: #1d4d32;
+
+    border-radius: 50%;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.checkout-help-card strong {
+    display: block;
+
+    color: #1d4d32;
+
+    font-size: 0.73rem;
+}
+
+.checkout-help-card p {
+    margin: 4px 0 0;
+
+    color: #69756f;
+
+    font-size: 0.65rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BACK TO CART
+   ========================================================= */
+
+.back-to-cart {
+    display: inline-block;
+
+    margin-top: 17px;
+
+    color: #1d4d32;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.back-to-cart:hover {
+    color: #168b82;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-sidebar {
+        position: static;
+    }
+
+    .checkout-summary-card {
+        max-width: none;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .checkout-page {
+        padding-top: 40px;
+    }
+
+    .checkout-header {
+        margin-bottom: 30px;
+    }
+
+    .checkout-card {
+        padding: 21px;
+    }
+
+    .checkout-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .checkout-field.full-width {
+        grid-column: auto;
+    }
+
+    .checkout-summary-card {
+        padding: 20px;
+    }
+
+    .checkout-product {
+        grid-template-columns: 62px minmax(0, 1fr);
+    }
+
+    .checkout-product-image {
+        width: 62px;
+        height: 62px;
+    }
+
+    .checkout-product-total {
+        grid-column: 2;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .checkout-header h1 {
+        font-size: 2.8rem;
+    }
+
+    .checkout-card h2,
+    .checkout-payment-section h2,
+    .summary-header h2 {
+        font-size: 1.65rem;
+    }
+
+}
+
+</style>
+
+
+<section class="checkout-page">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="checkout-header">
+
+            <p class="eyebrow">
+                SECURE CHECKOUT
+            </p>
+
+            <h1>
+                Checkout
+            </h1>
+
+            <p class="checkout-intro">
+                Complete your delivery details and review your order
+                before placing it.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM ERROR
+        ================================================== -->
+
+        {% if form.non_field_errors %}
+
+            <div class="checkout-alert error">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             CHECKOUT LAYOUT
+        ================================================== -->
+
+        <div class="checkout-layout">
+
+
+            <!-- =================================================
+                 LEFT SIDE
+            ================================================== -->
+
+            <div class="checkout-main">
+
+                <div class="checkout-card">
+
+
+                    <!-- =========================================
+                         DELIVERY ADDRESS
+                    ========================================== -->
+
+                    <div class="checkout-card-header">
+
+                        <div>
+
+                            <p class="checkout-step">
+                                STEP 01
+                            </p>
+
+                            <h2>
+                                Delivery Address
+                            </h2>
+
+                            <p>
+                                Enter the address where you want your
+                                order delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if default_address %}
+
+                        <div class="saved-address-note">
+
+                            <div class="saved-address-icon">
+                                ✓
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Your default address
+                                </strong>
+
+                                <p>
+                                    Your saved default address has been
+                                    pre-filled below.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =========================================
+                         CHECKOUT FORM
+                    ========================================== -->
+
+                    <form
+                        method="POST"
+                        action="{% url 'checkout' %}"
+                        id="checkout-form"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <div class="checkout-form-grid">
+
+
+                            <!-- FULL NAME -->
+
+                            <div class="checkout-field full-width">
+
+                                <label
+                                    for="{{ form.full_name.id_for_label }}"
+                                >
+                                    Full Name
+                                </label>
+
+                                {{ form.full_name }}
+
+                                {% if form.full_name.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.full_name.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="checkout-field">
+
+                                <label
+                                    for="{{ form.phone.id_for_label }}"
+                                >
+                                    Phone Number
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% if form.phone.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.phone.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PINCODE -->
+
+                            <div class="checkout-field">
+
+                                <label
+                                    for="{{ form.pincode.id_for_label }}"
+                                >
+                                    Pincode
+                                </label>
+
+                                {{ form.pincode }}
+
+                                {% if form.pincode.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.pincode.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="checkout-field full-width">
+
+                                <label
+                                    for="{{ form.address_line.id_for_label }}"
+                                >
+                                    Address
+                                </label>
+
+                                {{ form.address_line }}
+
+                                {% if form.address_line.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.address_line.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- CITY -->
+
+                            <div class="checkout-field">
+
+                                <label
+                                    for="{{ form.city.id_for_label }}"
+                                >
+                                    City
+                                </label>
+
+                                {{ form.city }}
+
+                                {% if form.city.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.city.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- STATE -->
+
+                            <div class="checkout-field">
+
+                                <label
+                                    for="{{ form.state.id_for_label }}"
+                                >
+                                    State
+                                </label>
+
+                                {{ form.state }}
+
+                                {% if form.state.errors %}
+
+                                    <div class="field-error">
+
+                                        {% for error in form.state.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =====================================
+                             PAYMENT
+                        ====================================== -->
+
+                        <div class="checkout-payment-section">
+
+                            <p class="checkout-step">
+                                STEP 02
+                            </p>
+
+                            <h2>
+                                Payment Method
+                            </h2>
+
+                            <p class="payment-description">
+                                Choose your preferred payment method.
+                            </p>
+
+
+                            <div class="payment-option selected">
+
+                                <div class="payment-radio">
+
+                                    <input
+                                        type="radio"
+                                        id="cod-payment"
+                                        name="payment_method"
+                                        value="COD"
+                                        checked
+                                    >
+
+                                    <span></span>
+
+                                </div>
+
+
+                                <label for="cod-payment">
+
+                                    <div class="payment-option-content">
+
+                                        <strong>
+                                            Cash on Delivery
+                                        </strong>
+
+                                        <small>
+                                            Pay securely when your order
+                                            is delivered.
+                                        </small>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =====================================
+                             SECURITY
+                        ====================================== -->
+
+                        <div class="checkout-security">
+
+                            <span class="security-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Secure Checkout
+                                </strong>
+
+                                <p>
+                                    Your personal information is
+                                    handled securely.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =====================================
+                             PLACE ORDER
+                        ====================================== -->
+
+                        <button
+                            type="submit"
+                            class="place-order-btn"
+                            id="place-order-button"
+                        >
+
+                            <span>
+                                Place Order
+                            </span>
+
+                            <span class="order-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT SIDE — ORDER SUMMARY
+            ================================================== -->
+
+            <aside class="checkout-sidebar">
+
+
+                <div class="checkout-summary-card">
+
+
+                    <!-- =========================================
+                         SUMMARY HEADER
+                    ========================================== -->
+
+                    <div class="summary-header">
+
+                        <p class="checkout-step">
+                            YOUR ORDER
+                        </p>
+
+                        <h2>
+                            Order Summary
+                        </h2>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         PRODUCTS
+                    ========================================== -->
+
+                    <div class="checkout-products">
+
+                        {% for item in cart_items %}
+
+                            <div class="checkout-product">
+
+
+                                <!-- PRODUCT IMAGE -->
+
+                                <div class="checkout-product-image">
+
+                                    {% if item.product.image %}
+
+                                        <img
+                                            src="{{ item.product.image.url }}"
+                                            alt="{{ item.product.name }}"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="checkout-product-placeholder">
+                                            MP
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <span class="checkout-product-quantity">
+                                        {{ item.quantity }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- PRODUCT INFO -->
+
+                                <div class="checkout-product-info">
+
+                                    <h3>
+                                        {{ item.product.name }}
+                                    </h3>
+
+                                    {% if item.product.net_quantity %}
+
+                                        <small>
+                                            {{ item.product.net_quantity }}
+                                        </small>
+
+                                    {% endif %}
+
+                                    <p>
+                                        ₹{{ item.product.selling_price|floatformat:2 }}
+                                    </p>
+
+                                </div>
+
+
+                                <!-- ITEM TOTAL -->
+
+                                <div class="checkout-product-total">
+
+                                    <strong>
+                                        ₹{{ item.total_price|floatformat:2 }}
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =========================================
+                         PRICE DETAILS
+                    ========================================== -->
+
+                    <div class="checkout-price-details">
+
+
+                        <div class="checkout-summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong>
+                                ₹{{ subtotal|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="checkout-summary-row">
+
+                            <span>
+                                Shipping
+                            </span>
+
+                            {% if shipping_charge == 0 %}
+
+                                <strong class="free-shipping">
+                                    FREE
+                                </strong>
+
+                            {% else %}
+
+                                <strong>
+                                    ₹{{ shipping_charge|floatformat:2 }}
+                                </strong>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="checkout-summary-divider"></div>
+
+
+                        <div class="checkout-total-row">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                ₹{{ total_amount|floatformat:2 }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =============================================
+                     NEED HELP
+                ============================================== -->
+
+                <div class="checkout-help-card">
+
+                    <div class="help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need Help?
+                        </strong>
+
+                        <p>
+                            Contact our support team if you need
+                            assistance with your order.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     BACK TO CART
+                ============================================== -->
+
+                <a
+                    href="{% url 'cart' %}"
+                    class="back-to-cart"
+                >
+                    ← Back to Cart
+                </a>
+
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const checkoutForm =
+        document.getElementById("checkout-form");
+
+    const placeOrderButton =
+        document.getElementById("place-order-button");
+
+
+    if (!checkoutForm || !placeOrderButton) {
+        return;
+    }
+
+
+    /*
+     * Prevent accidental double-clicks.
+     */
+
+    checkoutForm.addEventListener("submit", function () {
+
+        placeOrderButton.disabled = true;
+
+        const text =
+            placeOrderButton.querySelector("span:first-child");
+
+        if (text) {
+            text.textContent = "Processing...";
+        }
+
+    });
+
+
+    /*
+     * Phone number validation.
+     */
+
+    const phoneInput =
+        document.getElementById("id_phone");
+
+
+    if (phoneInput) {
+
+        phoneInput.addEventListener("input", function () {
+
+            this.value =
+                this.value.replace(/\D/g, "");
+
+            if (this.value.length > 10) {
+
+                this.value =
+                    this.value.slice(0, 10);
+
+            }
+
+        });
+
+    }
+
+
+    /*
+     * Pincode validation.
+     */
+
+    const pincodeInput =
+        document.getElementById("id_pincode");
+
+
+    if (pincodeInput) {
+
+        pincodeInput.addEventListener("input", function () {
+
+            this.value =
+                this.value.replace(/\D/g, "");
+
+            if (this.value.length > 6) {
+
+                this.value =
+                    this.value.slice(0, 6);
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

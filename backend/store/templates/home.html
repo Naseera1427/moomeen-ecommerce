@@ -1,0 +1,938 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+MOOMEEN PRODUCTS | Natural & Siddha Care
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     HERO SECTION
+========================================================= -->
+
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <p class="hero-eyebrow">
+            MOOMEEN PRODUCTS
+        </p>
+
+        <h1>
+            Natural Care,<br>
+            <span>Inspired by Siddha Wisdom</span>
+        </h1>
+
+        <p class="hero-description">
+            Thoughtfully made with natural ingredients for your
+            everyday digestive wellness.
+        </p>
+
+        <a href="{% url 'products' %}" class="primary-btn hero-btn">
+            Shop Now <span>→</span>
+        </a>
+
+        <div class="hero-highlights">
+
+            <div class="hero-highlight">
+                <span class="hero-icon">◌</span>
+                <span>Natural</span>
+            </div>
+
+            <div class="hero-highlight">
+                <span class="hero-icon">✦</span>
+                <span>Traditional</span>
+            </div>
+
+            <div class="hero-highlight">
+                <span class="hero-icon">♡</span>
+                <span>Thoughtfully Made</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO IMAGE -->
+
+    <div class="hero-visual">
+
+        <img
+            src="{% static 'images/hero/hero-image.jpg' %}"
+            alt="MOOMEEN PRODUCTS"
+            class="hero-image"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SHOP BY CATEGORY
+========================================================= -->
+
+<section class="home-section categories-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            EXPLORE OUR COLLECTION
+        </p>
+
+        <h2>
+            Shop by Category
+        </h2>
+
+        <p>
+            Explore our range of thoughtfully selected natural
+            and Siddha-inspired products.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        {% for category in categories %}
+
+        <a
+            href="{% url 'products' %}?category={{ category.slug }}"
+            class="category-card"
+        >
+
+            <div class="category-image">
+
+                {% if category.image %}
+
+                    <img
+                        src="{{ category.image.url }}"
+                        alt="{{ category.name }}"
+                    >
+
+                {% else %}
+
+                    <div class="category-placeholder">
+                        <span>🌿</span>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="category-content">
+
+                <h3>
+                    {{ category.name }}
+                </h3>
+
+                {% if category.description %}
+
+                    <p>
+                        {{ category.description|truncatewords:12 }}
+                    </p>
+
+                {% endif %}
+
+                <span class="text-link">
+                    Explore →
+                </span>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <div class="empty-message">
+            Categories will appear here.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURED PRODUCTS
+========================================================= -->
+
+<section class="home-section featured-section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <p class="eyebrow">
+                OUR COLLECTION
+            </p>
+
+            <h2>
+                Featured Products
+            </h2>
+
+        </div>
+
+        <a href="{% url 'products' %}" class="view-all-link">
+            View All Products →
+        </a>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for product in featured_products %}
+
+        <article class="home-product-card">
+
+            <a
+                href="{% url 'product_detail' product.slug %}"
+                class="product-image-link"
+            >
+
+                <div class="home-product-image">
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+                            MP
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if product.mrp > product.selling_price %}
+
+                        <span class="discount-badge">
+                            {{ product.discount_percentage }}% OFF
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </a>
+
+
+            <div class="home-product-info">
+
+                <span class="product-category">
+                    {{ product.category.name }}
+                </span>
+
+                <h3>
+                    <a href="{% url 'product_detail' product.slug %}">
+                        {{ product.name }}
+                    </a>
+                </h3>
+
+
+                {% if product.short_description %}
+
+                    <p>
+                        {{ product.short_description|truncatewords:12 }}
+                    </p>
+
+                {% endif %}
+
+
+                <div class="home-product-bottom">
+
+                    <div class="home-price">
+
+                        <strong>
+                            ₹{{ product.selling_price|floatformat:2 }}
+                        </strong>
+
+                        {% if product.mrp > product.selling_price %}
+
+                            <del>
+                                ₹{{ product.mrp|floatformat:2 }}
+                            </del>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                        class="product-arrow"
+                        aria-label="View {{ product.name }}"
+                    >
+                        →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+        {% empty %}
+
+        <div class="empty-message">
+            Products will appear here after adding them from the admin panel.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NATURAL INGREDIENTS
+========================================================= -->
+
+<section class="home-section ingredients-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            FROM NATURE
+        </p>
+
+        <h2>
+            Natural Ingredients
+        </h2>
+
+        <p>
+            Discover the natural ingredients behind our
+            traditional formulations.
+        </p>
+
+    </div>
+
+
+    <div class="ingredients-grid">
+
+
+        <!-- KADUKKAI -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/kadukkai.jpg' %}"
+                    alt="Kadukkai - Terminalia chebula"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Kadukkai</h3>
+
+                <span>
+                    Terminalia chebula
+                </span>
+
+                <p>
+                    A traditional herbal ingredient with a
+                    long-standing place in Indian herbal practices.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- NELLIKAI -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/nellikai.jpg' %}"
+                    alt="Nellikai - Emblica officinalis"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Nellikai</h3>
+
+                <span>
+                    Emblica officinalis
+                </span>
+
+                <p>
+                    Amla — a valued botanical ingredient
+                    traditionally used in herbal preparations.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- AAMANAKKU -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/aamanakku.jpg' %}"
+                    alt="Aamanakku - Ricinus communis"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Aamanakku</h3>
+
+                <span>
+                    Ricinus communis
+                </span>
+
+                <p>
+                    A traditional botanical ingredient with
+                    a long history in Indian traditional practices.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- THIPPILI -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/thippili.jpg' %}"
+                    alt="Thippili - Piper longum"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Thippili</h3>
+
+                <span>
+                    Piper longum
+                </span>
+
+                <p>
+                    A traditional spice and herbal ingredient
+                    used in Indian herbal preparations.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- MILAGU -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/milagu.jpg' %}"
+                    alt="Milagu - Piper nigrum"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Milagu</h3>
+
+                <span>
+                    Piper nigrum
+                </span>
+
+                <p>
+                    A familiar spice valued in traditional
+                    culinary and herbal practices.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- INJI -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/inji.jpg' %}"
+                    alt="Inji - Zingiber officinale"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Inji</h3>
+
+                <span>
+                    Zingiber officinale
+                </span>
+
+                <p>
+                    A well-known traditional ingredient commonly
+                    used in food and herbal preparations.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <!-- AAVARAM -->
+
+        <article class="ingredient-card">
+
+            <div class="ingredient-image">
+
+                <img
+                    src="{% static 'images/ingredients/aavaram.jpg' %}"
+                    alt="Aavaram - Cassia auriculata"
+                >
+
+            </div>
+
+            <div class="ingredient-content">
+
+                <h3>Aavaram</h3>
+
+                <span>
+                    Cassia auriculata
+                </span>
+
+                <p>
+                    A traditional South Indian botanical known
+                    for its use in herbal preparations.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WHY CHOOSE MOOMEEN
+========================================================= -->
+
+<section class="why-choose-section">
+
+    <div class="why-choose-image">
+
+        <img
+            src="{% static 'images/why-choose/why-choose.jpg' %}"
+            alt="Why Choose MOOMEEN PRODUCTS"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT MOOMEEN
+========================================================= -->
+
+<section class="home-section about-section" id="about">
+
+    <div class="about-layout">
+
+        <div class="about-label">
+
+            <p class="eyebrow">
+                ABOUT MOOMEEN PRODUCTS
+            </p>
+
+            <div class="about-year">
+                50+
+                <span>
+                    YEARS OF<br>
+                    TRADITION
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="about-content">
+
+            <h2>
+                50 Years of Tradition.<br>
+                <span>A New Journey in Siddha Wellness.</span>
+            </h2>
+
+            <p>
+                For over 50 years, we have been serving people through
+                the traditional wisdom of Siddha medicine, built on
+                trust, experience, and respect for nature.
+            </p>
+
+            <p>
+                Now, we are taking this legacy forward by obtaining
+                the appropriate Siddha medicine manufacturing licence
+                and developing our traditional formulations to meet
+                modern standards.
+            </p>
+
+            <p>
+                Our vision is to preserve our Siddha heritage while
+                making traditional wellness products more accessible
+                to today’s generation.
+            </p>
+
+
+            <div class="about-signature">
+
+                <strong>
+                    MOOMEEN PRODUCTS
+                </strong>
+
+                <span>
+                    50 Years of Tradition — A New Step Towards the Future.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMER REVIEWS
+========================================================= -->
+
+<section class="home-section reviews-section">
+
+    <div class="section-heading centered">
+
+        <p class="eyebrow">
+            CUSTOMER EXPERIENCES
+        </p>
+
+        <h2>
+            What Our Customers Say
+        </h2>
+
+        <p>
+            Genuine experiences from our customers.
+        </p>
+
+    </div>
+
+
+    {% if approved_reviews %}
+
+        <div class="reviews-grid">
+
+            {% for review in approved_reviews %}
+
+            <article class="home-review-card">
+
+                <div class="review-stars">
+
+                    {% for i in "12345" %}
+
+                        {% if forloop.counter <= review.rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                <p class="review-comment">
+                    “{{ review.comment }}”
+                </p>
+
+
+                <div class="review-author">
+
+                    <strong>
+                        {{ review.user.first_name|default:review.user.username }}
+                    </strong>
+
+                    <span>
+                        ✓ Verified Purchase
+                    </span>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="reviews-empty">
+
+            <div class="review-empty-icon">
+                ♡
+            </div>
+
+            <h3>
+                Your experience matters to us.
+            </h3>
+
+            <p>
+                Customer reviews will appear here once they are approved.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =========================================================
+     FAQ
+========================================================= -->
+
+<section class="home-section faq-section">
+
+    <div class="faq-layout">
+
+        <div class="faq-intro">
+
+            <p class="eyebrow">
+                NEED TO KNOW?
+            </p>
+
+            <h2>
+                Frequently Asked Questions
+            </h2>
+
+            <p>
+                Find quick answers to some of the questions
+                our customers ask most often.
+            </p>
+
+        </div>
+
+
+        <div class="faq-list">
+
+
+            <!-- FAQ 1 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question" type="button">
+
+                    <span>
+                        WHAT MAKES MOOMEEN PRODUCTS DIFFERENT?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Rooted in the principle of “Food as Medicine,”
+                        our formulations bring together familiar herbal
+                        ingredients, traditional wisdom and natural goodness.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 2 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question" type="button">
+
+                    <span>
+                        HOW QUICKLY WILL I SEE RESULTS?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Every product and individual is different.
+                        Consistent use as directed is the key to
+                        experiencing the intended benefits.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 3 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question" type="button">
+
+                    <span>
+                        ARE YOUR FORMULATIONS SAFE FOR DAILY USE?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Our products use carefully selected herbal
+                        and food-based ingredients. Follow the
+                        recommended usage given for each product.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 4 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question" type="button">
+
+                    <span>
+                        ARE MOOMEEN PRODUCTS INSPIRED BY SIDDHA TRADITIONS?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Yes. Our formulations are inspired by the
+                        rich heritage of Siddha knowledge and
+                        traditional herbal practices.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 5 -->
+
+            <div class="faq-item">
+
+                <button class="faq-question" type="button">
+
+                    <span>
+                        ARE YOUR PRODUCTS SUITABLE FOR EVERYONE?
+                    </span>
+
+                    <span class="faq-icon">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+                        Our range is designed for different age groups,
+                        depending on the individual product. Always follow
+                        the product-specific directions and precautions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="home-cta">
+
+    <div class="cta-symbol">
+        ◐
+    </div>
+
+    <p class="eyebrow">
+        MOOMEEN PRODUCTS
+    </p>
+
+    <h2>
+        Discover Natural Care,<br>
+        Inspired by Tradition.
+    </h2>
+
+    <p>
+        Explore our collection of natural and Siddha-inspired products.
+    </p>
+
+    <a href="{% url 'products' %}" class="primary-btn">
+        Explore Products →
+    </a>
+
+</section>
+
+
+{% endblock %}

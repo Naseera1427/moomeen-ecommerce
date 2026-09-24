@@ -8,10 +8,11 @@ __pycache__/
 *.pyd
 .Python
 env/
-moomeen/db.sqlite3
-moomeen/.env
-moomeen/.env.local
-moomeen/media/
+frontend/
+backend/db.sqlite3
+backend/.env
+backend/.env.local
+backend/media/
 .vscode/
 .idea/
 *.log

@@ -1,27 +1,216 @@
 {
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "headers": [
-      {
-        "source": "**/*.@(css|js|jpg|jpeg|png|svg|webp|ico|woff|woff2)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "max-age=31536000, immutable"
-          }
-        ]
-      }
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "site": "moomeenproducts",
+      "public": "frontend",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(css|js|jpg|jpeg|png|svg|webp|ico|woff|woff2)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
+        }
+      ],
+      "rewrites": [
+        {
+          "source": "/healthz",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/cart/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/buy-now/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/wishlist/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/checkout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/order-confirmation/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/my-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/about/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/contact/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/login/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/logout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/register/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-dashboard/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-customers/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-reviews/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/static/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/media/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "site": "moomeen-69cf9",
+      "public": "frontend",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(css|js|jpg|jpeg|png|svg|webp|ico|woff|woff2)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000, immutable"
+            }
+          ]
+        }
+      ],
+      "rewrites": [
+        {
+          "source": "/healthz",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/cart/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/buy-now/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/wishlist/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/checkout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/order-confirmation/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/my-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/about/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/contact/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/login/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/logout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/register/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-dashboard/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-customers/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/admin-reviews/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/static/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "/media/**",
+          "run": { "serviceId": "moomeen-backend", "region": "asia-south1" }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
 }

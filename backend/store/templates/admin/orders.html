@@ -1,0 +1,528 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Orders | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .admin-page {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .admin-header {
+        margin-bottom: 25px;
+    }
+
+    .admin-header h1 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 42px;
+        margin: 0 0 5px;
+    }
+
+    .admin-header p {
+        color: #666;
+        margin: 0;
+    }
+
+    .filter-card {
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 20px;
+    }
+
+    .filter-form {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .filter-input,
+    .filter-select {
+        padding: 11px 13px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #fff;
+    }
+
+    .filter-input {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .filter-select {
+        min-width: 180px;
+    }
+
+    .filter-btn {
+        border: none;
+        background: #1D4D32;
+        color: white;
+        padding: 11px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .clear-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 11px 18px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        color: #555;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .orders-card {
+        background: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1000px;
+    }
+
+    th,
+    td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #eee;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        color: #1D4D32;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    td {
+        color: #555;
+        font-size: 14px;
+    }
+
+    .order-number {
+        color: #1D4D32;
+        font-weight: 700;
+    }
+
+    .customer-name {
+        color: #333;
+        font-weight: 600;
+    }
+
+    .payment-method {
+        color: #555;
+        font-weight: 600;
+    }
+
+    .payment-status {
+        color: #888;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .status-form {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .status-select {
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 7px;
+        background: white;
+        color: #444;
+    }
+
+    .update-btn {
+        border: none;
+        background: #168B82;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .update-btn:hover {
+        background: #126f68;
+    }
+
+    .view-btn {
+        display: inline-block;
+        color: #168B82;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 7px 12px;
+        border: 1px solid #168B82;
+        border-radius: 7px;
+    }
+
+    .view-btn:hover {
+        background: #168B82;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-state h2 {
+        color: #1D4D32;
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
+        color: #777;
+    }
+
+    .message-box {
+        margin-bottom: 20px;
+    }
+
+    .message {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .message.success {
+        background: #edf7f2;
+        color: #216b4b;
+        border: 1px solid #d3eadf;
+    }
+
+    .message.error {
+        background: #f9eeee;
+        color: #a33a3a;
+        border: 1px solid #efd0d0;
+    }
+
+    @media (max-width: 700px) {
+
+        .admin-page {
+            margin: 30px auto;
+        }
+
+        .admin-header h1 {
+            font-size: 36px;
+        }
+
+        .filter-form {
+            flex-direction: column;
+        }
+
+        .filter-input,
+        .filter-select,
+        .filter-btn,
+        .clear-btn {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+    }
+
+</style>
+
+
+<div class="admin-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="admin-header">
+
+        <h1>Orders</h1>
+
+        <p>
+            Manage customer orders and update order status.
+        </p>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        <div class="message-box">
+
+            {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- FILTERS -->
+
+    <div class="filter-card">
+
+        <form method="GET" class="filter-form">
+
+            <input
+                type="text"
+                name="search"
+                class="filter-input"
+                placeholder="Search order number, customer or phone..."
+                value="{{ search }}"
+            >
+
+            <select
+                name="status"
+                class="filter-select"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                {% for value, label in status_choices %}
+
+                    <option
+                        value="{{ value }}"
+                        {% if selected_status == value %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ label }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="filter-btn"
+            >
+                Search
+            </button>
+
+
+            <a
+                href="{% url 'admin_orders' %}"
+                class="clear-btn"
+            >
+                Clear
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- ORDERS TABLE -->
+
+    <div class="orders-card">
+
+        {% if orders %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order Number</th>
+
+                        <th>Customer</th>
+
+                        <th>Total</th>
+
+                        <th>Payment</th>
+
+                        <th>Status</th>
+
+                        <th>Date</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                        <tr>
+
+                            <!-- ORDER NUMBER -->
+
+                            <td>
+
+                                <span class="order-number">
+                                    {{ order.order_number }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <span class="customer-name">
+                                    {{ order.full_name }}
+                                </span>
+
+                                <br>
+
+                                <small>
+                                    {{ order.phone }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- TOTAL -->
+
+                            <td>
+
+                                <strong>
+                                    ₹{{ order.total_amount }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- PAYMENT -->
+
+                            <td>
+
+                                <span class="payment-method">
+                                    {{ order.get_payment_method_display }}
+                                </span>
+
+                                <div class="payment-status">
+                                    {{ order.payment_status }}
+                                </div>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'admin_order_detail' order.id %}"
+                                    class="status-form"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <select
+                                        name="status"
+                                        class="status-select"
+                                    >
+
+                                        {% for value, label in status_choices %}
+
+                                            <option
+                                                value="{{ value }}"
+                                                {% if order.status == value %}
+                                                    selected
+                                                {% endif %}
+                                            >
+                                                {{ label }}
+                                            </option>
+
+                                        {% endfor %}
+
+                                    </select>
+
+
+                                    <button
+                                        type="submit"
+                                        class="update-btn"
+                                    >
+                                        Update
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                {{ order.created_at|date:"d M Y" }}
+
+                                <br>
+
+                                <small>
+                                    {{ order.created_at|date:"h:i A" }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <a
+                                    href="{% url 'admin_order_detail' order.id %}"
+                                    class="view-btn"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h2>No Orders</h2>
+
+                <p>
+                    Customer orders will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

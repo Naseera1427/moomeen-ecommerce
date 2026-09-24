@@ -1,0 +1,737 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About Us | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================
+   MOOMEEN PRODUCTS - ABOUT PAGE
+
+   DARK TEAL : #124A47
+   BROWN     : #B9674B
+========================================= */
+
+.about-page {
+    background: #ffffff;
+    color: #555555;
+    overflow: hidden;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.about-hero {
+    padding: 80px 7% 65px;
+    text-align: center;
+    background: #ffffff;
+}
+
+.about-hero-small {
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #B9674B;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.about-hero h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.05;
+    font-weight: 700;
+    color: #124A47;
+    margin: 0;
+}
+
+.about-hero h1 span {
+    color: #124A47;
+}
+
+.about-hero-line {
+    width: 90px;
+    height: 3px;
+    background: #B9674B;
+    margin: 25px auto;
+    border-radius: 5px;
+}
+
+.about-hero-subtitle {
+    max-width: 850px;
+    margin: auto;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.35;
+    font-weight: 700;
+    color: #124A47;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.about-container {
+    width: 86%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding-bottom: 90px;
+}
+
+
+/* =========================================
+   IMAGE + INTRODUCTION
+========================================= */
+
+.about-intro {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 65px;
+    align-items: center;
+    margin-bottom: 85px;
+}
+
+.about-image-wrapper {
+    position: relative;
+}
+
+.about-image-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #B9674B;
+    border-radius: 22px;
+    left: 14px;
+    top: 14px;
+    z-index: 0;
+}
+
+.about-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: block;
+    border-radius: 22px;
+    object-fit: cover;
+    box-shadow: 0 15px 40px rgba(18, 74, 71, 0.12);
+}
+
+.about-intro-text {
+    padding-left: 10px;
+}
+
+.about-section-label {
+    display: inline-block;
+    font-family: "DM Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #B9674B;
+    margin-bottom: 12px;
+}
+
+
+/* =========================================
+   ALL HEADINGS
+   DARK TEAL ONLY
+========================================= */
+
+.about-intro-text h2,
+.about-content-section h2,
+.doctors-section h2,
+.belief-section h2,
+.brand-message h2 {
+    font-family: "Cormorant Garamond", serif;
+    color: #124A47;
+    font-weight: 700;
+}
+
+.about-intro-text h2,
+.about-content-section h2,
+.belief-section h2 {
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.15;
+    margin: 0 0 20px;
+}
+
+.about-intro-text h2 span,
+.about-content-section h2 span,
+.doctors-section h2 span,
+.belief-section h2 span,
+.brand-message h2 span {
+    color: #124A47;
+}
+
+
+/* =========================================
+   BODY TEXT
+========================================= */
+
+.about-text {
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #555555;
+    margin-bottom: 18px;
+}
+
+
+/* =========================================
+   IMPORTANT / BOLD TEXT
+   DARK TEAL ONLY
+========================================= */
+
+.highlight-teal {
+    color: #124A47;
+    font-weight: 700;
+}
+
+.highlight-brown {
+    color: #124A47;
+    font-weight: 700;
+}
+
+.doctor-name {
+    color: #124A47;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   CONTENT SECTIONS
+========================================= */
+
+.about-content-section {
+    max-width: 1050px;
+    margin: 0 auto 75px;
+}
+
+.about-content-section h2 {
+    margin-bottom: 25px;
+}
+
+
+/* =========================================
+   DOCTORS SECTION
+========================================= */
+
+.doctors-section {
+    margin: 80px 0;
+    padding: 55px 60px;
+    background: #ffffff;
+    border-left: 5px solid #B9674B;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 10px 35px rgba(18, 74, 71, 0.08);
+}
+
+.doctors-section h2 {
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.15;
+    margin: 0 0 25px;
+}
+
+
+/* =========================================
+   BELIEF SECTION
+========================================= */
+
+.belief-section {
+    margin: 80px 0;
+    text-align: center;
+    padding: 70px 30px;
+    background: #ffffff;
+    border-top: 1px solid rgba(18, 74, 71, 0.15);
+    border-bottom: 1px solid rgba(18, 74, 71, 0.15);
+}
+
+.belief-section h2 {
+    margin-bottom: 35px;
+}
+
+.belief-lines {
+    max-width: 700px;
+    margin: 0 auto 35px;
+}
+
+.belief-line {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.5;
+    font-weight: 700;
+    color: #124A47;
+    margin: 4px 0;
+}
+
+
+/* =========================================
+   FINAL BRAND MESSAGE
+========================================= */
+
+.brand-message {
+    text-align: center;
+    padding: 65px 25px 25px;
+    max-width: 950px;
+    margin: auto;
+}
+
+.brand-message h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(40px, 5vw, 60px);
+    color: #124A47;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.brand-message-tagline {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.5;
+    color: #124A47;
+    font-weight: 700;
+    margin-bottom: 35px;
+}
+
+.brand-message p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #555555;
+    margin-bottom: 12px;
+}
+
+
+/* =========================================
+   FINAL LINES
+========================================= */
+
+.final-lines {
+    margin-top: 40px;
+}
+
+.final-lines p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    color: #124A47;
+    margin: 10px 0;
+}
+
+
+/* =========================================
+   FINAL BRAND TAGLINE
+========================================= */
+
+.brand-ending {
+    margin-top: 50px;
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+}
+
+
+/* MOOMEEN PRODUCTS - BROWN */
+
+.brand-name {
+    color: #B9674B;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+}
+
+
+/* THREE TAGLINES - ONE BY ONE */
+
+.brand-tagline {
+    color: #124A47;
+    font-size: clamp(25px, 3.5vw, 36px);
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+.brand-tagline div {
+    margin: 4px 0;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .about-hero {
+        padding: 65px 6% 50px;
+    }
+
+    .about-container {
+        width: 90%;
+    }
+
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .about-intro-text {
+        padding-left: 0;
+    }
+
+    .doctors-section {
+        padding: 40px 30px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .about-hero {
+        padding: 50px 5% 40px;
+    }
+
+    .about-hero-small {
+        font-size: 21px;
+    }
+
+    .about-container {
+        width: 90%;
+        padding-bottom: 60px;
+    }
+
+    .about-image-wrapper::before {
+        left: 8px;
+        top: 8px;
+    }
+
+    .about-text {
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    .doctors-section {
+        margin: 55px 0;
+        padding: 35px 22px;
+    }
+
+    .belief-section {
+        padding: 50px 15px;
+        margin: 55px 0;
+    }
+
+    .brand-message {
+        padding-top: 35px;
+    }
+
+    .brand-message p {
+        font-size: 15px;
+    }
+
+    .brand-name {
+        letter-spacing: 1px;
+    }
+}
+
+</style>
+
+
+<div class="about-page">
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="about-hero">
+
+        <span class="about-hero-small">
+            50 Years of Tradition…
+        </span>
+
+        <h1>
+            About MOOMEEN PRODUCTS
+        </h1>
+
+        <div class="about-hero-line"></div>
+
+        <div class="about-hero-subtitle">
+            A Siddha Healthcare Journey Blended with Modern Science
+        </div>
+
+    </section>
+
+
+    <div class="about-container">
+
+
+        <!-- =====================================
+             IMAGE + INTRODUCTION
+        ====================================== -->
+
+        <section class="about-intro">
+
+            <div class="about-image-wrapper">
+
+                <img
+                    src="{% static 'images/about/about-50-years.jpg' %}"
+                    alt="MOOMEEN PRODUCTS - 50 Years of Siddha Tradition"
+                    class="about-image"
+                >
+
+            </div>
+
+
+            <div class="about-intro-text">
+
+                <span class="about-section-label">
+                    Our Journey
+                </span>
+
+                <h2>
+                    Rooted in Tradition,
+                    Guided by Science
+                </h2>
+
+                <p class="about-text">
+                    For over
+                    <strong class="highlight-teal">50 years</strong>,
+                    traditional Siddha healthcare has been practiced and shared with people through experience and generations of knowledge.
+                    With the vision of carrying this heritage forward to the next generation through a
+                    <strong class="highlight-teal">scientific and contemporary approach</strong>,
+                    <strong class="highlight-teal">MOOMEEN PRODUCTS</strong>
+                    was founded.
+                </p>
+
+                <p class="about-text">
+                    Siddha medicine is not merely a system of healthcare; it is a reflection of
+                    <strong class="highlight-teal">Tamil heritage</strong>,
+                    a way of life rooted in harmony with nature, and a symbol of traditional medical wisdom passed down through generations.
+                </p>
+
+                <p class="about-text">
+                    Respecting this heritage and preserving its fundamental principles, our mission is to combine
+                    <strong class="highlight-teal">traditional Siddha knowledge</strong>
+                    with modern scientific understanding and contemporary quality standards to create Siddha-based products that are relevant to today's lifestyle.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             FROM TRADITION TO SCIENCE
+        ====================================== -->
+
+        <section class="about-content-section">
+
+            <span class="about-section-label">
+                Our Approach
+            </span>
+
+            <h2>
+                From Tradition to a
+                Scientific Approach…
+            </h2>
+
+            <p class="about-text">
+                <strong class="highlight-teal">MOOMEEN PRODUCTS</strong>
+                was born from a commitment to understand the Siddha medical knowledge passed down through generations through formal education and clinical experience, and to bring this knowledge to people with
+                <strong class="highlight-teal">confidence and responsibility.</strong>
+            </p>
+
+            <p class="about-text">
+                Our foundation is supported by the knowledge and experience of doctors with formal education in Siddha medicine, teaching experience, and years of clinical practice.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             DOCTORS
+        ====================================== -->
+
+        <section class="doctors-section">
+
+            <span class="about-section-label">
+                Our Foundation
+            </span>
+
+            <h2>
+                Medical Knowledge &
+                Clinical Experience
+            </h2>
+
+            <p class="about-text">
+                <strong class="doctor-name">
+                    Dr. Mohammed Fharook, MD (Siddha), and his wife, Dr. G. Rathiga, MD (Siddha),
+                </strong>
+                founded MOOMEEN PRODUCTS based on their medical knowledge, professional experience, and deep belief in the values of traditional Siddha medicine.
+            </p>
+
+            <p class="about-text">
+                Both doctors have formally completed their undergraduate and postgraduate studies in Siddha medicine.
+                They also gained
+                <strong class="highlight-teal">
+                    three years of academic and teaching experience as Assistant Lecturers at a Siddha medical college.
+                </strong>
+            </p>
+
+            <p class="about-text">
+                In addition, their medical journey includes
+                <strong class="highlight-teal">
+                    more than 10 years of direct clinical experience,
+                </strong>
+                understanding patients' healthcare needs and providing medical care.
+            </p>
+
+            <p class="about-text">
+                By bringing together their education, teaching experience, clinical knowledge, and traditional wisdom,
+                <strong class="highlight-teal">MOOMEEN PRODUCTS</strong>
+                strives to develop quality Siddha-based products and become a name that people can trust.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             OUR BELIEF
+        ====================================== -->
+
+        <section class="belief-section">
+
+            <span class="about-section-label">
+                What We Believe
+            </span>
+
+            <h2>
+                Our Belief
+            </h2>
+
+            <div class="belief-lines">
+
+                <div class="belief-line">
+                    Tradition is our foundation.
+                </div>
+
+                <div class="belief-line">
+                    Science is our guide.
+                </div>
+
+                <div class="belief-line">
+                    Quality is our commitment.
+                </div>
+
+                <div class="belief-line">
+                    People's trust is our goal.
+                </div>
+
+            </div>
+
+            <p class="about-text">
+                We respect the fundamental principles of Siddha medicine and the value of nature,
+                while placing
+                <strong class="highlight-teal">
+                    quality, purity, and responsibility
+                </strong>
+                at the heart of every product we create.
+            </p>
+
+            <p class="about-text">
+                Our vision is to make the wisdom of Siddha medicine, passed down through generations,
+                accessible to the next generation in a simple, understandable, and trustworthy way.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             FINAL BRAND MESSAGE
+        ====================================== -->
+
+        <section class="brand-message">
+
+            <h2>
+                MOOMEEN PRODUCTS
+            </h2>
+
+            <div class="brand-message-tagline">
+                Not just a product company…
+            </div>
+
+            <p>
+                <strong class="highlight-teal">
+                    A journey to carry forward our trust in traditional Siddha medicine,
+                </strong>
+                guided by a modern scientific approach and passed on to the next generation.
+            </p>
+
+
+            <div class="final-lines">
+
+                <p>
+                    Rooted in
+                    <strong class="highlight-teal">
+                        50 years of tradition…
+                    </strong>
+                </p>
+
+                <p>
+                    Guided by
+                    <strong class="highlight-teal">
+                        the light of modern science…
+                    </strong>
+                </p>
+
+                <p>
+                    Moving forward with
+                    <strong class="highlight-teal">
+                        trust and confidence.
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 FINAL BRAND SIGNATURE
+            ================================== -->
+
+            <div class="brand-ending">
+
+                <div class="brand-name">
+                    MOOMEEN PRODUCTS
+                </div>
+
+                <div class="brand-tagline">
+
+                    <div>
+                        Tradition Continues.
+                    </div>
+
+                    <div>
+                        Science Connects.
+                    </div>
+
+                    <div>
+                        Trust Grows.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

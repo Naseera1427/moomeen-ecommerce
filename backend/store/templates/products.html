@@ -1,0 +1,773 @@
+{% extends "base.html" %}
+
+{% block title %}Products | MOOMEEN PRODUCTS{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   PRODUCTS PAGE
+   ========================================================= */
+
+.products-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #ffffff;
+    padding: 0 0 80px;
+    color: #24382e;
+    font-family: "DM Sans", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.products-page .page-header {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+    padding: 70px 0 45px;
+    text-align: center;
+}
+
+.products-page .eyebrow {
+    margin: 0 0 10px;
+
+    color: #168b82;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+}
+
+.products-page .page-header h1 {
+    margin: 0;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 600;
+    line-height: 1.05;
+}
+
+.products-page .page-header > p:last-child {
+    max-width: 560px;
+    margin: 15px auto 0;
+
+    color: #66736d;
+
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SHOP SECTION
+   ========================================================= */
+
+.products-page .shop-section {
+    width: min(1180px, 92%);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+
+    gap: 38px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   FILTER SIDEBAR
+   ========================================================= */
+
+.products-page .filters {
+    position: sticky;
+    top: 25px;
+
+    padding: 24px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8e3;
+    border-radius: 10px;
+
+    box-shadow: 0 8px 25px rgba(29, 77, 50, 0.055);
+}
+
+.products-page .filters h3 {
+    margin: 0 0 17px;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+}
+
+.products-page .filters a {
+    display: block;
+
+    padding: 10px 11px;
+    margin-bottom: 4px;
+
+    color: #59665f;
+
+    border-radius: 5px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.products-page .filters a:hover {
+    color: #1d4d32;
+    background: #f2f7f3;
+}
+
+.products-page .filters a:first-of-type {
+    color: #ffffff;
+    background: #1d4d32;
+}
+
+
+/* =========================================================
+   SHOP CONTENT
+   ========================================================= */
+
+.products-page .shop-content {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SEARCH BOX
+   ========================================================= */
+
+.products-page .search-box {
+    width: 100%;
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: stretch;
+}
+
+.products-page .search-box input {
+    flex: 1;
+
+    min-width: 0;
+    height: 46px;
+
+    padding: 0 15px;
+
+    color: #24382e;
+    background: #ffffff;
+
+    border: 1px solid #d9e1dc;
+    border-right: none;
+
+    border-radius: 6px 0 0 6px;
+
+    outline: none;
+
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.78rem;
+}
+
+.products-page .search-box input::placeholder {
+    color: #9aa39e;
+}
+
+.products-page .search-box input:focus {
+    border-color: #168b82;
+}
+
+.products-page .search-box button {
+    width: 105px;
+    height: 46px;
+
+    border: 1px solid #1d4d32;
+    border-radius: 0 6px 6px 0;
+
+    background: #1d4d32;
+    color: #ffffff;
+
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.products-page .search-box button:hover {
+    background: #168b82;
+    border-color: #168b82;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.products-page .product-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+.products-page .product-card {
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e7e2;
+    border-radius: 10px;
+
+    box-shadow: 0 6px 22px rgba(29, 77, 50, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.products-page .product-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 14px 32px rgba(29, 77, 50, 0.10);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+   ========================================================= */
+
+.products-page .product-card > a:first-child {
+    display: block;
+
+    width: 100%;
+    height: 285px;
+
+    overflow: hidden;
+
+    background: #f8faf8;
+
+    text-decoration: none;
+}
+
+.products-page .product-card > a:first-child img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    padding: 15px;
+
+    object-fit: contain;
+
+    transition: transform 0.35s ease;
+}
+
+.products-page .product-card:hover > a:first-child img {
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.products-page .product-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+   ========================================================= */
+
+.products-page .product-info {
+    padding: 19px 20px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+}
+
+.products-page .product-info small {
+    margin-bottom: 7px;
+
+    color: #168b82;
+
+    font-size: 0.61rem;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.products-page .product-info h3 {
+    margin: 0;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+
+    line-height: 1.15;
+}
+
+.products-page .product-info p {
+    margin: 9px 0 14px;
+
+    min-height: 39px;
+
+    color: #69756f;
+
+    font-size: 0.74rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRICE
+   ========================================================= */
+
+.products-page .price {
+    margin-top: auto;
+    margin-bottom: 17px;
+
+    color: #1d4d32;
+
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.products-page .secondary-btn {
+    width: 100%;
+    min-height: 41px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    color: #1d4d32;
+    background: #ffffff;
+
+    border: 1px solid #1d4d32;
+    border-radius: 5px;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.products-page .secondary-btn:hover {
+    color: #ffffff;
+    background: #1d4d32;
+}
+
+
+/* =========================================================
+   EMPTY MESSAGE
+   ========================================================= */
+
+.products-page .empty-message {
+    grid-column: 1 / -1;
+
+    padding: 70px 25px;
+
+    text-align: center;
+
+    border: 1px solid #e2e8e3;
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.products-page .empty-message h3 {
+    margin: 0 0 8px;
+
+    color: #1d4d32;
+
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2rem;
+}
+
+.products-page .empty-message p {
+    margin: 0;
+
+    color: #69756f;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .products-page .shop-section {
+        grid-template-columns: 190px minmax(0, 1fr);
+        gap: 25px;
+    }
+
+    .products-page .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 17px;
+    }
+
+    .products-page .product-card > a:first-child {
+        height: 250px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .products-page .page-header {
+        padding: 50px 0 35px;
+    }
+
+    .products-page .shop-section {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .products-page .filters {
+        position: static;
+    }
+
+    .products-page .filters h3 {
+        margin-bottom: 12px;
+    }
+
+    .products-page .filters {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 17px;
+    }
+
+    .products-page .filters h3 {
+        width: 100%;
+    }
+
+    .products-page .filters a {
+        margin: 0;
+
+        padding: 8px 13px;
+
+        border: 1px solid #dce5df;
+        border-radius: 999px;
+
+        font-size: 0.66rem;
+    }
+
+    .products-page .filters a:first-of-type {
+        border-color: #1d4d32;
+    }
+
+    .products-page .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .products-page .product-card > a:first-child {
+        height: 310px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .products-page .page-header h1 {
+        font-size: 2.7rem;
+    }
+
+    .products-page .page-header > p:last-child {
+        font-size: 0.78rem;
+    }
+
+    .products-page .search-box input {
+        font-size: 0.72rem;
+    }
+
+    .products-page .search-box button {
+        width: 85px;
+        font-size: 0.61rem;
+    }
+
+    .products-page .product-card > a:first-child {
+        height: 285px;
+    }
+
+}
+
+</style>
+
+
+<div class="products-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="page-header">
+
+        <p class="eyebrow">
+            MOOMEEN COLLECTION
+        </p>
+
+        <h1>
+            Our Products
+        </h1>
+
+        <p>
+            Explore our collection of natural products.
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         SHOP AREA
+    ====================================================== -->
+
+    <section class="shop-section">
+
+
+        <!-- =================================================
+             CATEGORY FILTER
+        ================================================== -->
+
+        <aside class="filters">
+
+            <h3>
+                Categories
+            </h3>
+
+
+            <a href="{% url 'products' %}">
+                All Products
+            </a>
+
+
+            {% for category in categories %}
+
+                <a href="?category={{ category.slug }}">
+                    {{ category.name }}
+                </a>
+
+            {% endfor %}
+
+        </aside>
+
+
+        <!-- =================================================
+             PRODUCTS CONTENT
+        ================================================== -->
+
+        <div class="shop-content">
+
+
+            <!-- SEARCH -->
+
+            <form
+                method="get"
+                class="search-box"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search products..."
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+
+            <!-- PRODUCT GRID -->
+
+            <div class="product-grid">
+
+                {% for product in products %}
+
+
+                <article class="product-card">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                    >
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="product-placeholder">
+                                MP
+                            </div>
+
+                        {% endif %}
+
+                    </a>
+
+
+                    <!-- PRODUCT DETAILS -->
+
+                    <div class="product-info">
+
+
+                        <small>
+                            {{ product.category.name }}
+                        </small>
+
+
+                        <h3>
+                            {{ product.name }}
+                        </h3>
+
+
+                        {% if product.short_description %}
+
+                            <p>
+                                {{ product.short_description|truncatewords:10 }}
+                            </p>
+
+                        {% else %}
+
+                            <p>
+                                Discover more about this product.
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- PRICE -->
+
+                        <div class="price">
+                            ₹{{ product.selling_price }}
+                        </div>
+
+
+                        <!-- VIEW DETAILS -->
+
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
+                            class="secondary-btn"
+                        >
+                            View Details
+                        </a>
+
+
+                    </div>
+
+                </article>
+
+
+                {% empty %}
+
+
+                <div class="empty-message">
+
+                    <h3>
+                        No Products Found
+                    </h3>
+
+                    <p>
+                        Try another search or category.
+                    </p>
+
+                </div>
+
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

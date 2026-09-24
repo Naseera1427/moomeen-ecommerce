@@ -1,9 +1,25 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
+
+# Django secrets & local DB
 .env
 db.sqlite3
 data.json
+
+# Media uploads (served from GCS in production)
 media/
+
+# Collected static (generated at Docker build time, not committed)
 staticfiles/
+
+# IDE & OS artifacts
 .vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store
+
+# Firebase cache
+.firebase/

@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Account | MOOMEEN PRODUCTS
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <!-- =================================================
+                 REGISTER HEADER
+            ================================================== -->
+
+            <div class="auth-header">
+
+                <p class="eyebrow">
+                    JOIN MOOMEEN PRODUCTS
+                </p>
+
+                <h1>
+                    Create Account
+                </h1>
+
+                <p>
+                    Create your account to shop our natural
+                    and Siddha-inspired products.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ERRORS
+            ================================================== -->
+
+            {% if form.non_field_errors %}
+
+            <div class="auth-error">
+
+                {% for error in form.non_field_errors %}
+
+                    <p>
+                        {{ error }}
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 REGISTER FORM
+            ================================================== -->
+
+            <form
+                method="POST"
+                action="{% url 'register' %}"
+                class="auth-form"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- =============================================
+                     FIRST NAME
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.first_name.id_for_label }}">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="first_name"
+                        id="{{ form.first_name.id_for_label }}"
+                        value="{{ form.first_name.value|default:'' }}"
+                        class="auth-input"
+                        placeholder="Enter your first name"
+                        autocomplete="given-name"
+                    >
+
+                    {% if form.first_name.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.first_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =============================================
+                     LAST NAME
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.last_name.id_for_label }}">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="last_name"
+                        id="{{ form.last_name.id_for_label }}"
+                        value="{{ form.last_name.value|default:'' }}"
+                        class="auth-input"
+                        placeholder="Enter your last name"
+                        autocomplete="family-name"
+                    >
+
+                    {% if form.last_name.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.last_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =============================================
+                     USERNAME
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.username.id_for_label }}">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        id="{{ form.username.id_for_label }}"
+                        value="{{ form.username.value|default:'' }}"
+                        class="auth-input"
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                    >
+
+                    {% if form.username.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.username.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =============================================
+                     EMAIL
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.email.id_for_label }}">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        id="{{ form.email.id_for_label }}"
+                        value="{{ form.email.value|default:'' }}"
+                        class="auth-input"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                    >
+
+                    {% if form.email.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.email.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =============================================
+                     PASSWORD
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.password.id_for_label }}">
+                        Password
+                    </label>
+
+                    {{ form.password }}
+
+                    {% if form.password.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                    <small class="auth-help">
+                        Password must contain at least 8 characters.
+                    </small>
+
+                </div>
+
+
+                <!-- =============================================
+                     CONFIRM PASSWORD
+                ============================================== -->
+
+                <div class="auth-field">
+
+                    <label for="{{ form.confirm_password.id_for_label }}">
+                        Confirm Password
+                    </label>
+
+                    {{ form.confirm_password }}
+
+                    {% if form.confirm_password.errors %}
+
+                    <div class="field-error">
+
+                        {% for error in form.confirm_password.errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =============================================
+                     CREATE ACCOUNT BUTTON
+                ============================================== -->
+
+                <button
+                    type="submit"
+                    class="auth-submit-btn"
+                >
+                    CREATE ACCOUNT
+                </button>
+
+            </form>
+
+
+            <!-- =================================================
+                 LOGIN LINK
+            ================================================== -->
+
+            <div class="auth-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <div class="auth-register">
+
+                <p>
+                    Already have an account?
+                </p>
+
+                <a href="{% url 'login' %}">
+                    Login to Your Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

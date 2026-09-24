@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login | MOOMEEN PRODUCTS
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+
+                <p class="eyebrow">
+                    WELCOME BACK
+                </p>
+
+                <h1>
+                    Login
+                </h1>
+
+                <p>
+                    Login to your MOOMEEN PRODUCTS account
+                    to continue shopping.
+                </p>
+
+            </div>
+
+
+            {% if form.non_field_errors %}
+
+            <div class="auth-error">
+
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            <form method="POST" class="auth-form">
+
+                {% csrf_token %}
+
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                {% endif %}
+
+                <div class="auth-field">
+
+                    <label for="{{ form.username.id_for_label }}">
+                        Username
+                    </label>
+
+                    {{ form.username }}
+
+                    {% if form.username.errors %}
+
+                    <div class="field-error">
+                        {{ form.username.errors.0 }}
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="auth-field">
+
+                    <label for="{{ form.password.id_for_label }}">
+                        Password
+                    </label>
+
+                    {{ form.password }}
+
+                    {% if form.password.errors %}
+
+                    <div class="field-error">
+                        {{ form.password.errors.0 }}
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-submit-btn"
+                >
+                    LOGIN
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider">
+                <span>OR</span>
+            </div>
+
+
+            <div class="auth-register">
+
+                <p>
+                    Don't have an account?
+                </p>
+
+                <a href="{% url 'register' %}">
+                    Create an Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
