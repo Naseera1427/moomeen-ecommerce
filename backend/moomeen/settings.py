@@ -238,6 +238,25 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # Required for cookies to work across Firebase Hosting → Cloud Run
+    # (cross-origin requests require SameSite=None and Secure=True)
+    SESSION_COOKIE_SAMESITE = "None"
+    CSRF_COOKIE_SAMESITE = "None"
+
+# =========================================================
+# SESSION PERSISTENCE
+# =========================================================
+
+# Keep users logged in for 30 days (in seconds)
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
+
+# Refresh the session expiry on every request so active users
+# don't get logged out unexpectedly.
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Use database-backed sessions (default) — persists across
+# Cloud Run container restarts.
+SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 
 # =========================================================
@@ -286,7 +305,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # When login is required, Django sends the user here.
 LOGIN_URL = "login"
 
-# After successful login, go to Home.
+# After successful login, go to Home (overridden by ?next= param).
 LOGIN_REDIRECT_URL = "home"
 
 # After logout, go to Home.

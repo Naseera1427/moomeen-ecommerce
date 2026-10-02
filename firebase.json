@@ -23,8 +23,88 @@
       ],
       "rewrites": [
         {
-          "source": "**",
-          "destination": "/index.html"
+          "source": "/login/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/register/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/logout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/cart/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/buy-now/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/checkout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/order-confirmation/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/my-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/my-addresses/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/wishlist/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/about/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/contact/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/static/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/media/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-dashboard/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-customers/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-reviews/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
         }
       ]
     },
@@ -51,8 +131,88 @@
       ],
       "rewrites": [
         {
-          "source": "**",
-          "destination": "/index.html"
+          "source": "/login/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/register/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/logout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/cart/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/buy-now/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/checkout/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/order-confirmation/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/my-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/my-addresses/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/wishlist/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/about/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/contact/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/static/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/media/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-dashboard/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-products/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-orders/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-customers/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/admin-reviews/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
+        },
+        {
+          "source": "/**",
+          "run": { "serviceId": "moomeen-backend", "region": "us-central1" }
         }
       ]
     }

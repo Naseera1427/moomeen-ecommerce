@@ -212,54 +212,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =====================================================
-       BUY NOW INTERACTION
-       When unauthenticated user clicks Buy Now:
-       Redirect to login page with next set to checkout
+       AUTO-DISMISS FLASH MESSAGES
+       Messages disappear after 6 seconds
     ===================================================== */
-    const buyNowForms = document.querySelectorAll("form[action^='/buy-now/']");
-    buyNowForms.forEach(function (form) {
-        form.addEventListener("submit", function (e) {
-            const userIcon = document.querySelector(".nav-icon-link[title*='My Account']");
-            if (!userIcon) {
-                e.preventDefault();
-                window.location.href = "/login/?next=/checkout/";
+    const siteMessages = document.querySelectorAll(".site-message");
+    siteMessages.forEach(function (msg) {
+        setTimeout(function () {
+            if (msg && msg.parentElement) {
+                msg.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+                msg.style.opacity = "0";
+                msg.style.transform = "translateY(-6px)";
+                setTimeout(function () {
+                    if (msg && msg.parentElement) {
+                        msg.parentElement.removeChild(msg);
+                    }
+                }, 400);
             }
-        });
+        }, 6000);
     });
 
-
-    /* =====================================================
-       LOGIN FORM SUBMISSION & REDIRECT TO CHECKOUT
-    ===================================================== */
-    const loginForm = document.querySelector(".auth-form");
-    if (loginForm && (window.location.pathname === "/login/" || window.location.pathname.startsWith("/login"))) {
-        loginForm.addEventListener("submit", function (e) {
-            const usernameInput = document.getElementById("id_username");
-            const passwordInput = document.getElementById("id_password");
-            const urlParams = new URLSearchParams(window.location.search);
-            const nextUrl = urlParams.get("next") || "/checkout/";
-
-            if (usernameInput && passwordInput) {
-                const u = usernameInput.value.trim();
-                const p = passwordInput.value.trim();
-                if (!u || !p) {
-                    return;
-                }
-                if (p === "wrongpass" || p === "wrongpassword" || p === "invalid") {
-                    e.preventDefault();
-                    let errBox = document.querySelector(".auth-error");
-                    if (!errBox) {
-                        errBox = document.createElement("div");
-                        errBox.className = "auth-error";
-                        loginForm.parentNode.insertBefore(errBox, loginForm);
-                    }
-                    errBox.innerHTML = "<p>Please enter a correct username and password. Note that both fields may be case-sensitive.</p>";
-                    return;
-                }
-                e.preventDefault();
-                window.location.href = nextUrl;
-            }
-        });
-    }
-
-});
+});

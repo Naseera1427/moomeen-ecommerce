@@ -583,10 +583,30 @@ def buy_now(request, product_id):
         is_active=True
     )
 
+    # ------------------------------------------------------------------
+    # AUTHENTICATION GATE
+    # Save the intended product & quantity into the session so it is
+    # available after the login redirect, then send the user to login.
+    # ------------------------------------------------------------------
     if not request.user.is_authenticated:
+
+        # Persist the intended purchase in the session
+        quantity_requested = 1
+        if request.method == "POST":
+            try:
+                quantity_requested = int(request.POST.get("quantity", 1))
+            except (TypeError, ValueError):
+                quantity_requested = 1
+
+        request.session["buy_now_product_id"] = product_id
+        request.session["buy_now_quantity"] = quantity_requested
+
+        # After login, return to buy-now so it can process the session
         return redirect(f"/login/?next=/buy-now/{product_id}/")
 
-    # Don't continue if out of stock
+    # ------------------------------------------------------------------
+    # STOCK CHECK
+    # ------------------------------------------------------------------
     if product.stock <= 0:
 
         messages.error(
@@ -599,28 +619,33 @@ def buy_now(request, product_id):
             slug=product.slug
         )
 
-    # Get selected quantity
+    # ------------------------------------------------------------------
+    # RESOLVE QUANTITY
+    # Priority: POST param → session (set before login redirect) → 1
+    # ------------------------------------------------------------------
     quantity = 1
+
     if request.method == "POST":
         try:
-
-            quantity = int(
-                request.POST.get(
-                    "quantity",
-                    1
-                )
-            )
-
+            quantity = int(request.POST.get("quantity", 1))
         except (TypeError, ValueError):
-
             quantity = 1
+    else:
+        # GET after returning from login — pick up from session
+        session_qty = request.session.pop("buy_now_quantity", None)
+        if session_qty is not None:
+            try:
+                quantity = int(session_qty)
+            except (TypeError, ValueError):
+                quantity = 1
 
-    # Minimum quantity
+    # Also clean up the product ID from the session if present
+    request.session.pop("buy_now_product_id", None)
+
+    # Enforce bounds
     if quantity < 1:
-
         quantity = 1
 
-    # Quantity cannot exceed stock
     if quantity > product.stock:
 
         messages.warning(
@@ -633,22 +658,20 @@ def buy_now(request, product_id):
             slug=product.slug
         )
 
-    # Get or create cart
-    cart, created = Cart.objects.get_or_create(
-        user=request.user
-    )
+    # ------------------------------------------------------------------
+    # ADD TO CART
+    # ------------------------------------------------------------------
+    cart, _ = Cart.objects.get_or_create(user=request.user)
 
-    # Get or create cart item
-    cart_item, item_created = CartItem.objects.get_or_create(
+    cart_item, _ = CartItem.objects.get_or_create(
         cart=cart,
         product=product
     )
 
-    # BUY NOW uses selected quantity
     cart_item.quantity = quantity
     cart_item.save()
 
-    # Redirect user directly to checkout page to continue purchase
+    # Go straight to checkout
     return redirect("checkout")
 
 
