@@ -13,7 +13,6 @@ jobs:
   deploy-backend:
     name: Build & Deploy Backend (Cloud Run)
     runs-on: ubuntu-latest
-    if: "${{ secrets.GCP_CREDENTIALS != '' }}"
 
     steps:
       - name: Checkout Code
@@ -37,7 +36,7 @@ jobs:
   deploy-frontend:
     name: Deploy Frontend (Firebase Hosting)
     runs-on: ubuntu-latest
-    if: "${{ secrets.GCP_CREDENTIALS != '' }}"
+    needs: deploy-backend
 
     steps:
       - name: Checkout Code
