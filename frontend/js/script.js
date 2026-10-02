@@ -167,4 +167,68 @@ document.addEventListener("DOMContentLoaded", function () {
         yearElement.textContent = new Date().getFullYear();
     }
 
-});
+
+    /* =====================================================
+       SIDE DRAWER / HAMBURGER MENU INTERACTION
+    ===================================================== */
+    const hamburgerBtn = document.getElementById("navHamburgerBtn");
+    const drawer = document.getElementById("navDrawer");
+    const backdrop = document.getElementById("navDrawerBackdrop");
+    const drawerCloseBtn = document.getElementById("navDrawerClose");
+
+    function openNavDrawer() {
+        if (drawer && backdrop) {
+            drawer.classList.add("is-active");
+            backdrop.classList.add("is-active");
+            document.body.classList.add("nav-drawer-open");
+        }
+    }
+
+    function closeNavDrawer() {
+        if (drawer && backdrop) {
+            drawer.classList.remove("is-active");
+            backdrop.classList.remove("is-active");
+            document.body.classList.remove("nav-drawer-open");
+        }
+    }
+
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener("click", openNavDrawer);
+    }
+
+    if (drawerCloseBtn) {
+        drawerCloseBtn.addEventListener("click", closeNavDrawer);
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener("click", closeNavDrawer);
+    }
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && drawer && drawer.classList.contains("is-active")) {
+            closeNavDrawer();
+        }
+    });
+
+
+    /* =====================================================
+       AUTO-DISMISS FLASH MESSAGES
+       Messages disappear after 6 seconds
+    ===================================================== */
+    const siteMessages = document.querySelectorAll(".site-message");
+    siteMessages.forEach(function (msg) {
+        setTimeout(function () {
+            if (msg && msg.parentElement) {
+                msg.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+                msg.style.opacity = "0";
+                msg.style.transform = "translateY(-6px)";
+                setTimeout(function () {
+                    if (msg && msg.parentElement) {
+                        msg.parentElement.removeChild(msg);
+                    }
+                }, 400);
+            }
+        }, 6000);
+    });
+
+});

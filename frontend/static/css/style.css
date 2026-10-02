@@ -77,6 +77,89 @@ button {
 }
 
 
+
+/* =========================================================
+   SITE-WIDE FLASH MESSAGES
+   (Django messages framework display)
+   ========================================================= */
+
+.site-messages {
+    position: sticky;
+    top: 0;
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.site-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* success */
+.site-message--success {
+    background: #e8f5ee;
+    color: #1a5c36;
+    border-bottom: 1px solid #b5d9c4;
+}
+
+/* error */
+.site-message--error {
+    background: #fdf2f2;
+    color: #8b2e2e;
+    border-bottom: 1px solid #f0c4c4;
+}
+
+/* warning */
+.site-message--warning {
+    background: #fef9ec;
+    color: #7c5a0a;
+    border-bottom: 1px solid #f3d88a;
+}
+
+/* info */
+.site-message--info {
+    background: #edf4fd;
+    color: #1a4a7a;
+    border-bottom: 1px solid #b5d0f0;
+}
+
+.site-message__text {
+    flex: 1;
+}
+
+.site-message__close {
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.site-message__close:hover {
+    opacity: 1;
+}
+
+
 /* =========================================================
    COMMON
    ========================================================= */
