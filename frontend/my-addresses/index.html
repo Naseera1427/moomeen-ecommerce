@@ -1,0 +1,858 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        My Addresses | MOOMEEN PRODUCTS
+    </title>
+
+    <meta
+        name="description"
+        content="MOOMEEN PRODUCTS - Natural and Siddha-inspired products."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<!-- =========================================================
+     HEADER / NAVBAR
+========================================================= -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+        <!-- LEFT: HAMBURGER MENU BUTTON -->
+        <div class="nav-left-zone">
+            <button
+                type="button"
+                class="nav-hamburger-btn"
+                id="navHamburgerBtn"
+                aria-label="Toggle Navigation Menu"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- CENTER: MOOMEEN PRODUCTS LOGO -->
+        <a
+            href="/"
+            class="brand"
+            aria-label="MOOMEEN PRODUCTS Home"
+        >
+            <img
+                src="/static/images/logo/moomeen-logo.jpg"
+                alt="MOOMEEN PRODUCTS"
+                class="brand-logo"
+            >
+        </a>
+
+        <!-- RIGHT: WISHLIST, USER / LOGIN, CART ICONS -->
+        <div class="nav-actions">
+
+            <!-- WISHLIST ICON -->
+            <a
+                href="/wishlist/"
+                class="nav-icon-link"
+                aria-label="Wishlist"
+                title="Wishlist"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </a>
+
+            <!-- USER / LOGIN ICON -->
+            
+                <a
+                    href="/my-orders/"
+                    class="nav-icon-link"
+                    aria-label="My Account"
+                    title="My Account (MohammedFharook)"
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
+            
+
+            <!-- CART ICON -->
+            <a
+                href="/cart/"
+                class="nav-icon-link cart-icon-link"
+                aria-label="Cart"
+                title="Cart"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- =========================================================
+     SIDE DRAWER (HAMBURGER MENU)
+========================================================= -->
+<div class="nav-drawer-backdrop" id="navDrawerBackdrop"></div>
+
+<aside class="nav-drawer" id="navDrawer" aria-label="Main Navigation">
+
+    <div class="nav-drawer-header">
+        <span class="nav-drawer-brand-title">MOOMEEN PRODUCTS</span>
+        <button
+            type="button"
+            class="nav-drawer-close"
+            id="navDrawerClose"
+            aria-label="Close menu"
+        >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="nav-drawer-links">
+
+        <a href="/" class="drawer-link">
+            Home
+        </a>
+
+        <a href="/products/" class="drawer-link">
+            Products
+        </a>
+
+        <a href="/about/" class="drawer-link">
+            About Us
+        </a>
+
+        <a href="/contact/" class="drawer-link">
+            Contact
+        </a>
+
+        <div class="drawer-divider"></div>
+
+        
+            <a href="/my-orders/" class="drawer-link">
+                My Orders
+            </a>
+            <a href="/my-addresses/" class="drawer-link">
+                My Addresses
+            </a>
+            <a href="/wishlist/" class="drawer-link">
+                Wishlist
+            </a>
+            <form method="post" action="/logout/" class="drawer-logout-form">
+                <input type="hidden" name="csrfmiddlewaretoken" value="3XyRQEPpVybXyRXTRTfhhrVNoA7fAGWF3hKY2x40lt9KYGpTMKe3s8ohhbTR0TdH">
+                <button type="submit" class="drawer-link drawer-logout-btn">
+                    Logout (MohammedFharook)
+                </button>
+            </form>
+        
+
+    </nav>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+    
+
+<style>
+    .account-page {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+
+    .account-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .account-header h1 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 42px;
+        margin: 0;
+    }
+
+    .account-header p {
+        color: #69756f;
+        margin: 5px 0 0;
+    }
+
+    .add-btn {
+        background: #168B82;
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.2s, transform 0.15s;
+        font-family: inherit;
+    }
+
+    .add-btn:hover {
+        background: #12726b;
+        transform: translateY(-1px);
+    }
+
+    /* Alerts / Messages */
+    .addr-messages {
+        margin-bottom: 24px;
+    }
+
+    .addr-alert {
+        padding: 13px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .addr-alert-success {
+        background: #e8f5e9;
+        color: #1b5e20;
+        border: 1px solid #c8e6c9;
+    }
+
+    .addr-alert-error, .addr-alert-danger {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
+    }
+
+    /* Address Grid */
+    .address-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+    }
+
+    .address-card {
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 24px;
+        background: #fff;
+        box-shadow: 0 7px 22px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .address-card:hover {
+        border-color: #cbdad3;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+    }
+
+    .address-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .address-card h3 {
+        color: #1D4D32;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .default-badge {
+        display: inline-block;
+        background: #e8f3ef;
+        color: #168B82;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+    }
+
+    .address-card p {
+        color: #555;
+        line-height: 1.65;
+        margin: 6px 0;
+        font-size: 14px;
+    }
+
+    .delete-addr-btn {
+        background: transparent;
+        border: 1px solid #f0d5d2;
+        color: #c0392b;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .delete-addr-btn:hover {
+        background: #fdf0ee;
+        border-color: #c0392b;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        border: 1px dashed #ddd;
+        border-radius: 15px;
+        background: #fafcfb;
+    }
+
+    .empty-state h2 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        margin: 0 0 10px;
+    }
+
+    .empty-state p {
+        color: #69756f;
+        margin: 0 0 20px;
+    }
+
+    /* Modal */
+    .addr-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 33, 23, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .addr-modal-overlay.active {
+        display: flex;
+    }
+
+    .addr-modal-card {
+        background: #ffffff;
+        border-radius: 16px;
+        max-width: 580px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 32px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+        animation: addrModalFadeIn 0.22s ease-out;
+        box-sizing: border-box;
+    }
+
+    @keyframes addrModalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(12px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .addr-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #eef2f0;
+    }
+
+    .addr-modal-header h2 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        margin: 0;
+    }
+
+    .addr-close-btn {
+        background: transparent;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        color: #888;
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.15s;
+    }
+
+    .addr-close-btn:hover {
+        color: #1D4D32;
+    }
+
+    /* Form Styles */
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #24382e;
+    }
+
+    .addr-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #d4ded9;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #24382e;
+        background: #fafcfb;
+        font-family: inherit;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .addr-input:focus {
+        outline: none;
+        border-color: #168B82;
+        box-shadow: 0 0 0 3px rgba(22, 139, 130, 0.14);
+        background: #ffffff;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    .form-row-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .field-error {
+        display: block;
+        color: #c0392b;
+        font-size: 12px;
+        margin-top: 4px;
+        font-weight: 500;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1px solid #eef2f0;
+    }
+
+    .cancel-btn {
+        background: transparent;
+        color: #555;
+        border: 1px solid #ccc;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .cancel-btn:hover {
+        background: #f5f5f5;
+        color: #222;
+    }
+
+    .save-btn {
+        background: #168B82;
+        color: #ffffff;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: inherit;
+    }
+
+    .save-btn:hover {
+        background: #12726b;
+    }
+
+    @media(max-width: 700px) {
+        .address-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .account-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-row, .form-row-3 {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .addr-modal-card {
+            padding: 22px 18px;
+        }
+    }
+</style>
+
+<div class="account-page">
+
+    <!-- Flash Messages -->
+    
+
+    <div class="account-header">
+        <div>
+            <h1>My Addresses</h1>
+            <p>Manage your delivery addresses.</p>
+        </div>
+
+        <button type="button" class="add-btn" id="open-address-btn">+ Add Address</button>
+    </div>
+
+    
+
+        <div class="empty-state">
+            <h2>No saved addresses</h2>
+            <p>Add an address to make future orders quick and easy.</p>
+            <button type="button" class="add-btn" id="empty-add-address-btn" style="display: inline-flex;">+ Add Your First Address</button>
+        </div>
+
+    
+
+</div>
+
+
+<!-- =========================================================
+     ADD ADDRESS MODAL FORM
+========================================================= -->
+<div id="address-modal" class="addr-modal-overlay ">
+    <div class="addr-modal-card">
+        <div class="addr-modal-header">
+            <h2>Add New Address</h2>
+            <button type="button" class="addr-close-btn" id="close-address-modal" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <form method="post" action="/my-addresses/" class="addr-form" novalidate>
+            <input type="hidden" name="csrfmiddlewaretoken" value="3XyRQEPpVybXyRXTRTfhhrVNoA7fAGWF3hKY2x40lt9KYGpTMKe3s8ohhbTR0TdH">
+
+            
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="addr-full-name">Full Name *</label>
+                    <input type="text" name="full_name" placeholder="Enter full name" class="addr-input" id="addr-full-name" autocomplete="name" maxlength="150" required>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-phone">Phone Number *</label>
+                    <input type="text" name="phone" placeholder="10-digit mobile number" class="addr-input" id="addr-phone" maxlength="20" inputmode="numeric" autocomplete="tel" required>
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="addr-line">Street Address *</label>
+                <textarea name="address_line" cols="40" rows="3" placeholder="House / Door No., Street, Area" class="addr-input" id="addr-line" autocomplete="street-address" required>
+</textarea>
+                
+            </div>
+
+            <div class="form-row form-row-3">
+                <div class="form-group">
+                    <label for="addr-city">City *</label>
+                    <input type="text" name="city" placeholder="City" class="addr-input" id="addr-city" autocomplete="address-level2" maxlength="100" required>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-state">State *</label>
+                    <input type="text" name="state" placeholder="State" class="addr-input" id="addr-state" autocomplete="address-level1" maxlength="100" required>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-pincode">Pincode *</label>
+                    <input type="text" name="pincode" placeholder="6-digit pincode" class="addr-input" id="addr-pincode" maxlength="10" inputmode="numeric" autocomplete="postal-code" required>
+                    
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" id="cancel-address-modal">Cancel</button>
+                <button type="submit" class="save-btn">Save Address</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const modal = document.getElementById('address-modal');
+        const openBtn = document.getElementById('open-address-btn');
+        const emptyOpenBtn = document.getElementById('empty-add-address-btn');
+        const closeBtn = document.getElementById('close-address-modal');
+        const cancelBtn = document.getElementById('cancel-address-modal');
+
+        function openModal() {
+            if (modal) {
+                modal.classList.add('active');
+                const firstInput = modal.querySelector('input:not([type="hidden"])');
+                if (firstInput) firstInput.focus();
+            }
+        }
+
+        function closeModal() {
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        if (openBtn) openBtn.addEventListener('click', openModal);
+        if (emptyOpenBtn) emptyOpenBtn.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    })();
+</script>
+
+
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <div class="footer-brand">
+
+            <h3>
+                MOOMEEN PRODUCTS
+            </h3>
+
+            <p>
+                Natural care inspired by traditional wisdom.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK LINKS
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Quick Links
+            </h4>
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/products/">
+                Products
+            </a>
+
+            <a href="/about/">
+                About Us
+            </a>
+
+            
+
+                <a href="/my-orders/">
+                    My Orders
+                </a>
+
+                <a href="/wishlist/">
+                    Wishlist
+                </a>
+
+            
+
+        </div>
+
+
+        <!-- =================================================
+             CUSTOMER SUPPORT
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Customer Support
+            </h4>
+
+            <a href="/contact/">
+                Contact Us
+            </a>
+
+            <a href="#">
+                Shipping & Delivery
+            </a>
+
+            <a href="#">
+                Returns & Refunds
+            </a>
+
+            <a href="#">
+                FAQ
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             LEGAL
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>
+                Legal
+            </h4>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms & Conditions
+            </a>
+
+            <a href="#">
+                Disclaimer
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         COPYRIGHT
+    ====================================================== -->
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 MOOMEEN PRODUCTS · All Rights Reserved
+        </p>
+
+        <p>
+            Designed &amp; Developed by
+            <strong>Naseera Begam</strong>
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script src="/static/js/script.js"></script>
+
+</body>
+
+</html>
