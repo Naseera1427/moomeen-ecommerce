@@ -23,3 +23,10 @@ Thumbs.db
 
 # Firebase cache
 .firebase/
+
+# Legacy directory prior to backend/ rename
+moomeen/
+
+# Reference screenshots
+ref_order_screenshots/
+

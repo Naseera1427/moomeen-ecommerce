@@ -11,32 +11,34 @@
 <style>
 
 /* =========================================================
-   PRODUCT DETAIL PAGE
-========================================================= */
+   PRODUCT DETAIL PAGE - MATCHING REFERENCE SCREENSHOT
+   ========================================================= */
 
 .product-detail-page {
     width: 100%;
-    padding: 70px 20px 90px;
     background: #FFFFFF;
+    padding: 0 0 90px;
+    color: #24382E;
+    font-family: "DM Sans", Arial, sans-serif;
 }
 
 .product-detail {
     width: min(92%, 1100px);
-    margin: 0 auto;
+    margin: 48px auto 40px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 55px;
     align-items: start;
 }
 
 
 /* =========================================================
    PRODUCT IMAGE
-========================================================= */
+   ========================================================= */
 
 .detail-image {
     width: 100%;
-    height: 540px;
+    height: 480px;
     background: #F8FCFA;
     border: 1px solid #E4E8E4;
     border-radius: 18px;
@@ -50,6 +52,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .large-placeholder {
@@ -60,133 +63,110 @@
 
 /* =========================================================
    PRODUCT INFORMATION
-========================================================= */
+   ========================================================= */
 
 .detail-info {
-    padding-top: 8px;
+    padding-top: 4px;
 }
 
-.eyebrow {
-    margin: 0 0 10px;
+.detail-info .eyebrow {
+    margin: 0 0 8px;
     color: #B9674B;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.13em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
 .detail-info h1 {
-    margin: 0;
+    margin: 0 0 14px;
     color: #1D4D32;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 600;
+    font-size: 2.8rem;
+    font-weight: 500;
     line-height: 1.05;
 }
 
 .detail-description {
-    margin: 18px 0 0;
+    margin: 0 0 20px;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.8;
+    font-size: 0.82rem;
+    line-height: 1.65;
 }
 
 
 /* =========================================================
    PRICE
-========================================================= */
+   ========================================================= */
 
 .detail-price {
     display: flex;
     align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 25px;
+    margin-bottom: 16px;
 }
 
 .detail-price strong {
     color: #168B82;
-    font-family: "DM Sans", sans-serif;
     font-size: 1.45rem;
     font-weight: 700;
 }
 
 .detail-price del {
     color: #9AA7A2;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.82rem;
 }
 
 .discount {
-    padding: 4px 9px;
-    border-radius: 999px;
-    background: #F1F8F5;
-    color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #E5F7F3;
+    color: #168B82;
     font-size: 0.62rem;
     font-weight: 700;
 }
 
 
 /* =========================================================
-   PRODUCT META
-========================================================= */
+   META & STOCK
+   ========================================================= */
 
 .product-meta {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-top: 18px;
+    margin-bottom: 10px;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.72rem;
 }
 
-.product-meta strong {
-    color: #1D4D32;
-}
-
-
-/* =========================================================
-   STOCK
-========================================================= */
-
 .in-stock {
-    margin: 14px 0 0;
-    color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
+    margin: 0 0 20px;
+    color: #168B82;
     font-size: 0.72rem;
     font-weight: 700;
 }
 
 .out-stock {
-    margin: 14px 0 0;
+    margin: 0 0 20px;
     color: #B9674B;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.72rem;
     font-weight: 700;
 }
 
 
 /* =========================================================
-   MESSAGES
-========================================================= */
+   DJANGO MESSAGES
+   ========================================================= */
 
 .product-messages {
-    margin-top: 18px;
+    margin: 0 0 16px;
 }
 
 .product-message {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 11px 13px;
-    border-radius: 9px;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.7rem;
-    line-height: 1.5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .product-message.success {
@@ -202,46 +182,32 @@
     color: #B9674B;
 }
 
-.message-icon {
-    width: 22px;
-    height: 22px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-weight: 700;
-}
-
 
 /* =========================================================
-   BUY SECTION
-========================================================= */
+   QUANTITY & ACTIONS
+   ========================================================= */
 
 .product-buy-section {
-    margin-top: 28px;
+    margin-top: 0;
 }
-
-
-/* =========================================================
-   QUANTITY
-========================================================= */
 
 .product-quantity {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
+    margin-bottom: 18px;
 }
 
 .quantity-label {
     color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .quantity-control {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border: 1px solid #DCE4DF;
     border-radius: 999px;
@@ -250,39 +216,36 @@
 }
 
 .quantity-control button {
-    width: 38px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border: 0;
-    background: #F8FCFA;
+    background: transparent;
     color: #1D4D32;
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background 0.2s ease;
 }
 
 .quantity-control button:hover {
-    background: #EAF5F0;
+    background: #F1F8F5;
 }
 
 .quantity-value {
-    min-width: 40px;
+    min-width: 30px;
     text-align: center;
     color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.78rem;
     font-weight: 700;
 }
 
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-
 .product-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 18px;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .product-action-form {
@@ -292,15 +255,18 @@
 .product-add-btn,
 .product-buy-btn {
     width: 100%;
-    min-height: 45px;
-    padding: 12px 15px;
+    height: 46px;
+    padding: 0 15px;
     border: 0;
     border-radius: 999px;
-    font-family: "DM Sans", sans-serif;
+    font-family: "DM Sans", Arial, sans-serif;
     font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .product-add-btn {
@@ -310,7 +276,6 @@
 
 .product-add-btn:hover {
     background: #168B82;
-    transform: translateY(-1px);
 }
 
 .product-buy-btn {
@@ -319,61 +284,57 @@
 }
 
 .product-buy-btn:hover {
-    background: #1D4D32;
-    transform: translateY(-1px);
+    background: #A2583E;
 }
 
 
 /* =========================================================
    WISHLIST
-========================================================= */
+   ========================================================= */
 
 .wishlist-action {
-    margin-top: 12px;
+    margin-top: 0;
 }
 
 .wishlist-btn {
     width: 100%;
-    min-height: 44px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 11px 15px;
+    padding: 0 15px;
     border: 1px solid #D9E1DD;
     border-radius: 999px;
     background: #FFFFFF;
     color: #1D4D32;
     text-decoration: none;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.68rem;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 0.66rem;
     font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .wishlist-btn:hover {
-    background: #F1F8F5;
+    background: #F8FCFA;
     border-color: #168B82;
     color: #168B82;
-    transform: translateY(-1px);
 }
 
 .wishlist-heart {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1;
 }
 
-
-/* =========================================================
-   LOGIN MESSAGE
-========================================================= */
-
 .wishlist-login-note {
-    margin-top: 11px;
+    margin-top: 10px;
     text-align: center;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.62rem;
+    font-size: 0.68rem;
 }
 
 .wishlist-login-note a {
@@ -382,61 +343,109 @@
     text-decoration: none;
 }
 
-.wishlist-login-note a:hover {
-    color: #B9674B;
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+.section-divider {
+    width: min(92%, 1100px);
+    height: 1px;
+    background: #E8ECE9;
+    margin: 45px auto 40px;
 }
 
 
 /* =========================================================
-   PRODUCT INFORMATION
-========================================================= */
+   MIDDLE SECTION - 2-COLUMN CARDS GRID
+   ========================================================= */
 
-.product-information {
+.product-info-grid {
     width: min(92%, 1100px);
-    margin: 70px auto 0;
-    padding-top: 35px;
-    border-top: 1px solid #E4E8E4;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
 }
 
-.product-information > div {
-    margin-bottom: 30px;
+.info-col-left,
+.info-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-.product-information h2 {
-    margin: 0 0 10px;
+.info-card {
+    background: #FFFFFF;
+    border: 1px solid #E4E8E4;
+    border-radius: 12px;
+    padding: 26px 28px;
+    box-sizing: border-box;
+}
+
+.info-card h2 {
+    margin: 0 0 12px;
     color: #1D4D32;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.8rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 500;
 }
 
-.product-information p {
-    max-width: 900px;
+.info-card p {
     margin: 0;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.8rem;
-    line-height: 1.8;
+    font-size: 0.78rem;
+    line-height: 1.75;
 }
 
 
 /* =========================================================
-   REVIEWS
-========================================================= */
+   CUSTOMER REVIEWS SECTION
+   ========================================================= */
 
-.reviews {
+.reviews-container {
     width: min(92%, 1100px);
-    margin: 55px auto 0;
-    padding-top: 35px;
-    border-top: 1px solid #E4E8E4;
+    margin: 0 auto;
 }
 
-.reviews > h2 {
-    margin: 0 0 25px;
+.reviews-container > h2 {
+    margin: 0 0 26px;
     color: #1D4D32;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.9rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.reviews-empty {
+    max-width: 480px;
+    margin: 0 auto 22px;
+    padding: 34px 24px;
+    text-align: center;
+    background: #F8FCFA;
+    border: 1px solid #E4E8E4;
+    border-radius: 12px;
+}
+
+.review-empty-icon {
+    color: #B9674B;
+    font-size: 1.35rem;
+    margin-bottom: 6px;
+}
+
+.reviews-empty h3 {
+    margin: 6px 0 6px;
+    color: #263A38;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.reviews-empty p {
+    margin: 0;
+    color: #667572;
+    font-size: 0.72rem;
 }
 
 .review-card {
@@ -449,305 +458,204 @@
 
 .review-card strong {
     color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.78rem;
 }
 
-.review-rating {
-    margin-top: 6px;
+.review-rating-stars {
+    margin-top: 4px;
     color: #B9674B;
     font-size: 0.82rem;
     letter-spacing: 2px;
 }
 
 .review-card p {
-    margin: 9px 0 0;
+    margin: 8px 0 0;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
     font-size: 0.76rem;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
-/* =========================================================
-   REVIEW FORM
-   ========================================================= */
+/* WRITE REVIEW / ELIGIBILITY BANNER */
 
-.review-form-box {
-    margin-top: 35px;
-    padding: 28px;
-    background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-}
-
-.review-form-box h3 {
-    margin: 0 0 22px;
-    color: #1D4D32;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.review-rating,
-.review-comment {
-    margin-bottom: 18px;
-}
-
-.review-rating label,
-.review-comment label {
-    display: block;
-    margin-bottom: 8px;
-    color: #1D4D32;
-    font-weight: 600;
-}
-
-.review-rating select,
-.review-comment textarea {
+.review-notice-banner {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #d8d8d8;
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: inherit;
-    background: #fff;
+    padding: 14px 20px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #E4E8E4;
+    border-radius: 10px;
+    color: #667572;
+    font-size: 0.76rem;
     box-sizing: border-box;
 }
 
-.review-rating select:focus,
-.review-comment textarea:focus {
-    outline: none;
-    border-color: #168B82;
-    box-shadow: 0 0 0 3px rgba(22, 139, 130, 0.10);
+.review-notice-banner a {
+    color: #168B82;
+    font-weight: 700;
+    text-decoration: none;
 }
 
-.review-comment textarea {
+.review-form-card {
+    margin-top: 24px;
+    padding: 26px 28px;
+    background: #FFFFFF;
+    border: 1px solid #E4E8E4;
+    border-radius: 12px;
+}
+
+.review-form-card h3 {
+    margin: 0 0 18px;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #1D4D32;
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #DCE4DF;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 90px;
 }
 
 .review-submit-btn {
     border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
+    padding: 11px 24px;
+    border-radius: 999px;
     background: #1D4D32;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: background 0.2s ease;
 }
 
 .review-submit-btn:hover {
     background: #168B82;
 }
 
-.review-note {
-    margin: 15px 0 0;
-    color: #777;
-    font-size: 13px;
-    line-height: 1.6;
+
+/* FOOTER COLUMN HARMONIZATION (Match 3-column footer in screenshots) */
+.footer-container {
+    grid-template-columns: 1.5fr 1fr 1fr !important;
 }
-
-.review-login-box {
-    margin-top: 30px;
-    padding: 20px;
-    text-align: center;
-    background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 12px;
-}
-
-.review-login-box p {
-    margin: 0;
-    color: #666;
-}
-
-.review-login-box a {
-    color: #1D4D32;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.review-login-box a:hover {
-    color: #168B82;
-}
-
-/* =========================================================
-   EMPTY REVIEWS
-========================================================= */
-
-.reviews-empty {
-    padding: 35px 20px;
-    text-align: center;
-    background: #F8FCFA;
-    border: 1px solid #E4E8E4;
-    border-radius: 14px;
-}
-
-.review-empty-icon {
-    color: #B9674B;
-    font-size: 1.5rem;
-}
-
-.reviews-empty h3 {
-    margin: 10px 0 6px;
-    color: #1D4D32;
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.4rem;
-}
-
-.reviews-empty p {
-    margin: 0;
-    color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.72rem;
+.footer-column:nth-of-type(3) ~ .footer-column {
+    display: none !important;
 }
 
 
 /* =========================================================
-   RESPONSIVE
-========================================================= */
+   RESPONSIVE DESIGN
+   ========================================================= */
 
 @media (max-width: 850px) {
-
     .product-detail {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 35px;
     }
 
     .detail-image {
-        height: 500px;
+        height: 400px;
     }
 
+    .product-info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
-
 
 @media (max-width: 600px) {
-
     .product-detail-page {
-        padding: 50px 15px 70px;
+        padding: 0 0 60px;
     }
-
-    .product-detail,
-    .product-information,
-    .reviews {
-        width: 100%;
-    }
-
-    .detail-image {
-        height: 390px;
-        border-radius: 14px;
-    }
-
-    .product-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .product-information {
-        margin-top: 50px;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 400px) {
 
     .detail-image {
         height: 330px;
     }
 
-    .product-quantity {
-        justify-content: space-between;
+    .detail-info h1 {
+        font-size: 2.2rem;
     }
 
+    .product-actions {
+        grid-template-columns: 1fr;
+    }
 }
 
 </style>
 
 
-<section class="product-detail-page">
+<div class="product-detail-page">
 
+    <!-- =====================================================
+         TOP PRODUCT SECTION
+    ====================================================== -->
     <div class="product-detail">
 
-
-        <!-- =====================================================
-             PRODUCT IMAGE
-        ====================================================== -->
-
+        <!-- PRODUCT IMAGE -->
         <div class="detail-image">
-
             {% if product.image %}
-
                 <img
                     src="{{ product.image.url }}"
                     alt="{{ product.name }}"
                 >
-
             {% else %}
-
                 <div class="large-placeholder">
                     🌿
                 </div>
-
             {% endif %}
-
         </div>
 
-
-        <!-- =====================================================
-             PRODUCT INFORMATION
-        ====================================================== -->
-
+        <!-- PRODUCT INFORMATION & ACTIONS -->
         <div class="detail-info">
 
-
-            <!-- CATEGORY -->
-
             <p class="eyebrow">
-                {{ product.category.name }}
+                {{ product.category.name|upper }}
             </p>
-
-
-            <!-- PRODUCT NAME -->
 
             <h1>
                 {{ product.name }}
             </h1>
 
-
-            <!-- SHORT DESCRIPTION -->
-
             {% if product.short_description %}
-
                 <p class="detail-description">
                     {{ product.short_description }}
                 </p>
-
             {% else %}
-
                 <p class="detail-description">
                     {{ product.description }}
                 </p>
-
             {% endif %}
 
-
-            <!-- =================================================
-                 PRICE
-            ================================================== -->
-
+            <!-- PRICE ROW -->
             <div class="detail-price">
-
                 <strong>
                     ₹{{ product.selling_price|floatformat:2 }}
                 </strong>
 
                 {% if product.mrp > product.selling_price %}
-
                     <del>
                         ₹{{ product.mrp|floatformat:2 }}
                     </del>
@@ -755,116 +663,48 @@
                     <span class="discount">
                         {{ product.discount_percentage }}% OFF
                     </span>
-
                 {% endif %}
-
             </div>
 
-
-            <!-- =================================================
-                 NET QUANTITY
-            ================================================== -->
-
+            <!-- NET QUANTITY -->
             {% if product.net_quantity %}
-
                 <div class="product-meta">
-
-                    <strong>
-                        Net Quantity:
-                    </strong>
-
-                    <span>
-                        {{ product.net_quantity }}
-                    </span>
-
+                    Net Quantity: {{ product.net_quantity }}
                 </div>
-
             {% endif %}
 
-
-            <!-- =================================================
-                 STOCK STATUS
-            ================================================== -->
-
+            <!-- STOCK STATUS -->
             {% if product.stock > 0 %}
-
                 <p class="in-stock">
                     ✓ In Stock
                 </p>
-
             {% else %}
-
                 <p class="out-stock">
                     Currently Out of Stock
                 </p>
-
             {% endif %}
 
-
-            <!-- =================================================
-                 DJANGO MESSAGES
-            ================================================== -->
-
+            <!-- DJANGO MESSAGES -->
             {% if messages %}
-
                 <div class="product-messages">
-
                     {% for message in messages %}
-
                         <div class="product-message {{ message.tags }}">
-
-                            {% if message.tags == "success" %}
-
-                                <span class="message-icon">
-                                    ✓
-                                </span>
-
-                            {% elif message.tags == "error" %}
-
-                                <span class="message-icon">
-                                    !
-                                </span>
-
-                            {% elif message.tags == "warning" %}
-
-                                <span class="message-icon">
-                                    !
-                                </span>
-
-                            {% endif %}
-
-                            <span class="message-text">
-                                {{ message }}
-                            </span>
-
+                            {{ message }}
                         </div>
-
                     {% endfor %}
-
                 </div>
-
             {% endif %}
-
-
-            <!-- =================================================
-                 QUANTITY + ACTION BUTTONS
-            ================================================== -->
 
             {% if product.stock > 0 %}
-
                 <div class="product-buy-section">
 
-
-                    <!-- QUANTITY -->
-
+                    <!-- QUANTITY SELECTOR -->
                     <div class="product-quantity">
-
                         <span class="quantity-label">
-                            Quantity
+                            QUANTITY
                         </span>
 
                         <div class="quantity-control">
-
                             <button
                                 type="button"
                                 class="quantity-minus"
@@ -887,150 +727,102 @@
                             >
                                 +
                             </button>
-
                         </div>
-
                     </div>
 
-
-                    <!-- =================================================
-                         ACTION BUTTONS
-                    ================================================== -->
-
+                    <!-- ACTION BUTTONS (ADD TO CART & BUY NOW) -->
                     <div class="product-actions">
 
-
                         <!-- ADD TO CART -->
-
                         <form
                             method="POST"
                             action="{% url 'add_to_cart' product.id %}"
                             class="product-action-form"
                         >
-
                             {% csrf_token %}
-
                             <input
                                 type="hidden"
                                 name="quantity"
                                 id="cart-quantity-input"
                                 value="1"
                             >
-
                             <button
                                 type="submit"
                                 class="product-add-btn"
                             >
                                 ADD TO CART
                             </button>
-
                         </form>
 
-
                         <!-- BUY NOW -->
-
                         <form
                             method="POST"
                             action="{% url 'buy_now' product.id %}"
                             class="product-action-form"
                         >
-
                             {% csrf_token %}
-
                             <input
                                 type="hidden"
                                 name="quantity"
                                 id="buy-now-quantity-input"
                                 value="1"
                             >
-
                             <button
                                 type="submit"
                                 class="product-buy-btn"
                             >
                                 BUY NOW
                             </button>
-
                         </form>
 
                     </div>
 
-
-                    <!-- =================================================
-                         WISHLIST
-                    ================================================== -->
-
+                    <!-- WISHLIST BUTTON -->
                     {% if user.is_authenticated %}
-
                         <div class="wishlist-action">
-
                             <form method="post" action="{% url 'add_to_wishlist' product.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="wishlist-btn">
-
-                                <span class="wishlist-heart">
-                                    ♡
-                                </span>
-
-                                ADD TO WISHLIST
-
+                                    <span class="wishlist-heart">
+                                        {% if is_wishlisted %}♥{% else %}♡{% endif %}
+                                    </span>
+                                    {% if is_wishlisted %}IN WISHLIST{% else %}ADD TO WISHLIST{% endif %}
                                 </button>
                             </form>
-
                         </div>
-
                     {% else %}
-
-                        <div class="wishlist-login-note">
-
-                            Please
-                            <a href="{% url 'login' %}?next={{ request.path|urlencode }}">
-                                login
+                        <div class="wishlist-action">
+                            <a href="{% url 'login' %}?next={{ request.path|urlencode }}" class="wishlist-btn">
+                                <span class="wishlist-heart">♡</span>
+                                ADD TO WISHLIST
                             </a>
-                            to add this product to your wishlist.
-
                         </div>
-
                     {% endif %}
-
 
                 </div>
 
             {% else %}
 
-                <!-- OUT OF STOCK -->
-
+                <!-- OUT OF STOCK WISHLIST -->
                 {% if user.is_authenticated %}
-
                     <div class="wishlist-action">
-
                         <form method="post" action="{% url 'add_to_wishlist' product.id %}">
                             {% csrf_token %}
                             <button type="submit" class="wishlist-btn">
-
-                            <span class="wishlist-heart">
-                                ♡
-                            </span>
-
-                            ADD TO WISHLIST
-
+                                <span class="wishlist-heart">
+                                    {% if is_wishlisted %}♥{% else %}♡{% endif %}
+                                </span>
+                                {% if is_wishlisted %}IN WISHLIST{% else %}ADD TO WISHLIST{% endif %}
                             </button>
                         </form>
-
                     </div>
-
                 {% else %}
-
-                    <div class="wishlist-login-note">
-
-                        Please
-                        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">
-                            login
+                    <div class="wishlist-action">
+                        <a href="{% url 'login' %}?next={{ request.path|urlencode }}" class="wishlist-btn">
+                            <span class="wishlist-heart">♡</span>
+                            ADD TO WISHLIST
                         </a>
-                        to add this product to your wishlist.
-
                     </div>
-
                 {% endif %}
 
             {% endif %}
@@ -1041,175 +833,117 @@
 
 
     <!-- =========================================================
-         PRODUCT INFORMATION
+         MIDDLE SECTION: DESCRIPTION, INGREDIENTS, STORAGE
     ========================================================== -->
+    <div class="section-divider"></div>
 
-    <section class="product-information">
+    <div class="product-info-grid">
 
+        <!-- LEFT COLUMN: PRODUCT DESCRIPTION & STORAGE -->
+        <div class="info-col-left">
 
-        <!-- PRODUCT DESCRIPTION -->
+            {% if product.description %}
+                <div class="info-card">
+                    <h2>
+                        Product Description
+                    </h2>
+                    <p>
+                        {{ product.description|linebreaksbr }}
+                    </p>
+                </div>
+            {% endif %}
 
-        {% if product.description %}
+            {% if product.storage %}
+                <div class="info-card">
+                    <h2>
+                        Storage
+                    </h2>
+                    <p>
+                        {{ product.storage|linebreaksbr }}
+                    </p>
+                </div>
+            {% endif %}
 
-            <div>
+            {% if product.precautions %}
+                <div class="info-card">
+                    <h2>
+                        Precautions
+                    </h2>
+                    <p>
+                        {{ product.precautions|linebreaksbr }}
+                    </p>
+                </div>
+            {% endif %}
 
-                <h2>
-                    Product Description
-                </h2>
-
-                <p>
-                    {{ product.description|linebreaksbr }}
-                </p>
-
-            </div>
-
-        {% endif %}
-
-
-        <!-- INGREDIENTS -->
-
-        {% if product.ingredients %}
-
-            <div>
-
-                <h2>
-                    Ingredients
-                </h2>
-
-                <p>
-                    {{ product.ingredients|linebreaksbr }}
-                </p>
-
-            </div>
-
-        {% endif %}
-
-
-        <!-- DIRECTIONS -->
-
-        {% if product.directions %}
-
-            <div>
-
-                <h2>
-                    Directions
-                </h2>
-
-                <p>
-                    {{ product.directions|linebreaksbr }}
-                </p>
-
-            </div>
-
-        {% endif %}
+        </div>
 
 
-        <!-- PRECAUTIONS -->
+        <!-- RIGHT COLUMN: INGREDIENTS & DIRECTIONS -->
+        <div class="info-col-right">
 
-        {% if product.precautions %}
+            {% if product.ingredients %}
+                <div class="info-card">
+                    <h2>
+                        Ingredients
+                    </h2>
+                    <p>
+                        {{ product.ingredients|linebreaksbr }}
+                    </p>
+                </div>
+            {% endif %}
 
-            <div>
+            {% if product.directions %}
+                <div class="info-card">
+                    <h2>
+                        Directions
+                    </h2>
+                    <p>
+                        {{ product.directions|linebreaksbr }}
+                    </p>
+                </div>
+            {% endif %}
 
-                <h2>
-                    Precautions
-                </h2>
+        </div>
 
-                <p>
-                    {{ product.precautions|linebreaksbr }}
-                </p>
-
-            </div>
-
-        {% endif %}
-
-
-        <!-- STORAGE -->
-
-        {% if product.storage %}
-
-            <div>
-
-                <h2>
-                    Storage
-                </h2>
-
-                <p>
-                    {{ product.storage|linebreaksbr }}
-                </p>
-
-            </div>
-
-        {% endif %}
-
-
-    </section>
+    </div>
 
 
     <!-- =========================================================
-         CUSTOMER REVIEWS
+         CUSTOMER REVIEWS SECTION
     ========================================================== -->
+    <div class="section-divider"></div>
 
-    <section class="reviews">
+    <section class="reviews-container">
 
         <h2>
             Customer Reviews
         </h2>
 
-
         {% if reviews %}
-
             {% for review in reviews %}
-
                 <div class="review-card">
-
-
-                    <!-- CUSTOMER NAME -->
-
                     <strong>
                         {{ review.user.get_full_name|default:review.user.username }}
                     </strong>
 
-
-                    <!-- STAR RATING -->
-
-                    <div class="review-rating">
-
+                    <div class="review-rating-stars">
                         {% for i in "12345" %}
-
                             {% if forloop.counter <= review.rating %}
-
                                 ★
-
                             {% else %}
-
                                 ☆
-
                             {% endif %}
-
                         {% endfor %}
-
                     </div>
-
-
-                    <!-- REVIEW -->
 
                     <p>
                         {{ review.comment }}
                     </p>
-
-
                 </div>
-
             {% endfor %}
-
-
         {% else %}
-
-
-            <!-- NO REVIEWS -->
-
+            <!-- EMPTY REVIEWS BOX -->
             <div class="reviews-empty">
-
                 <div class="review-empty-icon">
                     ☆
                 </div>
@@ -1221,203 +955,103 @@
                 <p>
                     Be the first customer to share your experience.
                 </p>
-
             </div>
-
-
         {% endif %}
-        
+
+        <!-- REVIEW ELIGIBILITY / CALLOUT BANNER -->
         {% if not user.is_authenticated %}
+            <div class="review-notice-banner">
+                Please <a href="{% url 'login' %}?next={{ request.path|urlencode }}">login</a> to write a review.
+            </div>
+        {% elif already_reviewed %}
+            <div class="review-notice-banner">
+                You have already submitted a review for this product.
+            </div>
+        {% elif can_review %}
+            <div class="review-form-card">
+                <h3>Write a Review</h3>
 
-<div class="review-login-box">
-    <p>
-        Please
-        <a href="{% url 'login' %}?next={{ request.path|urlencode }}">login</a>
-        to write a review.
-    </p>
-</div>
+                <form method="POST" action="{% url 'submit_review' product.id %}">
+                    {% csrf_token %}
 
-{% elif already_reviewed %}
+                    <div class="form-group">
+                        <label>Your Rating</label>
+                        <select name="rating" required>
+                            <option value="">Select Rating</option>
+                            <option value="5">★★★★★ - Excellent</option>
+                            <option value="4">★★★★☆ - Very Good</option>
+                            <option value="3">★★★☆☆ - Good</option>
+                            <option value="2">★★☆☆☆ - Fair</option>
+                            <option value="1">★☆☆☆☆ - Poor</option>
+                        </select>
+                    </div>
 
-<div class="review-login-box">
-    <p>
-        You have already submitted a review for this product.
-    </p>
-</div>
+                    <div class="form-group">
+                        <label>Your Review</label>
+                        <textarea
+                            name="comment"
+                            rows="4"
+                            placeholder="Share your experience with this product..."
+                            required
+                        ></textarea>
+                    </div>
 
-{% elif can_review %}
+                    <button type="submit" class="review-submit-btn">
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <div class="review-notice-banner">
+                You can write a review after this product has been delivered to you.
+            </div>
+        {% endif %}
 
-<div class="review-form-box">
-
-    <h3>Write a Review</h3>
-
-    <form method="POST" action="{% url 'submit_review' product.id %}">
-        {% csrf_token %}
-
-        <div class="review-rating">
-            <label>Your Rating</label>
-
-            <select name="rating" required>
-                <option value="">Select Rating</option>
-                <option value="5">★★★★★ - Excellent</option>
-                <option value="4">★★★★☆ - Very Good</option>
-                <option value="3">★★★☆☆ - Good</option>
-                <option value="2">★★☆☆☆ - Fair</option>
-                <option value="1">★☆☆☆☆ - Poor</option>
-            </select>
-        </div>
-
-        <div class="review-comment">
-            <label>Your Review</label>
-
-            <textarea
-                name="comment"
-                rows="5"
-                placeholder="Share your experience with this product..."
-                required
-            ></textarea>
-        </div>
-
-        <button type="submit" class="review-submit-btn">
-            Submit Review
-        </button>
-    </form>
-
-    <p class="review-note">
-        Your review will appear after admin approval.
-    </p>
-
-</div>
-
-{% else %}
-
-<div class="review-login-box">
-    <p>
-        You can write a review after this product has been delivered to you.
-    </p>
-</div>
-
-{% endif %}
     </section>
 
-</section>
+</div>
 
 
 <!-- =============================================================
      PRODUCT QUANTITY JAVASCRIPT
 ============================================================= -->
-
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
+    const quantityValue = document.getElementById("product-quantity");
+    const minusButton = document.querySelector(".quantity-minus");
+    const plusButton = document.querySelector(".quantity-plus");
+    const cartQuantityInput = document.getElementById("cart-quantity-input");
+    const buyNowQuantityInput = document.getElementById("buy-now-quantity-input");
 
-
-    /* =========================================================
-       GET ELEMENTS
-    ========================================================== */
-
-    const quantityValue =
-        document.getElementById("product-quantity");
-
-    const minusButton =
-        document.querySelector(".quantity-minus");
-
-    const plusButton =
-        document.querySelector(".quantity-plus");
-
-    const cartQuantityInput =
-        document.getElementById("cart-quantity-input");
-
-    const buyNowQuantityInput =
-        document.getElementById("buy-now-quantity-input");
-
-
-    /* =========================================================
-       CHECK ELEMENTS
-    ========================================================== */
-
-    if (
-        !quantityValue ||
-        !minusButton ||
-        !plusButton ||
-        !cartQuantityInput ||
-        !buyNowQuantityInput
-    ) {
+    if (!quantityValue || !minusButton || !plusButton) {
         return;
     }
 
-
-    /* =========================================================
-       INITIAL QUANTITY
-    ========================================================== */
-
     let quantity = 1;
-
-
-    /* =========================================================
-       MAXIMUM STOCK
-    ========================================================== */
-
-    const maxStock = Number("{{ product.stock }}");
-
-
-    /* =========================================================
-       UPDATE QUANTITY
-    ========================================================== */
+    const maxStock = Number("{{ product.stock|default:1 }}") || 1;
 
     function updateQuantity() {
-
         quantityValue.textContent = quantity;
-
-        cartQuantityInput.value = quantity;
-
-        buyNowQuantityInput.value = quantity;
-
+        if (cartQuantityInput) cartQuantityInput.value = quantity;
+        if (buyNowQuantityInput) buyNowQuantityInput.value = quantity;
     }
 
-
-    /* =========================================================
-       MINUS BUTTON
-    ========================================================== */
-
     minusButton.addEventListener("click", function () {
-
         if (quantity > 1) {
-
             quantity--;
-
             updateQuantity();
-
         }
-
     });
-
-
-    /* =========================================================
-       PLUS BUTTON
-    ========================================================== */
 
     plusButton.addEventListener("click", function () {
-
         if (quantity < maxStock) {
-
             quantity++;
-
             updateQuantity();
-
         }
-
     });
 
-
-    /* =========================================================
-       INITIALIZE
-    ========================================================== */
-
     updateQuantity();
-
 });
-
 </script>
 
 {% endblock %}

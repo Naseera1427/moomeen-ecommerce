@@ -23,6 +23,10 @@
         content="MOOMEEN PRODUCTS - Natural and Siddha-inspired products."
     >
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
+
     <link
         rel="stylesheet"
         href="{% static 'css/style.css' %}"
@@ -38,115 +42,97 @@
      HEADER
 ========================================================= -->
 
+<!-- =========================================================
+     HEADER / NAVBAR
+========================================================= -->
+
 <header class="navbar">
 
     <div class="nav-container">
 
+        <!-- LEFT: HAMBURGER MENU BUTTON -->
+        <div class="nav-left-zone">
+            <button
+                type="button"
+                class="nav-hamburger-btn"
+                id="navHamburgerBtn"
+                aria-label="Toggle Navigation Menu"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
 
-        <!-- =================================================
-             LEFT NAVIGATION
-        ================================================== -->
-
-        <nav class="nav-links nav-left">
-
-            <a href="{% url 'home' %}">
-                Home
-            </a>
-
-            <a href="{% url 'products' %}">
-                Products
-            </a>
-
-            <a href="{% url 'about' %}">
-                About
-            </a>
-
-            <a href="{% url 'contact' %}">
-                Contact
-            </a>
-
-        </nav>
-
-
-        <!-- =================================================
-             CENTER LOGO
-        ================================================== -->
-
+        <!-- CENTER: MOOMEEN PRODUCTS LOGO -->
         <a
             href="{% url 'home' %}"
             class="brand"
             aria-label="MOOMEEN PRODUCTS Home"
         >
-
             <img
                 src="{% static 'images/logo/moomeen-logo.jpg' %}"
                 alt="MOOMEEN PRODUCTS"
                 class="brand-logo"
             >
-
         </a>
 
-
-        <!-- =================================================
-             RIGHT ACTIONS
-        ================================================== -->
-
+        <!-- RIGHT: WISHLIST, USER / LOGIN, CART ICONS -->
         <div class="nav-actions">
 
+            <!-- WISHLIST ICON -->
+            <a
+                href="{% url 'wishlist' %}"
+                class="nav-icon-link"
+                aria-label="Wishlist"
+                title="Wishlist"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </a>
 
-            <!-- =============================================
-                 LOGIN / USER
-            ============================================== -->
-
+            <!-- USER / LOGIN ICON -->
             {% if user.is_authenticated %}
-
-                <span class="nav-user">
-                    Hi, {{ user.first_name|default:user.username }}
-                </span>
-
                 <a
                     href="{% url 'my_orders' %}"
-                    class="nav-auth-link"
+                    class="nav-icon-link"
+                    aria-label="My Account"
+                    title="My Account ({{ user.username }})"
                 >
-                    My Orders
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                 </a>
-
-                <a
-                    href="{% url 'wishlist' %}"
-                    class="nav-auth-link"
-                >
-                    Wishlist
-                </a>
-
-                <form method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="nav-auth-link">
-                        Logout
-                    </button>
-                </form>
-
             {% else %}
-
                 <a
                     href="{% url 'login' %}"
-                    class="nav-auth-link"
+                    class="nav-icon-link"
+                    aria-label="Login"
+                    title="Login"
                 >
-                    Login
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                 </a>
-
             {% endif %}
 
-
-            <!-- =============================================
-                 CART
-            ============================================== -->
-
+            <!-- CART ICON -->
             <a
                 href="{% url 'cart' %}"
-                class="cart-link"
+                class="nav-icon-link cart-icon-link"
+                aria-label="Cart"
+                title="Cart"
             >
-                Cart
-                <span class="cart-symbol">🛒</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
             </a>
 
         </div>
@@ -154,6 +140,74 @@
     </div>
 
 </header>
+
+<!-- =========================================================
+     SIDE DRAWER (HAMBURGER MENU)
+========================================================= -->
+<div class="nav-drawer-backdrop" id="navDrawerBackdrop"></div>
+
+<aside class="nav-drawer" id="navDrawer" aria-label="Main Navigation">
+
+    <div class="nav-drawer-header">
+        <span class="nav-drawer-brand-title">MOOMEEN PRODUCTS</span>
+        <button
+            type="button"
+            class="nav-drawer-close"
+            id="navDrawerClose"
+            aria-label="Close menu"
+        >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="nav-drawer-links">
+
+        <a href="{% url 'home' %}" class="drawer-link">
+            Home
+        </a>
+
+        <a href="{% url 'products' %}" class="drawer-link">
+            Products
+        </a>
+
+        <a href="{% url 'about' %}" class="drawer-link">
+            About Us
+        </a>
+
+        <a href="{% url 'contact' %}" class="drawer-link">
+            Contact
+        </a>
+
+        <div class="drawer-divider"></div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'my_orders' %}" class="drawer-link">
+                My Orders
+            </a>
+            <a href="{% url 'my_addresses' %}" class="drawer-link">
+                My Addresses
+            </a>
+            <a href="{% url 'wishlist' %}" class="drawer-link">
+                Wishlist
+            </a>
+            <form method="post" action="{% url 'logout' %}" class="drawer-logout-form">
+                {% csrf_token %}
+                <button type="submit" class="drawer-link drawer-logout-btn">
+                    Logout ({{ user.username }})
+                </button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="drawer-link drawer-auth-highlight">
+                Login / Register
+            </a>
+        {% endif %}
+
+    </nav>
+
+</aside>
 
 
 <!-- =========================================================

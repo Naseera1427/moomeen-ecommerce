@@ -174,6 +174,18 @@ urlpatterns = [
         name="my_orders"
     ),
 
+    path(
+        "my-addresses/",
+        views.my_addresses,
+        name="my_addresses"
+    ),
+
+    path(
+        "my-addresses/delete/<int:address_id>/",
+        views.delete_address,
+        name="delete_address"
+    ),
+
 
     # =====================================================
     # COMPANY

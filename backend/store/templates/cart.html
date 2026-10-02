@@ -80,28 +80,19 @@ Shopping Cart | MOOMEEN PRODUCTS
                             </p>
 
 
-                            {% if item.product.net_quantity %}
+                            <small class="cart-meta">
 
-                            <small class="cart-quantity-info">
-                                {{ item.product.net_quantity }}
+                                {% if item.product.net_quantity %}
+                                    {{ item.product.net_quantity }}
+                                {% endif %}
+
+                                {% if item.product.stock > 0 %}
+                                    {{ item.product.stock }} available
+                                {% else %}
+                                    <span class="out-of-stock-text">Out of stock</span>
+                                {% endif %}
+
                             </small>
-
-                            {% endif %}
-
-
-                            {% if item.product.stock > 0 %}
-
-                            <small class="cart-stock">
-                                {{ item.product.stock }} available
-                            </small>
-
-                            {% else %}
-
-                            <small class="cart-stock out-of-stock-text">
-                                Out of stock
-                            </small>
-
-                            {% endif %}
 
                         </div>
 
@@ -115,7 +106,7 @@ Shopping Cart | MOOMEEN PRODUCTS
                     <div class="cart-quantity">
 
                         <span class="quantity-label">
-                            Quantity
+                            QUANTITY
                         </span>
 
 
@@ -181,7 +172,7 @@ Shopping Cart | MOOMEEN PRODUCTS
                     <div class="cart-item-total">
 
                         <span>
-                            Total
+                            TOTAL
                         </span>
 
                         <strong>
@@ -267,7 +258,7 @@ Shopping Cart | MOOMEEN PRODUCTS
                         Total
                     </span>
 
-                    <strong>
+                    <strong class="summary-total-amount">
                         ₹{{ subtotal|floatformat:2 }}
                     </strong>
 
@@ -283,7 +274,7 @@ Shopping Cart | MOOMEEN PRODUCTS
                     class="checkout-btn"
                     aria-label="Proceed to checkout"
                 >
-                    Proceed to Checkout
+                    PROCEED TO CHECKOUT
                 </a>
 
 
@@ -295,7 +286,7 @@ Shopping Cart | MOOMEEN PRODUCTS
                     href="{% url 'products' %}"
                     class="continue-shopping"
                 >
-                    ← Continue Shopping
+                    — Continue Shopping
                 </a>
 
             </aside>

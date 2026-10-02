@@ -26,15 +26,61 @@
         margin: 0;
     }
 
+    .account-header p {
+        color: #69756f;
+        margin: 5px 0 0;
+    }
+
     .add-btn {
         background: #168B82;
         color: #fff;
         text-decoration: none;
-        padding: 12px 20px;
+        padding: 12px 22px;
         border-radius: 8px;
         font-weight: 600;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.2s, transform 0.15s;
+        font-family: inherit;
     }
 
+    .add-btn:hover {
+        background: #12726b;
+        transform: translateY(-1px);
+    }
+
+    /* Alerts / Messages */
+    .addr-messages {
+        margin-bottom: 24px;
+    }
+
+    .addr-alert {
+        padding: 13px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .addr-alert-success {
+        background: #e8f5e9;
+        color: #1b5e20;
+        border: 1px solid #c8e6c9;
+    }
+
+    .addr-alert-error, .addr-alert-danger {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
+    }
+
+    /* Address Grid */
     .address-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -44,38 +90,265 @@
     .address-card {
         border: 1px solid #e5e5e5;
         border-radius: 14px;
-        padding: 25px;
+        padding: 24px;
         background: #fff;
         box-shadow: 0 7px 22px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .address-card:hover {
+        border-color: #cbdad3;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+    }
+
+    .address-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
     }
 
     .address-card h3 {
         color: #1D4D32;
-        margin-top: 0;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
     }
 
     .default-badge {
         display: inline-block;
         background: #e8f3ef;
         color: #168B82;
-        padding: 5px 10px;
+        padding: 4px 10px;
         border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        margin-bottom: 12px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
     }
 
     .address-card p {
         color: #555;
-        line-height: 1.7;
-        margin: 5px 0;
+        line-height: 1.65;
+        margin: 6px 0;
+        font-size: 14px;
     }
 
+    .delete-addr-btn {
+        background: transparent;
+        border: 1px solid #f0d5d2;
+        color: #c0392b;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .delete-addr-btn:hover {
+        background: #fdf0ee;
+        border-color: #c0392b;
+    }
+
+    /* Empty state */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
         border: 1px dashed #ddd;
         border-radius: 15px;
+        background: #fafcfb;
+    }
+
+    .empty-state h2 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        margin: 0 0 10px;
+    }
+
+    .empty-state p {
+        color: #69756f;
+        margin: 0 0 20px;
+    }
+
+    /* Modal */
+    .addr-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 33, 23, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .addr-modal-overlay.active {
+        display: flex;
+    }
+
+    .addr-modal-card {
+        background: #ffffff;
+        border-radius: 16px;
+        max-width: 580px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 32px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+        animation: addrModalFadeIn 0.22s ease-out;
+        box-sizing: border-box;
+    }
+
+    @keyframes addrModalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(12px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .addr-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #eef2f0;
+    }
+
+    .addr-modal-header h2 {
+        color: #1D4D32;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 28px;
+        margin: 0;
+    }
+
+    .addr-close-btn {
+        background: transparent;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        color: #888;
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.15s;
+    }
+
+    .addr-close-btn:hover {
+        color: #1D4D32;
+    }
+
+    /* Form Styles */
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #24382e;
+    }
+
+    .addr-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #d4ded9;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #24382e;
+        background: #fafcfb;
+        font-family: inherit;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .addr-input:focus {
+        outline: none;
+        border-color: #168B82;
+        box-shadow: 0 0 0 3px rgba(22, 139, 130, 0.14);
+        background: #ffffff;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    .form-row-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .field-error {
+        display: block;
+        color: #c0392b;
+        font-size: 12px;
+        margin-top: 4px;
+        font-weight: 500;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1px solid #eef2f0;
+    }
+
+    .cancel-btn {
+        background: transparent;
+        color: #555;
+        border: 1px solid #ccc;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .cancel-btn:hover {
+        background: #f5f5f5;
+        color: #222;
+    }
+
+    .save-btn {
+        background: #168B82;
+        color: #ffffff;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: inherit;
+    }
+
+    .save-btn:hover {
+        background: #12726b;
     }
 
     @media(max-width: 700px) {
@@ -87,10 +360,30 @@
             flex-direction: column;
             align-items: flex-start;
         }
+
+        .form-row, .form-row-3 {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .addr-modal-card {
+            padding: 22px 18px;
+        }
     }
 </style>
 
 <div class="account-page">
+
+    <!-- Flash Messages -->
+    {% if messages %}
+        <div class="addr-messages">
+            {% for message in messages %}
+                <div class="addr-alert addr-alert-{{ message.tags }}">
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="account-header">
         <div>
@@ -98,7 +391,7 @@
             <p>Manage your delivery addresses.</p>
         </div>
 
-        <a href="#" class="add-btn">+ Add Address</a>
+        <button type="button" class="add-btn" id="open-address-btn">+ Add Address</button>
     </div>
 
     {% if addresses %}
@@ -109,19 +402,29 @@
 
                 <div class="address-card">
 
-                    {% if address.is_default %}
-                        <span class="default-badge">Default Address</span>
-                    {% endif %}
+                    <div>
+                        <div class="address-card-header">
+                            <div>
+                                {% if address.is_default %}
+                                    <span class="default-badge">Default Address</span>
+                                {% endif %}
+                                <h3>{{ address.full_name }}</h3>
+                            </div>
 
-                    <h3>{{ address.full_name }}</h3>
+                            <form method="post" action="{% url 'delete_address' address.id %}" onsubmit="return confirm('Are you sure you want to remove this address?');">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-addr-btn" title="Delete address">Delete</button>
+                            </form>
+                        </div>
 
-                    <p><strong>Phone:</strong> {{ address.phone }}</p>
+                        <p><strong>Phone:</strong> {{ address.phone }}</p>
 
-                    <p>
-                        {{ address.address_line }}<br>
-                        {{ address.city }}, {{ address.state }}<br>
-                        PIN: {{ address.pincode }}
-                    </p>
+                        <p>
+                            {{ address.address_line }}<br>
+                            {{ address.city }}, {{ address.state }}<br>
+                            PIN: {{ address.pincode }}
+                        </p>
+                    </div>
 
                 </div>
 
@@ -133,11 +436,137 @@
 
         <div class="empty-state">
             <h2>No saved addresses</h2>
-            <p>Add an address during checkout to make future orders easier.</p>
+            <p>Add an address to make future orders quick and easy.</p>
+            <button type="button" class="add-btn" id="empty-add-address-btn" style="display: inline-flex;">+ Add Your First Address</button>
         </div>
 
     {% endif %}
 
 </div>
+
+
+<!-- =========================================================
+     ADD ADDRESS MODAL FORM
+========================================================= -->
+<div id="address-modal" class="addr-modal-overlay {% if show_form %}active{% endif %}">
+    <div class="addr-modal-card">
+        <div class="addr-modal-header">
+            <h2>Add New Address</h2>
+            <button type="button" class="addr-close-btn" id="close-address-modal" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <form method="post" action="{% url 'my_addresses' %}" class="addr-form" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="addr-alert addr-alert-error">
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="addr-full-name">Full Name *</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                        <span class="field-error">{{ form.full_name.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-phone">Phone Number *</label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                        <span class="field-error">{{ form.phone.errors.0 }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="addr-line">Street Address *</label>
+                {{ form.address_line }}
+                {% if form.address_line.errors %}
+                    <span class="field-error">{{ form.address_line.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-row form-row-3">
+                <div class="form-group">
+                    <label for="addr-city">City *</label>
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                        <span class="field-error">{{ form.city.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-state">State *</label>
+                    {{ form.state }}
+                    {% if form.state.errors %}
+                        <span class="field-error">{{ form.state.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="addr-pincode">Pincode *</label>
+                    {{ form.pincode }}
+                    {% if form.pincode.errors %}
+                        <span class="field-error">{{ form.pincode.errors.0 }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" id="cancel-address-modal">Cancel</button>
+                <button type="submit" class="save-btn">Save Address</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const modal = document.getElementById('address-modal');
+        const openBtn = document.getElementById('open-address-btn');
+        const emptyOpenBtn = document.getElementById('empty-add-address-btn');
+        const closeBtn = document.getElementById('close-address-modal');
+        const cancelBtn = document.getElementById('cancel-address-modal');
+
+        function openModal() {
+            if (modal) {
+                modal.classList.add('active');
+                const firstInput = modal.querySelector('input:not([type="hidden"])');
+                if (firstInput) firstInput.focus();
+            }
+        }
+
+        function closeModal() {
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        if (openBtn) openBtn.addEventListener('click', openModal);
+        if (emptyOpenBtn) emptyOpenBtn.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    })();
+</script>
 
 {% endblock %}

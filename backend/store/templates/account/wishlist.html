@@ -5,17 +5,17 @@
 {% block content %}
 
 <style>
-
 /* =========================================
-   MOOMEEN PRODUCTS
-   WISHLIST PAGE
-========================================= */
+   MOOMEEN PRODUCTS - WISHLIST PAGE
+   ========================================= */
 
 .wishlist-page {
     width: 100%;
-    min-height: 75vh;
-    padding: 70px 20px 90px;
+    min-height: calc(100vh - 120px);
+    padding: 45px 20px 80px;
     background: #FFFFFF;
+    box-sizing: border-box;
+    font-family: "DM Sans", Arial, sans-serif;
 }
 
 .wishlist-container {
@@ -23,119 +23,169 @@
     margin: 0 auto;
 }
 
-
-/* =========================================
-   PAGE HEADER
-========================================= */
-
+/* Page Header */
 .wishlist-header {
     text-align: center;
-    margin-bottom: 42px;
+    margin-bottom: 38px;
 }
 
 .wishlist-eyebrow {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     color: #168B82;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.72rem;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
 }
 
 .wishlist-header h1 {
-    margin: 0;
+    margin: 0 0 10px;
     color: #1D4D32;
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-size: 46px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.15;
 }
 
 .wishlist-header p {
-    margin: 14px auto 0;
+    margin: 0 auto;
     max-width: 520px;
     color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.85rem;
-    line-height: 1.7;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
 }
 
+/* Empty State Card */
+.empty-state {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 48px 36px 44px;
+    text-align: center;
+    background: #FFFFFF;
+    border: 1px solid #E5EBE6;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.015);
+    box-sizing: border-box;
+}
 
-/* =========================================
-   WISHLIST GRID
-========================================= */
+.empty-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #EEF7F2;
+}
 
+.empty-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: #B9674B;
+}
+
+.empty-state h2 {
+    margin: 0 0 10px;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.empty-state p {
+    max-width: 420px;
+    margin: 0 auto 24px;
+    color: #667572;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+.browse-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 28px;
+    border-radius: 999px;
+    background: #1D4D32;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition: background 0.2s ease, transform 0.15s ease;
+    box-sizing: border-box;
+}
+
+.browse-btn:hover {
+    background: #163E28;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* Wishlist Grid (when populated) */
 .wishlist-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 22px;
 }
 
-
-/* =========================================
-   WISHLIST CARD
-========================================= */
-
 .wishlist-card {
     position: relative;
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
-    border: 1px solid #E4E8E4;
+    border: 1px solid #E5EBE6;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(38, 58, 56, 0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .wishlist-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 30px rgba(38, 58, 56, 0.10);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
 }
 
-
-/* =========================================
-   REMOVE BUTTON
-========================================= */
+.wishlist-remove-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
 
 .remove-wishlist {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 5;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1px solid #E5EBE6;
+    color: #667572;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: #FFFFFF;
-    border: 1px solid #E4E8E4;
-    color: #B9674B;
-    text-decoration: none;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: all 0.2s ease;
+    line-height: 1;
 }
 
 .remove-wishlist:hover {
-    background: #B9674B;
-    border-color: #B9674B;
-    color: #FFFFFF;
+    background: #FFF3F2;
+    color: #B9382B;
+    border-color: #F5D2CD;
 }
-
-
-/* =========================================
-   PRODUCT IMAGE
-========================================= */
 
 .wishlist-image {
     width: 100%;
-    height: 230px;
-    background: #F8FCFA;
+    height: 220px;
+    background: #F7FAF8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,110 +204,72 @@
 }
 
 .no-image {
-    color: #9AA7A2;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.72rem;
+    color: #9CA7A2;
+    font-size: 12px;
 }
 
-
-/* =========================================
-   PRODUCT CONTENT
-========================================= */
-
 .wishlist-content {
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 18px;
+    flex-grow: 1;
+}
+
+.wishlist-category {
+    color: #168B82;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
 }
 
 .wishlist-content h3 {
     margin: 0 0 8px;
     color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.92rem;
-    font-weight: 700;
-    line-height: 1.4;
-}
-
-
-/* =========================================
-   CATEGORY
-========================================= */
-
-.wishlist-category {
-    margin-bottom: 10px;
-    color: #B9674B;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.62rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 18px;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    line-height: 1.25;
 }
-
-
-/* =========================================
-   PRICE
-========================================= */
 
 .wishlist-price-row {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: baseline;
     gap: 8px;
     margin-bottom: 8px;
 }
 
 .current-price {
-    color: #168B82;
-    font-family: "DM Sans", sans-serif;
-    font-size: 1rem;
+    color: #1D4D32;
+    font-size: 15px;
     font-weight: 700;
 }
 
 .mrp-price {
-    color: #9AA7A2;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.72rem;
+    color: #9CA7A2;
+    font-size: 12px;
     text-decoration: line-through;
 }
 
 .discount-badge {
-    padding: 3px 7px;
-    border-radius: 999px;
-    background: #F1F8F5;
-    color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.58rem;
+    color: #168B82;
+    font-size: 10px;
     font-weight: 700;
 }
 
-
-/* =========================================
-   STOCK STATUS
-========================================= */
-
 .stock-status {
-    margin-bottom: 16px;
-    color: #1D4D32;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.65rem;
+    font-size: 11px;
     font-weight: 600;
+    color: #2E7D32;
+    margin-bottom: 12px;
 }
 
 .stock-status.out-of-stock {
-    color: #B9674B;
+    color: #C62828;
 }
 
-
-/* =========================================
-   ACTIONS
-========================================= */
-
 .wishlist-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
     margin-top: auto;
 }
 
@@ -265,160 +277,64 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 40px;
-    padding: 10px 14px;
+    width: 100%;
+    height: 38px;
     border-radius: 999px;
     background: #1D4D32;
     color: #FFFFFF;
     text-decoration: none;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.68rem;
+    font-size: 11px;
     font-weight: 700;
-    transition: all 0.2s ease;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, transform 0.15s ease;
+    box-sizing: border-box;
 }
 
 .view-btn:hover {
-    background: #168B82;
+    background: #163E28;
     color: #FFFFFF;
     transform: translateY(-1px);
 }
 
-
-/* =========================================
-   EMPTY STATE
-========================================= */
-
-.empty-state {
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 60px 30px;
-    text-align: center;
-    background: #FFFFFF;
-    border: 1px solid #E4E8E4;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(38, 58, 56, 0.05);
-}
-
-.empty-icon {
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #F1F8F5;
-    color: #B9674B;
-    font-size: 1.5rem;
-}
-
-.empty-state h2 {
-    margin: 0 0 10px;
-    color: #1D4D32;
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 2.1rem;
-    font-weight: 600;
-}
-
-.empty-state p {
-    max-width: 440px;
-    margin: 0 auto 25px;
-    color: #667572;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.78rem;
-    line-height: 1.7;
-}
-
-.browse-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 25px;
-    border-radius: 999px;
-    background: #1D4D32;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-family: "DM Sans", sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    transition: all 0.2s ease;
-}
-
-.browse-btn:hover {
-    background: #B9674B;
-    color: #FFFFFF;
-    transform: translateY(-1px);
-}
-
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
+/* Responsive */
 @media (max-width: 1000px) {
-
     .wishlist-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-
 }
-
 
 @media (max-width: 750px) {
-
     .wishlist-page {
-        padding: 50px 15px 65px;
+        padding: 35px 15px 60px;
     }
-
+    .wishlist-header h1 {
+        font-size: 36px;
+    }
     .wishlist-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
+        gap: 16px;
     }
-
-    .wishlist-image {
-        height: 210px;
+    .empty-state {
+        padding: 38px 20px 34px;
+        border-radius: 16px;
     }
-
 }
-
 
 @media (max-width: 500px) {
-
-    .wishlist-container {
-        width: 100%;
-    }
-
     .wishlist-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
     }
-
-    .wishlist-image {
-        height: 230px;
-    }
-
-    .wishlist-content {
-        padding: 17px;
-    }
-
-    .empty-state {
-        padding: 45px 20px;
-    }
-
 }
-
 </style>
-
 
 <section class="wishlist-page">
 
     <div class="wishlist-container">
 
-
         <!-- =========================================
              PAGE HEADER
         ========================================== -->
-
         <div class="wishlist-header">
 
             <p class="wishlist-eyebrow">
@@ -430,17 +346,14 @@
             </h1>
 
             <p>
-                Save your favourite products and come back
-                to them whenever you are ready.
+                Save your favourite products and come back to them whenever you are ready.
             </p>
 
         </div>
 
-
         <!-- =========================================
-             WISHLIST PRODUCTS
+             WISHLIST PRODUCTS / EMPTY STATE
         ========================================== -->
-
         {% if wishlist_items %}
 
             <div class="wishlist-grid">
@@ -449,10 +362,8 @@
 
                     <div class="wishlist-card">
 
-
                         <!-- REMOVE FROM WISHLIST -->
-
-                        <form method="post" action="{% url 'remove_from_wishlist' item.product.id %}">
+                        <form method="post" action="{% url 'remove_from_wishlist' item.product.id %}" class="wishlist-remove-form">
                             {% csrf_token %}
                             <button
                                 type="submit"
@@ -464,106 +375,66 @@
                             </button>
                         </form>
 
-
                         <!-- PRODUCT IMAGE -->
-
                         <div class="wishlist-image">
-
                             {% if item.product.image %}
-
                                 <img
                                     src="{{ item.product.image.url }}"
                                     alt="{{ item.product.name }}"
                                 >
-
                             {% else %}
-
                                 <span class="no-image">
                                     No Image
                                 </span>
-
                             {% endif %}
-
                         </div>
 
-
                         <!-- PRODUCT CONTENT -->
-
                         <div class="wishlist-content">
 
-
-                            <!-- CATEGORY -->
-
                             {% if item.product.category %}
-
                                 <div class="wishlist-category">
                                     {{ item.product.category.name }}
                                 </div>
-
                             {% endif %}
-
-
-                            <!-- PRODUCT NAME -->
 
                             <h3>
                                 {{ item.product.name }}
                             </h3>
 
-
-                            <!-- PRICE -->
-
                             <div class="wishlist-price-row">
-
                                 <span class="current-price">
                                     ₹{{ item.product.selling_price|floatformat:2 }}
                                 </span>
 
-
                                 {% if item.product.mrp > item.product.selling_price %}
-
                                     <span class="mrp-price">
                                         ₹{{ item.product.mrp|floatformat:2 }}
                                     </span>
-
                                     <span class="discount-badge">
                                         {{ item.product.discount_percentage }}% OFF
                                     </span>
-
                                 {% endif %}
-
                             </div>
 
-
-                            <!-- STOCK -->
-
                             {% if item.product.stock > 0 %}
-
                                 <div class="stock-status">
                                     In Stock
                                 </div>
-
                             {% else %}
-
                                 <div class="stock-status out-of-stock">
                                     Currently Out of Stock
                                 </div>
-
                             {% endif %}
 
-
-                            <!-- ACTION -->
-
                             <div class="wishlist-actions">
-
                                 <a
                                     href="{% url 'product_detail' item.product.slug %}"
                                     class="view-btn"
                                 >
                                     View Product
                                 </a>
-
                             </div>
-
 
                         </div>
 
@@ -573,18 +444,17 @@
 
             </div>
 
-
         {% else %}
-
 
             <!-- =========================================
                  EMPTY WISHLIST
             ========================================== -->
-
             <div class="empty-state">
 
                 <div class="empty-icon">
-                    ♡
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
                 </div>
 
                 <h2>
@@ -592,9 +462,7 @@
                 </h2>
 
                 <p>
-                    You haven't saved any products yet.
-                    Explore our collection and add your
-                    favourite products to your wishlist.
+                    You haven't saved any products yet. Explore our collection and add your favourite products to your wishlist.
                 </p>
 
                 <a
@@ -606,9 +474,7 @@
 
             </div>
 
-
         {% endif %}
-
 
     </div>
 

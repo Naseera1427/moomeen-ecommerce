@@ -9,7 +9,7 @@ from django.db.models import Q, Sum, Count
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 from PIL import Image, UnidentifiedImageError
-from .forms import CheckoutAddressForm, UserLoginForm, RegisterForm
+from .forms import CheckoutAddressForm, UserLoginForm, RegisterForm, AddAddressForm
 
 from .models import (
     Product,
@@ -93,9 +93,20 @@ def register(request):
 
 def user_login(request):
 
+    next_url = request.POST.get("next") or request.GET.get("next") or ""
+
     if request.user.is_authenticated:
         if request.user.is_staff:
             return redirect("admin_dashboard")
+        if next_url and (
+            (next_url.startswith("/") and not next_url.startswith("//"))
+            or url_has_allowed_host_and_scheme(
+                next_url,
+                allowed_hosts={request.get_host()},
+                require_https=False,
+            )
+        ):
+            return redirect(next_url)
         return redirect("home")
 
     if request.method == "POST":
@@ -111,12 +122,13 @@ def user_login(request):
 
             login(request, user)
 
-            next_url = request.POST.get("next") or request.GET.get("next")
-
-            if next_url and url_has_allowed_host_and_scheme(
-                next_url,
-                allowed_hosts={request.get_host()},
-                require_https=request.is_secure(),
+            if next_url and (
+                (next_url.startswith("/") and not next_url.startswith("//"))
+                or url_has_allowed_host_and_scheme(
+                    next_url,
+                    allowed_hosts={request.get_host()},
+                    require_https=False,
+                )
             ):
                 return redirect(next_url)
 
@@ -131,7 +143,7 @@ def user_login(request):
         "auth/login.html",
         {
             "form": form,
-            "next": request.GET.get("next", ""),
+            "next": next_url,
         }
     )
 
@@ -563,8 +575,6 @@ def add_to_cart(request, product_id):
 # BUY NOW
 # =========================================================
 
-@login_required
-@require_POST
 def buy_now(request, product_id):
 
     product = get_object_or_404(
@@ -572,6 +582,9 @@ def buy_now(request, product_id):
         id=product_id,
         is_active=True
     )
+
+    if not request.user.is_authenticated:
+        return redirect(f"/login/?next=/buy-now/{product_id}/")
 
     # Don't continue if out of stock
     if product.stock <= 0:
@@ -587,18 +600,20 @@ def buy_now(request, product_id):
         )
 
     # Get selected quantity
-    try:
+    quantity = 1
+    if request.method == "POST":
+        try:
 
-        quantity = int(
-            request.POST.get(
-                "quantity",
-                1
+            quantity = int(
+                request.POST.get(
+                    "quantity",
+                    1
+                )
             )
-        )
 
-    except (TypeError, ValueError):
+        except (TypeError, ValueError):
 
-        quantity = 1
+            quantity = 1
 
     # Minimum quantity
     if quantity < 1:
@@ -633,9 +648,8 @@ def buy_now(request, product_id):
     cart_item.quantity = quantity
     cart_item.save()
 
-    # For now BUY NOW goes to cart.
-    # Later this can connect directly to checkout.
-    return redirect("cart")
+    # Redirect user directly to checkout page to continue purchase
+    return redirect("checkout")
 
 
 # =========================================================
@@ -1061,11 +1075,14 @@ def order_confirmation(request, order_number):
         user=request.user
     )
 
+    order_items = order.orderitem_set.all()
+
     return render(
         request,
         "order_confirmation.html",
         {
             "order": order,
+            "order_items": order_items,
         }
     )
 
@@ -1090,6 +1107,95 @@ def my_orders(request):
             "orders": orders,
         }
     )
+
+
+# =========================================================
+# MY ADDRESSES
+# =========================================================
+
+@login_required
+def my_addresses(request):
+
+    if request.method == "POST":
+
+        form = AddAddressForm(request.POST)
+
+        if form.is_valid():
+
+            address = form.save(commit=False)
+            address.user = request.user
+
+            if not Address.objects.filter(user=request.user).exists():
+                address.is_default = True
+
+            address.save()
+
+            messages.success(
+                request,
+                "Address saved successfully."
+            )
+
+            return redirect("my_addresses")
+
+        # Form invalid — fall through to re-render with errors
+        addresses = Address.objects.filter(
+            user=request.user
+        ).order_by(
+            "-is_default", "-id"
+        )
+
+        return render(
+            request,
+            "account/addresses.html",
+            {
+                "addresses": addresses,
+                "form": form,
+                "show_form": True,
+            }
+        )
+
+    # GET — show the page
+    form = AddAddressForm()
+
+    addresses = Address.objects.filter(
+        user=request.user
+    ).order_by(
+        "-is_default", "-id"
+    )
+
+    return render(
+        request,
+        "account/addresses.html",
+        {
+            "addresses": addresses,
+            "form": form,
+            "show_form": False,
+        }
+    )
+
+
+# =========================================================
+# DELETE ADDRESS
+# =========================================================
+
+@login_required
+@require_POST
+def delete_address(request, address_id):
+
+    address = get_object_or_404(
+        Address,
+        id=address_id,
+        user=request.user  # Ensures users can only delete their own addresses
+    )
+
+    address.delete()
+
+    messages.success(
+        request,
+        "Address removed."
+    )
+
+    return redirect("my_addresses")
 
 
 # =========================================================

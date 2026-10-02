@@ -7,14 +7,14 @@
 <style>
 
 /* =========================================================
-   PRODUCTS PAGE
+   PRODUCTS PAGE - MATCHING REFERENCE SCREENSHOT
    ========================================================= */
 
 .products-page {
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     background: #ffffff;
-    padding: 0 0 80px;
+    padding: 0 0 90px;
     color: #24382e;
     font-family: "DM Sans", Arial, sans-serif;
 }
@@ -27,106 +27,81 @@
 .products-page .page-header {
     width: min(1180px, 92%);
     margin: 0 auto;
-    padding: 70px 0 45px;
+    padding: 48px 0 36px;
     text-align: center;
 }
 
 .products-page .eyebrow {
-    margin: 0 0 10px;
-
+    margin: 0 0 8px;
     color: #168b82;
-
     font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.20em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
 }
 
 .products-page .page-header h1 {
     margin: 0;
-
     color: #1d4d32;
-
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: clamp(2.8rem, 5vw, 4.2rem);
-    font-weight: 600;
-    line-height: 1.05;
+    font-size: clamp(2.8rem, 4.5vw, 3.6rem);
+    font-weight: 500;
+    line-height: 1.1;
 }
 
 .products-page .page-header > p:last-child {
     max-width: 560px;
-    margin: 15px auto 0;
-
-    color: #66736d;
-
-    font-size: 0.88rem;
-    line-height: 1.7;
+    margin: 10px auto 0;
+    color: #667572;
+    font-size: 0.84rem;
+    line-height: 1.6;
 }
 
 
 /* =========================================================
-   SHOP SECTION
+   SHOP SECTION (SIDEBAR + CONTENT)
    ========================================================= */
 
 .products-page .shop-section {
     width: min(1180px, 92%);
     margin: 0 auto;
-
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-
-    gap: 38px;
-
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 36px;
     align-items: start;
 }
 
 
 /* =========================================================
-   FILTER SIDEBAR
+   CATEGORIES SIDEBAR
    ========================================================= */
 
 .products-page .filters {
-    position: sticky;
-    top: 25px;
-
-    padding: 24px 20px;
-
     background: #ffffff;
-
-    border: 1px solid #e2e8e3;
-    border-radius: 10px;
-
-    box-shadow: 0 8px 25px rgba(29, 77, 50, 0.055);
+    border: 1px solid #e4e8e4;
+    border-radius: 12px;
+    padding: 22px 18px 24px;
+    box-shadow: none;
 }
 
 .products-page .filters h3 {
-    margin: 0 0 17px;
-
+    margin: 0 0 16px;
     color: #1d4d32;
-
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: 600;
 }
 
 .products-page .filters a {
     display: block;
-
-    padding: 10px 11px;
+    padding: 8px 12px;
     margin-bottom: 4px;
-
-    color: #59665f;
-
-    border-radius: 5px;
-
-    font-size: 0.75rem;
-    font-weight: 600;
-
+    color: #263a38;
+    border-radius: 6px;
+    font-size: 0.74rem;
+    font-weight: 500;
     text-decoration: none;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .products-page .filters a:hover {
@@ -134,9 +109,10 @@
     background: #f2f7f3;
 }
 
-.products-page .filters a:first-of-type {
-    color: #ffffff;
-    background: #1d4d32;
+.products-page .filters a.active {
+    color: #ffffff !important;
+    background: #1d4d32 !important;
+    font-weight: 700;
 }
 
 
@@ -155,32 +131,26 @@
 
 .products-page .search-box {
     width: 100%;
-    margin-bottom: 28px;
-
+    margin-bottom: 26px;
     display: flex;
     align-items: stretch;
+    height: 44px;
 }
 
 .products-page .search-box input {
     flex: 1;
-
     min-width: 0;
-    height: 46px;
-
-    padding: 0 15px;
-
+    height: 44px;
+    padding: 0 16px;
     color: #24382e;
     background: #ffffff;
-
-    border: 1px solid #d9e1dc;
+    border: 1px solid #dce4df;
     border-right: none;
-
     border-radius: 6px 0 0 6px;
-
     outline: none;
-
     font-family: "DM Sans", Arial, sans-serif;
     font-size: 0.78rem;
+    box-sizing: border-box;
 }
 
 .products-page .search-box input::placeholder {
@@ -192,27 +162,20 @@
 }
 
 .products-page .search-box button {
-    width: 105px;
-    height: 46px;
-
+    height: 44px;
+    padding: 0 24px;
     border: 1px solid #1d4d32;
     border-radius: 0 6px 6px 0;
-
     background: #1d4d32;
     color: #ffffff;
-
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 700;
-
-    letter-spacing: 0.07em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-
     cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+    box-sizing: border-box;
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .products-page .search-box button:hover {
@@ -227,11 +190,9 @@
 
 .products-page .product-grid {
     width: 100%;
-
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 320px));
+    gap: 24px;
 }
 
 
@@ -240,180 +201,128 @@
    ========================================================= */
 
 .products-page .product-card {
+    background: #ffffff;
+    border: 1px solid #e4e8e4;
+    border-radius: 12px;
     overflow: hidden;
-
     display: flex;
     flex-direction: column;
-
-    background: #ffffff;
-
-    border: 1px solid #e1e7e2;
-    border-radius: 10px;
-
-    box-shadow: 0 6px 22px rgba(29, 77, 50, 0.05);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    box-shadow: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .products-page .product-card:hover {
-    transform: translateY(-4px);
-
-    box-shadow: 0 14px 32px rgba(29, 77, 50, 0.10);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 
-/* =========================================================
-   PRODUCT IMAGE
-   ========================================================= */
+/* PRODUCT IMAGE */
 
 .products-page .product-card > a:first-child {
-    display: block;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 285px;
-
+    height: 250px;
+    background: #ffffff;
+    padding: 16px;
+    box-sizing: border-box;
     overflow: hidden;
-
-    background: #f8faf8;
-
     text-decoration: none;
 }
 
 .products-page .product-card > a:first-child img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: 100%;
-
-    display: block;
-
-    padding: 15px;
-
     object-fit: contain;
-
-    transition: transform 0.35s ease;
+    display: block;
+    transition: transform 0.3s ease;
 }
 
 .products-page .product-card:hover > a:first-child img {
-    transform: scale(1.04);
+    transform: scale(1.03);
 }
-
-
-/* =========================================================
-   PLACEHOLDER
-   ========================================================= */
 
 .products-page .product-placeholder {
     width: 100%;
     height: 100%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: #1d4d32;
-
     font-family: "Cormorant Garamond", Georgia, serif;
     font-size: 2rem;
     font-weight: 600;
 }
 
 
-/* =========================================================
-   PRODUCT INFORMATION
-   ========================================================= */
+/* PRODUCT DETAILS */
 
 .products-page .product-info {
-    padding: 19px 20px 20px;
-
+    padding: 18px 20px 20px;
     display: flex;
     flex-direction: column;
-
     flex: 1;
 }
 
 .products-page .product-info small {
-    margin-bottom: 7px;
-
-    color: #168b82;
-
-    font-size: 0.61rem;
+    margin-bottom: 6px;
+    color: #b9674b;
+    font-size: 0.65rem;
     font-weight: 700;
-
-    letter-spacing: 0.13em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
 .products-page .product-info h3 {
-    margin: 0;
-
+    margin: 0 0 8px;
     color: #1d4d32;
-
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     font-weight: 600;
+    line-height: 1.2;
+}
 
-    line-height: 1.15;
+.products-page .product-info h3 a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .products-page .product-info p {
-    margin: 9px 0 14px;
-
-    min-height: 39px;
-
-    color: #69756f;
-
+    margin: 0 0 16px;
+    color: #667572;
     font-size: 0.74rem;
     line-height: 1.6;
 }
 
-
-/* =========================================================
-   PRICE
-   ========================================================= */
-
 .products-page .price {
     margin-top: auto;
-    margin-bottom: 17px;
-
+    margin-bottom: 16px;
     color: #1d4d32;
-
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
-
-/* =========================================================
-   BUTTON
-   ========================================================= */
-
 .products-page .secondary-btn {
-    width: 100%;
-    min-height: 41px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    box-sizing: border-box;
-
-    color: #1d4d32;
+    width: 100%;
+    height: 38px;
+    border: 1.5px solid #1d4d32;
+    border-radius: 6px;
     background: #ffffff;
-
-    border: 1px solid #1d4d32;
-    border-radius: 5px;
-
-    font-size: 0.65rem;
+    color: #1d4d32;
+    font-size: 0.66rem;
     font-weight: 700;
-
-    letter-spacing: 0.07em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-
     text-decoration: none;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
+    box-sizing: border-box;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .products-page .secondary-btn:hover {
@@ -422,85 +331,59 @@
 }
 
 
-/* =========================================================
-   EMPTY MESSAGE
-   ========================================================= */
+/* EMPTY STATE */
 
 .products-page .empty-message {
     grid-column: 1 / -1;
-
-    padding: 70px 25px;
-
+    padding: 60px 20px;
     text-align: center;
-
-    border: 1px solid #e2e8e3;
-    border-radius: 10px;
-
+    border: 1px solid #e4e8e4;
+    border-radius: 12px;
     background: #ffffff;
 }
 
 .products-page .empty-message h3 {
     margin: 0 0 8px;
-
     color: #1d4d32;
-
     font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .products-page .empty-message p {
     margin: 0;
-
-    color: #69756f;
-
+    color: #667572;
     font-size: 0.8rem;
 }
 
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    .products-page .shop-section {
-        grid-template-columns: 190px minmax(0, 1fr);
-        gap: 25px;
-    }
-
-    .products-page .product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 17px;
-    }
-
-    .products-page .product-card > a:first-child {
-        height: 250px;
-    }
-
+/* FOOTER COLUMN HARMONIZATION (Match 3-column footer in screenshots) */
+.footer-container {
+    grid-template-columns: 1.5fr 1fr 1fr !important;
+}
+.footer-column:nth-of-type(3) ~ .footer-column {
+    display: none !important;
 }
 
 
 /* =========================================================
-   MOBILE
+   RESPONSIVE DESIGN
    ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
+    .products-page .shop-section {
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 24px;
+    }
+}
 
+@media (max-width: 700px) {
     .products-page .page-header {
-        padding: 50px 0 35px;
+        padding: 35px 0 25px;
     }
 
     .products-page .shop-section {
         grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .products-page .filters {
-        position: static;
-    }
-
-    .products-page .filters h3 {
-        margin-bottom: 12px;
+        gap: 20px;
     }
 
     .products-page .filters {
@@ -508,66 +391,29 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 6px;
-        padding: 17px;
+        padding: 14px;
     }
 
     .products-page .filters h3 {
         width: 100%;
+        margin-bottom: 8px;
     }
 
     .products-page .filters a {
         margin: 0;
-
-        padding: 8px 13px;
-
+        padding: 6px 12px;
         border: 1px solid #dce5df;
         border-radius: 999px;
-
-        font-size: 0.66rem;
+        font-size: 0.68rem;
     }
 
-    .products-page .filters a:first-of-type {
+    .products-page .filters a.active {
         border-color: #1d4d32;
     }
 
     .products-page .product-grid {
         grid-template-columns: 1fr;
     }
-
-    .products-page .product-card > a:first-child {
-        height: 310px;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 430px) {
-
-    .products-page .page-header h1 {
-        font-size: 2.7rem;
-    }
-
-    .products-page .page-header > p:last-child {
-        font-size: 0.78rem;
-    }
-
-    .products-page .search-box input {
-        font-size: 0.72rem;
-    }
-
-    .products-page .search-box button {
-        width: 85px;
-        font-size: 0.61rem;
-    }
-
-    .products-page .product-card > a:first-child {
-        height: 285px;
-    }
-
 }
 
 </style>
@@ -578,9 +424,7 @@
     <!-- =====================================================
          PAGE HEADER
     ====================================================== -->
-
     <section class="page-header">
-
         <p class="eyebrow">
             MOOMEEN COLLECTION
         </p>
@@ -592,58 +436,37 @@
         <p>
             Explore our collection of natural products.
         </p>
-
     </section>
 
 
     <!-- =====================================================
          SHOP AREA
     ====================================================== -->
-
     <section class="shop-section">
 
-
-        <!-- =================================================
-             CATEGORY FILTER
-        ================================================== -->
-
+        <!-- CATEGORIES SIDEBAR -->
         <aside class="filters">
-
             <h3>
                 Categories
             </h3>
 
-
-            <a href="{% url 'products' %}">
+            <a href="{% url 'products' %}" class="{% if not request.GET.category %}active{% endif %}">
                 All Products
             </a>
 
-
             {% for category in categories %}
-
-                <a href="?category={{ category.slug }}">
+                <a href="?category={{ category.slug }}" class="{% if request.GET.category == category.slug %}active{% endif %}">
                     {{ category.name }}
                 </a>
-
             {% endfor %}
-
         </aside>
 
 
-        <!-- =================================================
-             PRODUCTS CONTENT
-        ================================================== -->
-
+        <!-- PRODUCTS CONTENT -->
         <div class="shop-content">
 
-
-            <!-- SEARCH -->
-
-            <form
-                method="get"
-                class="search-box"
-            >
-
+            <!-- SEARCH BAR -->
+            <form method="get" class="search-box">
                 <input
                     type="text"
                     name="search"
@@ -652,103 +475,77 @@
                 >
 
                 <button type="submit">
-                    Search
+                    SEARCH
                 </button>
-
             </form>
 
 
             <!-- PRODUCT GRID -->
-
             <div class="product-grid">
 
                 {% for product in products %}
 
-
                 <article class="product-card">
 
-
                     <!-- PRODUCT IMAGE -->
-
-                    <a
-                        href="{% url 'product_detail' product.slug %}"
-                    >
-
+                    <a href="{% url 'product_detail' product.slug %}">
                         {% if product.image %}
-
                             <img
                                 src="{{ product.image.url }}"
                                 alt="{{ product.name }}"
                             >
-
                         {% else %}
-
                             <div class="product-placeholder">
                                 MP
                             </div>
-
                         {% endif %}
-
                     </a>
 
-
                     <!-- PRODUCT DETAILS -->
-
                     <div class="product-info">
-
-
                         <small>
-                            {{ product.category.name }}
+                            {{ product.category.name|upper }}
                         </small>
 
-
                         <h3>
-                            {{ product.name }}
+                            <a href="{% url 'product_detail' product.slug %}">
+                                {{ product.name }}
+                            </a>
                         </h3>
 
-
                         {% if product.short_description %}
-
                             <p>
                                 {{ product.short_description|truncatewords:10 }}
                             </p>
-
+                        {% elif product.description %}
+                            <p>
+                                {{ product.description|truncatewords:10 }}
+                            </p>
                         {% else %}
-
                             <p>
                                 Discover more about this product.
                             </p>
-
                         {% endif %}
 
-
                         <!-- PRICE -->
-
                         <div class="price">
-                            ₹{{ product.selling_price }}
+                            ₹{{ product.selling_price|floatformat:2 }}
                         </div>
 
-
-                        <!-- VIEW DETAILS -->
-
+                        <!-- VIEW DETAILS BUTTON -->
                         <a
                             href="{% url 'product_detail' product.slug %}"
                             class="secondary-btn"
                         >
-                            View Details
+                            VIEW DETAILS
                         </a>
-
-
                     </div>
 
                 </article>
 
-
                 {% empty %}
 
-
                 <div class="empty-message">
-
                     <h3>
                         No Products Found
                     </h3>
@@ -756,9 +553,7 @@
                     <p>
                         Try another search or category.
                     </p>
-
                 </div>
-
 
                 {% endfor %}
 

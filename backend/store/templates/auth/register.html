@@ -6,15 +6,263 @@ Create Account | MOOMEEN PRODUCTS
 
 {% block content %}
 
+<style>
+/* =========================================================
+   MOOMEEN PRODUCTS - REGISTER PAGE
+   ========================================================= */
+
+.auth-page {
+    width: 100%;
+    min-height: calc(100vh - 120px);
+    padding: 40px 16px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    font-family: "DM Sans", Arial, sans-serif;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+.auth-card {
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #E5EBE6;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+    padding: 38px 36px 34px;
+    box-sizing: border-box;
+}
+
+/* Header */
+.auth-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.auth-header .eyebrow {
+    margin: 0 0 6px 0;
+    color: #168B82;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.auth-header h1 {
+    margin: 0 0 8px 0;
+    color: #1D4D32;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.15;
+}
+
+.auth-header p:not(.eyebrow) {
+    margin: 0 auto;
+    max-width: 320px;
+    color: #667572;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+/* Errors */
+.auth-error {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    color: #A33A32;
+    background: #FFF3F2;
+    border: 1px solid #F5D2CD;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.auth-error p {
+    margin: 0;
+}
+
+.auth-error p + p {
+    margin-top: 4px;
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.auth-field label {
+    color: #1D4D32;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin: 0;
+    display: block;
+}
+
+.auth-input,
+.auth-field input:not([type="submit"]):not([type="checkbox"]) {
+    width: 100%;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 14px;
+    color: #263A38;
+    background: #FFFFFF;
+    border: 1px solid #D8E0DA;
+    border-radius: 7px;
+    outline: none;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 12.5px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input::placeholder,
+.auth-field input::placeholder {
+    color: #9CA7A2;
+    font-size: 12px;
+}
+
+.auth-input:focus,
+.auth-field input:not([type="submit"]):not([type="checkbox"]):focus {
+    border-color: #168B82;
+    box-shadow: 0 0 0 2.5px rgba(22, 139, 130, 0.12);
+}
+
+.auth-help {
+    display: block;
+    color: #8A9592;
+    font-size: 10.5px;
+    margin-top: 2px;
+    line-height: 1.3;
+}
+
+.field-error {
+    color: #B9382B;
+    font-size: 11px;
+    margin-top: 3px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* Submit Button */
+.auth-submit-btn {
+    width: 100%;
+    height: 46px;
+    min-height: 46px;
+    margin-top: 14px;
+    color: #FFFFFF;
+    background: #1D4D32;
+    border: 1px solid #1D4D32;
+    border-radius: 999px;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-submit-btn:hover {
+    background: #163E28;
+    border-color: #163E28;
+    transform: translateY(-1px);
+}
+
+.auth-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Divider */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 16px;
+    color: #9EA8A4;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #E5EBE6;
+}
+
+/* Footer Login Link */
+.auth-register {
+    text-align: center;
+}
+
+.auth-register p {
+    margin: 0 0 5px 0;
+    color: #667572;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 11.5px;
+}
+
+.auth-register a {
+    color: #B9674B;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.auth-register a:hover {
+    color: #168B82;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 30px 14px 60px;
+    }
+    .auth-card {
+        padding: 30px 20px 26px;
+        border-radius: 16px;
+    }
+    .auth-header h1 {
+        font-size: 32px;
+    }
+}
+</style>
+
 <section class="auth-page">
 
     <div class="auth-container">
 
         <div class="auth-card">
-
-            <!-- =================================================
-                 REGISTER HEADER
-            ================================================== -->
 
             <div class="auth-header">
 
@@ -27,37 +275,22 @@ Create Account | MOOMEEN PRODUCTS
                 </h1>
 
                 <p>
-                    Create your account to shop our natural
-                    and Siddha-inspired products.
+                    Create your account to shop our natural and Siddha-inspired products.
                 </p>
 
             </div>
-
-
-            <!-- =================================================
-                 FORM ERRORS
-            ================================================== -->
 
             {% if form.non_field_errors %}
 
             <div class="auth-error">
 
                 {% for error in form.non_field_errors %}
-
-                    <p>
-                        {{ error }}
-                    </p>
-
+                    <p>{{ error }}</p>
                 {% endfor %}
 
             </div>
 
             {% endif %}
-
-
-            <!-- =================================================
-                 REGISTER FORM
-            ================================================== -->
 
             <form
                 method="POST"
@@ -67,11 +300,7 @@ Create Account | MOOMEEN PRODUCTS
 
                 {% csrf_token %}
 
-
-                <!-- =============================================
-                     FIRST NAME
-                ============================================== -->
-
+                <!-- FIRST NAME -->
                 <div class="auth-field">
 
                     <label for="{{ form.first_name.id_for_label }}">
@@ -89,24 +318,14 @@ Create Account | MOOMEEN PRODUCTS
                     >
 
                     {% if form.first_name.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.first_name.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.first_name.errors.0 }}
                     </div>
-
                     {% endif %}
 
                 </div>
 
-
-                <!-- =============================================
-                     LAST NAME
-                ============================================== -->
-
+                <!-- LAST NAME -->
                 <div class="auth-field">
 
                     <label for="{{ form.last_name.id_for_label }}">
@@ -124,24 +343,14 @@ Create Account | MOOMEEN PRODUCTS
                     >
 
                     {% if form.last_name.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.last_name.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.last_name.errors.0 }}
                     </div>
-
                     {% endif %}
 
                 </div>
 
-
-                <!-- =============================================
-                     USERNAME
-                ============================================== -->
-
+                <!-- USERNAME -->
                 <div class="auth-field">
 
                     <label for="{{ form.username.id_for_label }}">
@@ -159,24 +368,14 @@ Create Account | MOOMEEN PRODUCTS
                     >
 
                     {% if form.username.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.username.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.username.errors.0 }}
                     </div>
-
                     {% endif %}
 
                 </div>
 
-
-                <!-- =============================================
-                     EMAIL
-                ============================================== -->
-
+                <!-- EMAIL ADDRESS -->
                 <div class="auth-field">
 
                     <label for="{{ form.email.id_for_label }}">
@@ -194,42 +393,33 @@ Create Account | MOOMEEN PRODUCTS
                     >
 
                     {% if form.email.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.email.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.email.errors.0 }}
                     </div>
-
                     {% endif %}
 
                 </div>
 
-
-                <!-- =============================================
-                     PASSWORD
-                ============================================== -->
-
+                <!-- PASSWORD -->
                 <div class="auth-field">
 
                     <label for="{{ form.password.id_for_label }}">
                         Password
                     </label>
 
-                    {{ form.password }}
+                    <input
+                        type="password"
+                        name="password"
+                        id="{{ form.password.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                    >
 
                     {% if form.password.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.password.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.password.errors.0 }}
                     </div>
-
                     {% endif %}
 
                     <small class="auth-help">
@@ -238,38 +428,31 @@ Create Account | MOOMEEN PRODUCTS
 
                 </div>
 
-
-                <!-- =============================================
-                     CONFIRM PASSWORD
-                ============================================== -->
-
+                <!-- CONFIRM PASSWORD -->
                 <div class="auth-field">
 
                     <label for="{{ form.confirm_password.id_for_label }}">
                         Confirm Password
                     </label>
 
-                    {{ form.confirm_password }}
+                    <input
+                        type="password"
+                        name="confirm_password"
+                        id="{{ form.confirm_password.id_for_label }}"
+                        class="auth-input"
+                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                    >
 
                     {% if form.confirm_password.errors %}
-
                     <div class="field-error">
-
-                        {% for error in form.confirm_password.errors %}
-                            {{ error }}
-                        {% endfor %}
-
+                        {{ form.confirm_password.errors.0 }}
                     </div>
-
                     {% endif %}
 
                 </div>
 
-
-                <!-- =============================================
-                     CREATE ACCOUNT BUTTON
-                ============================================== -->
-
+                <!-- CREATE ACCOUNT BUTTON -->
                 <button
                     type="submit"
                     class="auth-submit-btn"
@@ -279,19 +462,9 @@ Create Account | MOOMEEN PRODUCTS
 
             </form>
 
-
-            <!-- =================================================
-                 LOGIN LINK
-            ================================================== -->
-
             <div class="auth-divider">
-
-                <span>
-                    OR
-                </span>
-
+                <span>OR</span>
             </div>
-
 
             <div class="auth-register">
 
