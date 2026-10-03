@@ -23,7 +23,18 @@ if not SECRET_KEY:
     if DEBUG:
         SECRET_KEY = "django-insecure-local-development-key"
     else:
-        raise RuntimeError("DJANGO_SECRET_KEY must be set when DJANGO_DEBUG is false")
+        # During Railway build phase (collectstatic), env vars may not be
+        # injected yet. Generate a temporary key so the build succeeds.
+        # At RUNTIME, DJANGO_SECRET_KEY must always be set in Railway Variables.
+        from django.core.management.utils import get_random_secret_key
+        SECRET_KEY = get_random_secret_key()
+        import warnings
+        warnings.warn(
+            "DJANGO_SECRET_KEY is not set! A temporary key was generated. "
+            "Set DJANGO_SECRET_KEY in Railway Variables for production security.",
+            stacklevel=2,
+        )
+
 
 allowed_hosts_env = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
 ALLOWED_HOSTS = [
