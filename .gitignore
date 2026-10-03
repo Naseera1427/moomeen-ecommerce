@@ -24,7 +24,7 @@ cloudflared.exe
 ngrok.exe
 
 # Legacy directory prior to backend/ rename
-moomeen/
+/moomeen/
 
 # Reference screenshots
 ref_order_screenshots/

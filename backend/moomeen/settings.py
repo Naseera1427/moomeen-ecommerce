@@ -32,14 +32,23 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
-# Allow Cloudflare Tunnel and ngrok domains for temporary preview testing
+# Allow Cloudflare Tunnel, ngrok, and test runner
 if DEBUG:
     ALLOWED_HOSTS.extend([
+        "testserver",
         ".trycloudflare.com",
         ".ngrok-free.app",
         ".ngrok.app",
         ".ngrok.io",
     ])
+
+# Railway deployment domains
+ALLOWED_HOSTS.extend([
+    ".railway.app",
+    ".up.railway.app",
+])
+if os.getenv("RAILWAY_PUBLIC_DOMAIN"):
+    ALLOWED_HOSTS.append(os.getenv("RAILWAY_PUBLIC_DOMAIN"))
 
 
 # =========================================================
@@ -227,8 +236,17 @@ if DEBUG:
     # Tunnel terminates TLS — tell Django the request was originally HTTPS
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# Railway deployment HTTPS origins
+CSRF_TRUSTED_ORIGINS.extend([
+    "https://*.railway.app",
+    "https://*.up.railway.app",
+])
+if os.getenv("RAILWAY_PUBLIC_DOMAIN"):
+    railway_domain = os.getenv("RAILWAY_PUBLIC_DOMAIN")
+    CSRF_TRUSTED_ORIGINS.append(f"https://{railway_domain}")
+
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
