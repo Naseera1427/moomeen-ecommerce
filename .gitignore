@@ -8,10 +8,10 @@ __pycache__/
 db.sqlite3
 data.json
 
-# Media uploads (served from GCS in production)
+# Media uploads (uploaded by users, not committed to git)
 media/
 
-# Collected static (generated at Docker build time, not committed)
+# Collected static (generated at build time, not committed)
 staticfiles/
 
 # IDE & OS artifacts
@@ -21,12 +21,8 @@ staticfiles/
 Thumbs.db
 .DS_Store
 
-# Firebase cache
-.firebase/
-
 # Legacy directory prior to backend/ rename
 moomeen/
 
 # Reference screenshots
 ref_order_screenshots/
-

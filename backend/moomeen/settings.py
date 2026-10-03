@@ -213,22 +213,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "store" / "static",
 ]
 
-csrf_origins = [
+CSRF_TRUSTED_ORIGINS = [
     origin.strip()
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
-for domain in [
-    "https://moomeenproducts.web.app",
-    "https://moomeenproducts.firebaseapp.com",
-    "https://moomeenproducts.com",
-    "https://www.moomeenproducts.com",
-    "https://moomeen-69cf9.web.app",
-    "https://moomeen-69cf9.firebaseapp.com",
-]:
-    if domain not in csrf_origins:
-        csrf_origins.append(domain)
-CSRF_TRUSTED_ORIGINS = csrf_origins
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -238,10 +227,6 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    # Required for cookies to work across Firebase Hosting → Cloud Run
-    # (cross-origin requests require SameSite=None and Secure=True)
-    SESSION_COOKIE_SAMESITE = "None"
-    CSRF_COOKIE_SAMESITE = "None"
 
 # =========================================================
 # SESSION PERSISTENCE
@@ -254,8 +239,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 # don't get logged out unexpectedly.
 SESSION_SAVE_EVERY_REQUEST = True
 
-# Use database-backed sessions (default) — persists across
-# Cloud Run container restarts.
+# Use database-backed sessions — persists across server restarts.
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 
@@ -263,32 +247,17 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 # MEDIA & STORAGES CONFIGURATION
 # =========================================================
 
-GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME")
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-if GS_BUCKET_NAME:
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
-            "OPTIONS": {
-                "bucket_name": GS_BUCKET_NAME,
-            },
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
-    MEDIA_URL = f"https://storage.googleapis.com/{GS_BUCKET_NAME}/"
-else:
-    STORAGES = {
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 
 # =========================================================
