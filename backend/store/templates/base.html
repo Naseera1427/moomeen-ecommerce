@@ -363,7 +363,18 @@
                 Disclaimer
             </a>
 
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'admin_dashboard' %}" style="color: #2ec4b6; font-weight: 600;">
+                    ★ Admin Dashboard
+                </a>
+            {% else %}
+                <a href="{% url 'admin_login' %}">
+                    Admin Portal
+                </a>
+            {% endif %}
+
         </div>
+
 
 
     </div>
