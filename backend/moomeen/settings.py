@@ -31,18 +31,15 @@ ALLOWED_HOSTS = [
     for host in allowed_hosts_env.split(",")
     if host.strip()
 ]
-for domain in [
-    ".web.app",
-    ".firebaseapp.com",
-    ".run.app",
-    "moomeenproducts.com",
-    ".moomeenproducts.com",
-]:
-    if domain not in ALLOWED_HOSTS and not any(
-        h == domain or (h.startswith(".") and domain.endswith(h))
-        for h in ALLOWED_HOSTS
-    ):
-        ALLOWED_HOSTS.append(domain)
+
+# Allow Cloudflare Tunnel and ngrok domains for temporary preview testing
+if DEBUG:
+    ALLOWED_HOSTS.extend([
+        ".trycloudflare.com",
+        ".ngrok-free.app",
+        ".ngrok.app",
+        ".ngrok.io",
+    ])
 
 
 # =========================================================
@@ -218,6 +215,17 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
+
+# Allow Cloudflare Tunnel and ngrok HTTPS origins for preview testing
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend([
+        "https://*.trycloudflare.com",
+        "https://*.ngrok-free.app",
+        "https://*.ngrok.app",
+        "https://*.ngrok.io",
+    ])
+    # Tunnel terminates TLS — tell Django the request was originally HTTPS
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
