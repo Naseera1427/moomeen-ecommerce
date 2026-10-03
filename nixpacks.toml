@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python314", "libpq"]
+nixPkgs = ["libpq"]
 
 [phases.install]
 cmds = ["pip install -r backend/requirements.txt"]
