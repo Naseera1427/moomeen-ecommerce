@@ -42,6 +42,12 @@ urlpatterns = [
         name="admin_product_edit"
     ),
 
+    path(
+        "admin-products/delete/<int:product_id>/",
+        views.admin_product_delete,
+        name="admin_product_delete"
+    ),
+
 
     # =====================================================
     # USER AUTHENTICATION

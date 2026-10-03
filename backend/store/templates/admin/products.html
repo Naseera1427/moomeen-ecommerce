@@ -491,12 +491,31 @@
 
                     <td>
 
-                        <a
-                            href="{% url 'admin_product_edit' product.id %}"
-                            class="edit-btn"
-                        >
-                            Edit
-                        </a>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <a
+                                href="{% url 'admin_product_edit' product.id %}"
+                                class="edit-btn"
+                            >
+                                Edit
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{% url 'admin_product_delete' product.id %}"
+                                style="margin: 0; display: inline;"
+                                onsubmit="return confirm('Are you sure you want to remove \'{{ product.name|escapejs }}\'?');"
+                            >
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    style="padding: 7px 12px; border: 1px solid #c0392b; border-radius: 7px; color: #c0392b; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s;"
+                                    onmouseover="this.style.background='#c0392b'; this.style.color='#fff';"
+                                    onmouseout="this.style.background='transparent'; this.style.color='#c0392b';"
+                                >
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
 
                     </td>
 

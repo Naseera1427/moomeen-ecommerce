@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.db.models import Q, Sum, Count
+from django.db.models import Q, Sum, Count, ProtectedError
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 from PIL import Image, UnidentifiedImageError
@@ -1631,6 +1631,29 @@ def admin_product_edit(request, product_id):
             "form_type": "edit",
         }
     )
+
+
+@admin_required
+def admin_product_delete(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == "POST":
+        product_name = product.name
+        try:
+            product.delete()
+            messages.success(request, f'"{product_name}" was permanently deleted.')
+        except ProtectedError:
+            # Cannot delete product if orders exist for it; deactivate instead
+            product.is_active = False
+            product.save()
+            messages.warning(
+                request,
+                f'"{product_name}" has existing order history so it cannot be permanently removed. It has been deactivated and hidden from the store.'
+            )
+
+    return redirect("admin_products")
+
+
 # =====================================================
 # ADMIN ORDER MANAGEMENT
 # =====================================================
