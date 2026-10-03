@@ -27,7 +27,7 @@ class AdminAuthTests(TestCase):
         """The dedicated admin login page must be publicly accessible."""
         response = self.client.get(reverse("admin_login"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "admin/login.html")
+        self.assertTemplateUsed(response, "admin/admin_login.html")
 
     def test_admin_login_wrong_password_rejected(self):
         """Wrong password must not grant access and must stay on login page."""
@@ -36,7 +36,7 @@ class AdminAuthTests(TestCase):
             "password": "wrongpassword",
         })
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "admin/login.html")
+        self.assertTemplateUsed(response, "admin/admin_login.html")
         # Must NOT be logged in
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
@@ -47,7 +47,7 @@ class AdminAuthTests(TestCase):
             "password": "Customer@123",
         })
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "admin/login.html")
+        self.assertTemplateUsed(response, "admin/admin_login.html")
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     def test_admin_login_success_redirects_to_dashboard(self):

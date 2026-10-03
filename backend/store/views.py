@@ -1277,7 +1277,7 @@ def admin_login(request):
             messages.error(request, "Please provide both admin username and password.")
             return render(
                 request,
-                "admin/login.html",
+                "admin/admin_login.html",
                 {"next": next_url, "username": username}
             )
 
@@ -1291,7 +1291,7 @@ def admin_login(request):
                 )
                 return render(
                     request,
-                    "admin/login.html",
+                    "admin/admin_login.html",
                     {"next": next_url, "username": username}
                 )
 
@@ -1302,7 +1302,7 @@ def admin_login(request):
                 )
                 return render(
                     request,
-                    "admin/login.html",
+                    "admin/admin_login.html",
                     {"next": next_url, "username": username}
                 )
 
@@ -1326,7 +1326,7 @@ def admin_login(request):
 
     return render(
         request,
-        "admin/login.html",
+        "admin/admin_login.html",
         {"next": next_url}
     )
 
