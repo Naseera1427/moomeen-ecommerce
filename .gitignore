@@ -14,12 +14,14 @@ media/
 # Collected static (generated at build time, not committed)
 staticfiles/
 
-# IDE & OS artifacts
+# IDE, OS artifacts & tunnel binaries
 .vscode/
 .idea/
 *.log
 Thumbs.db
 .DS_Store
+cloudflared.exe
+ngrok.exe
 
 # Legacy directory prior to backend/ rename
 moomeen/
