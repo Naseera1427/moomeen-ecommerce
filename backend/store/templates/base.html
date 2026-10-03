@@ -183,6 +183,12 @@
 
         <div class="drawer-divider"></div>
 
+        {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'admin_dashboard' %}" class="drawer-link" style="color: #168B82; font-weight: 700; background: #e8f5f3; border-radius: 8px; margin: 4px 0;">
+                ★ Admin Dashboard
+            </a>
+        {% endif %}
+
         {% if user.is_authenticated %}
             <a href="{% url 'my_orders' %}" class="drawer-link">
                 My Orders

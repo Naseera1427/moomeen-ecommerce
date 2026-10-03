@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from functools import wraps
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.db.models import Q, Sum, Count, ProtectedError
@@ -40,10 +40,15 @@ def validate_product_image(uploaded_image):
         uploaded_image.seek(0)
 def admin_required(view_func):
     @wraps(view_func)
-    @login_required
     def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(f"/admin-login/?next={request.get_full_path()}")
 
-        if not request.user.is_staff:
+        if not (request.user.is_staff or request.user.is_superuser):
+            messages.error(
+                request,
+                "Access restricted: Administrator credentials are required to access this area."
+            )
             return redirect("home")
 
         return view_func(request, *args, **kwargs)
@@ -130,7 +135,12 @@ def user_login(request):
                     require_https=False,
                 )
             ):
+                if not (user.is_staff or user.is_superuser) and ("admin" in next_url):
+                    return redirect("home")
                 return redirect(next_url)
+
+            if user.is_staff or user.is_superuser:
+                return redirect("admin_dashboard")
 
             return redirect("home")
 
@@ -1243,6 +1253,91 @@ def contact(request):
         request,
         "contact.html"
     )
+
+# =========================================================
+# ADMIN AUTHENTICATION
+# =========================================================
+
+def admin_login(request):
+    next_url = request.POST.get("next") or request.GET.get("next") or ""
+
+    if request.user.is_authenticated:
+        if request.user.is_staff or request.user.is_superuser:
+            return redirect("admin_dashboard")
+        messages.warning(
+            request,
+            f"You are currently signed in as customer '{request.user.username}'. Please sign in with an administrator account to access the Admin Portal."
+        )
+
+    if request.method == "POST":
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
+
+        if not username or not password:
+            messages.error(request, "Please provide both admin username and password.")
+            return render(
+                request,
+                "admin/login.html",
+                {"next": next_url, "username": username}
+            )
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            if not (user.is_staff or user.is_superuser):
+                messages.error(
+                    request,
+                    "Access denied: This account does not have administrator privileges."
+                )
+                return render(
+                    request,
+                    "admin/login.html",
+                    {"next": next_url, "username": username}
+                )
+
+            if not user.is_active:
+                messages.error(
+                    request,
+                    "This administrator account is disabled."
+                )
+                return render(
+                    request,
+                    "admin/login.html",
+                    {"next": next_url, "username": username}
+                )
+
+            login(request, user)
+            messages.success(request, f"Welcome to MOOMEEN Admin Portal, {user.username}!")
+
+            if next_url and (
+                (next_url.startswith("/") and not next_url.startswith("//"))
+                or url_has_allowed_host_and_scheme(
+                    next_url,
+                    allowed_hosts={request.get_host()},
+                    require_https=False,
+                )
+            ):
+                return redirect(next_url)
+
+            return redirect("admin_dashboard")
+
+        else:
+            messages.error(request, "Invalid administrator username or password.")
+
+    return render(
+        request,
+        "admin/login.html",
+        {"next": next_url}
+    )
+
+
+@require_POST
+def admin_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request, "You have been securely logged out of the Admin Portal.")
+    return redirect("admin_login")
+
 
 # =========================================================
 # ADMIN DASHBOARD

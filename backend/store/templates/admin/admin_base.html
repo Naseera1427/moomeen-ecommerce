@@ -1,0 +1,576 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Portal | MOOMEEN PRODUCTS{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --primary: #1D4D32;
+            --primary-dark: #123321;
+            --primary-light: #286643;
+            --accent: #168B82;
+            --accent-light: #E8F5F3;
+            --gold: #C5A059;
+            --dark: #1F2937;
+            --gray-bg: #F4F6F5;
+            --gray-card: #FFFFFF;
+            --gray-border: #E5E9E7;
+            --gray-text: #6B7280;
+            --danger: #C0392B;
+            --danger-light: #FDF2F2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================= */
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--primary-dark) 0%, #0F2619 100%);
+            color: #FFFFFF;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-brand {
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .sidebar-brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .sidebar-brand-text h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+
+        .sidebar-brand-text span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .sidebar-user {
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            overflow: hidden;
+        }
+
+        .user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #FFFFFF;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 10px 6px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            opacity: 0.85;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+            transform: translateX(3px);
+        }
+
+        .nav-link.active {
+            background: var(--accent);
+            color: #FFFFFF;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(22, 139, 130, 0.35);
+        }
+
+        .nav-link.active svg {
+            opacity: 1;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 11px 14px;
+            background: rgba(192, 57, 43, 0.15);
+            border: 1px solid rgba(192, 57, 43, 0.3);
+            color: #FFA39E;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--danger);
+            color: #FFFFFF;
+            border-color: var(--danger);
+        }
+
+        /* =========================================================
+           MAIN WRAPPER & TOPBAR
+        ========================================================= */
+        .admin-main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .admin-topbar {
+            height: 64px;
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--gray-border);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sidebar-toggle-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--gray-border);
+            border-radius: 8px;
+            padding: 6px;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .topbar-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .view-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border: 1px solid var(--gray-border);
+            background: #FFFFFF;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .view-store-btn:hover {
+            background: var(--gray-bg);
+            border-color: var(--primary);
+        }
+
+        /* =========================================================
+           CONTENT AREA
+        ========================================================= */
+        .admin-content-area {
+            padding: 28px;
+            flex: 1;
+        }
+
+        /* FLASH MESSAGES */
+        .admin-messages {
+            margin-bottom: 24px;
+        }
+
+        .admin-alert {
+            padding: 13px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .admin-alert-success {
+            background: #E8F8F0;
+            color: #1E7E44;
+            border: 1px solid #A9DFBF;
+        }
+
+        .admin-alert-error {
+            background: #FDEDEC;
+            color: #C0392B;
+            border: 1px solid #F5B7B1;
+        }
+
+        .admin-alert-warning {
+            background: #FEF9E7;
+            color: #9A7D0A;
+            border: 1px solid #F9E79F;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* =========================================================
+           RESPONSIVE STYLES
+        ========================================================= */
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .admin-topbar {
+                padding: 0 16px;
+            }
+
+            .admin-content-area {
+                padding: 18px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar" id="adminSidebar">
+    <a href="{% url 'admin_dashboard' %}" class="sidebar-brand">
+        <img src="{% static 'images/logo/moomeen-logo.jpg' %}" alt="MOOMEEN Logo" class="sidebar-brand-logo" onerror="this.style.display='none'">
+        <div class="sidebar-brand-text">
+            <h2>MOOMEEN</h2>
+            <span>Admin Portal</span>
+        </div>
+    </a>
+
+    <div class="sidebar-user">
+        <div class="user-avatar">
+            {{ request.user.username|make_list|first|upper }}
+        </div>
+        <div class="user-info">
+            <div class="user-name">{{ request.user.username }}</div>
+            <div class="user-role">{% if request.user.is_superuser %}Super Administrator{% else %}Staff Member{% endif %}</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-section-title">Store Management</div>
+
+        <a href="{% url 'admin_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{% url 'admin_products' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_products' or request.resolver_match.url_name == 'admin_product_edit' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>Products</span>
+        </a>
+
+        <a href="{% url 'admin_product_add' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_product_add' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <span>Add Product</span>
+        </a>
+
+        <a href="{% url 'admin_orders' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_orders' or request.resolver_match.url_name == 'admin_order_detail' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span>Orders</span>
+        </a>
+
+        <a href="{% url 'admin_customers' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_customers' or request.resolver_match.url_name == 'admin_customer_detail' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Customers</span>
+        </a>
+
+        <a href="{% url 'admin_reviews' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_reviews' %}active{% endif %}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Reviews</span>
+        </a>
+
+        <div class="nav-section-title">System & Tools</div>
+
+        <a href="/django-admin/" class="nav-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+            </svg>
+            <span>Django Admin</span>
+            <svg style="margin-left: auto; width: 14px; height: 14px; opacity: 0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </a>
+
+        <a href="{% url 'home' %}" class="nav-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>View Storefront</span>
+            <svg style="margin-left: auto; width: 14px; height: 14px; opacity: 0.5;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <form method="POST" action="{% url 'admin_logout' %}" style="margin: 0;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Admin Logout</span>
+            </button>
+        </form>
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="admin-main">
+    <header class="admin-topbar">
+        <div class="topbar-left">
+            <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle Navigation">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <div class="topbar-title">{% block topbar_title %}Dashboard{% endblock %}</div>
+        </div>
+
+        <div class="topbar-right">
+            <a href="{% url 'home' %}" class="view-store-btn" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>Live Store</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="admin-content-area">
+        {% if messages %}
+            <div class="admin-messages">
+                {% for message in messages %}
+                    <div class="admin-alert admin-alert-{% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% else %}warning{% endif %}">
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block admin_content %}{% endblock %}
+    </main>
+</div>
+
+<script>
+    const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+    const adminSidebar = document.getElementById('adminSidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function toggleSidebar() {
+        adminSidebar.classList.toggle('open');
+        sidebarOverlay.classList.toggle('active');
+    }
+
+    if (sidebarToggleBtn && adminSidebar && sidebarOverlay) {
+        sidebarToggleBtn.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    }
+</script>
+
+</body>
+</html>

@@ -1,21 +1,29 @@
-{% extends "base.html" %}
+{% extends "admin/admin_base.html" %}
 
 {% block title %}
     {% if form_type == "edit" %}
-        Edit Product | MOOMEEN PRODUCTS
+        Edit Product | MOOMEEN Admin
     {% else %}
-        Add Product | MOOMEEN PRODUCTS
+        Add Product | MOOMEEN Admin
     {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block topbar_title %}
+    {% if form_type == "edit" %}
+        Edit Product
+    {% else %}
+        Add New Product
+    {% endif %}
+{% endblock %}
+
+{% block admin_content %}
 
 <style>
 
     .product-form-page {
         max-width: 1050px;
-        margin: 45px auto;
-        padding: 0 20px;
+        margin: 0 auto;
+        padding: 0;
     }
 
     /* ================================

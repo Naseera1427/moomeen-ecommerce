@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+{% extends "admin/admin_base.html" %}
 
-{% block title %}Customer Details | MOOMEEN PRODUCTS{% endblock %}
+{% block title %}Customer: {{ customer.username }} | MOOMEEN Admin{% endblock %}
+{% block topbar_title %}Customer Profile{% endblock %}
 
-{% block content %}
+{% block admin_content %}
 
 <style>
     .admin-page {
         max-width: 1200px;
-        margin: 40px auto;
-        padding: 0 20px;
+        margin: 0 auto;
+        padding: 0;
     }
 
     .admin-header {
